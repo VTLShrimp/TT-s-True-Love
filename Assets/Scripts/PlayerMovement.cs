@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private int jumpcount = 0;
     public int maxhealth = 100;
     public int currenthealth;
+    //yes testing//
     public HealthBar healthBar;
 
     [SerializeField] private Rigidbody2D rb;
@@ -55,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.G))
         {
             animator.SetBool("IsUsingSword", false);
+    
         }
        
 
