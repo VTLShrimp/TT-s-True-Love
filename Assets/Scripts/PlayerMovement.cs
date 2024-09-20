@@ -1,9 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
-    public float speed = 9f;
+    public float speed = 10f;
     public float jumpingPower = 16f;
     private bool isFacingRight = true;
     public Animator animator;
@@ -61,10 +61,12 @@ public class PlayerMovement : MonoBehaviour
        
 
     }
+ 
 
     private void FixedUpdate()
     {
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+
     }
 
     private bool IsGrounded()
