@@ -285,8 +285,8 @@ Transform:
   m_GameObject: {fileID: 340880074}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 37.8, y: 17.8, z: 0}
-  m_LocalScale: {x: 39.423283, y: 22.205065, z: 1}
+  m_LocalPosition: {x: -18.9808, y: 1.6031, z: 0}
+  m_LocalScale: {x: 6.6971774, y: 6.630289, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -356,7 +356,7 @@ Transform:
   m_GameObject: {fileID: 348635791}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30.64, y: -21.46, z: -10}
+  m_LocalPosition: {x: -30.83, y: -21.66, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -374,6 +374,7 @@ GameObject:
   - component: {fileID: 355392211}
   - component: {fileID: 355392213}
   - component: {fileID: 355392212}
+  - component: {fileID: 355392214}
   m_Layer: 0
   m_Name: Saw (1)
   m_TagString: Untagged
@@ -390,7 +391,7 @@ Transform:
   m_GameObject: {fileID: 355392210}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 128.8, y: 5.41, z: 0}
+  m_LocalPosition: {x: 125.93, y: -3.56, z: 0}
   m_LocalScale: {x: 3.4912, y: 3.06, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -469,6 +470,41 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &355392214
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 355392210}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.0000019073486, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.49999997
 --- !u!1 &489609154
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,7 +676,7 @@ Transform:
   m_GameObject: {fileID: 724717489}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30.64, y: -21.46, z: -10}
+  m_LocalPosition: {x: -30.83, y: -21.66, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -707,7 +743,7 @@ Transform:
   m_GameObject: {fileID: 757069676}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 174.9, y: -2.5, z: 0}
+  m_LocalPosition: {x: 129.8, y: -3.52, z: 0}
   m_LocalScale: {x: 3.4912, y: 3.06, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -59445,11 +59481,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -30.64
+      value: -30.83
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -21.46
+      value: -21.66
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
       propertyPath: m_LocalPosition.z
