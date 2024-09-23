@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         currenthealth = maxhealth;
-        healthBar.SetMaxHealth(maxhealth);
+        
         Application.targetFrameRate = 60;
 
     }
