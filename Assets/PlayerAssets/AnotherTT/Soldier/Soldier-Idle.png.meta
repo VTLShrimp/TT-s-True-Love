@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 37e5431d6cd38f446a1974446fa90dbf
+guid: c1839b1f2785c724f92b990c964d0a9e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,169 +97,127 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Run-Sheet_0
+      name: Soldier-Idle_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 10
-        width: 80
-        height: 70
+        x: 41
+        y: 43
+        width: 15
+        height: 18
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f3350edf33a3214bab06f9e716bc68c
-      internalID: 284104622
+      spriteID: a6b0d6002de49b740a591d7ebb377718
+      internalID: 568540075
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Run-Sheet_1
+      name: Soldier-Idle_1
       rect:
         serializedVersion: 2
-        x: 80
-        y: 10
-        width: 80
-        height: 70
+        x: 141
+        y: 43
+        width: 15
+        height: 18
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b4be9133c33d06342b2cffc3f74e1417
-      internalID: 1732650846
+      spriteID: b301198ef3251684fa93955e1dc055b5
+      internalID: -760847502
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Run-Sheet_2
+      name: Soldier-Idle_2
       rect:
         serializedVersion: 2
-        x: 160
-        y: 10
-        width: 80
-        height: 70
+        x: 241
+        y: 43
+        width: 15
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 14d5b4ee5e096974c95f40d4ee43b4f7
-      internalID: 1543994218
+      spriteID: 21bad91f9d2278144aa43cac23223c2b
+      internalID: -137892699
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Run-Sheet_3
+      name: Soldier-Idle_3
       rect:
         serializedVersion: 2
-        x: 240
-        y: 10
-        width: 80
-        height: 70
+        x: 341
+        y: 43
+        width: 15
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ecda8db066cf6924399e415719d961b5
-      internalID: -170891914
+      spriteID: 2147f527e92dd734ebce34f58883578c
+      internalID: 1612243738
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Run-Sheet_4
+      name: Soldier-Idle_4
       rect:
         serializedVersion: 2
-        x: 320
-        y: 10
-        width: 80
-        height: 70
+        x: 441
+        y: 43
+        width: 15
+        height: 18
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4d1adebdfb5f0e84dba74a5a9d8569c2
-      internalID: -1193234493
+      spriteID: 9cb79d439a7595747b1f7f23c3a98378
+      internalID: 1312387747
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Run-Sheet_5
+      name: Soldier-Idle_5
       rect:
         serializedVersion: 2
-        x: 400
-        y: 10
-        width: 80
-        height: 70
+        x: 541
+        y: 43
+        width: 15
+        height: 18
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c462e2e92d564994e8d69400420bbece
-      internalID: -1495876356
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Run-Sheet_6
-      rect:
-        serializedVersion: 2
-        x: 480
-        y: 10
-        width: 80
-        height: 70
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 18be4973e5eae0d48a9133c7eca4b015
-      internalID: -2029578531
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Run-Sheet_7
-      rect:
-        serializedVersion: 2
-        x: 560
-        y: 10
-        width: 80
-        height: 70
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 35b5e58b21b25414bb7ccd7b22b73f22
-      internalID: -1346935632
+      spriteID: c5811429a1fb30b449f7131d6eb176cb
+      internalID: 582343748
       vertices: []
       indices: 
       edges: []
@@ -275,14 +233,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Run-Sheet_0: 284104622
-      Run-Sheet_1: 1732650846
-      Run-Sheet_2: 1543994218
-      Run-Sheet_3: -170891914
-      Run-Sheet_4: -1193234493
-      Run-Sheet_5: -1495876356
-      Run-Sheet_6: -2029578531
-      Run-Sheet_7: -1346935632
+      Soldier-Idle_0: 568540075
+      Soldier-Idle_1: -760847502
+      Soldier-Idle_2: -137892699
+      Soldier-Idle_3: 1612243738
+      Soldier-Idle_4: 1312387747
+      Soldier-Idle_5: 582343748
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
