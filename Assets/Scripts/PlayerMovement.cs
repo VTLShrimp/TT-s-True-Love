@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     private float attackCooldownTimer = 0f;
     public float attackCooldownDuration = 1f;
 
+    public float bowcooldown = 1f;
+
     //yes testing//
     // public HealthBar healthBar;
 
@@ -40,12 +42,16 @@ public class PlayerMovement : MonoBehaviour
         {
             attackCooldownTimer -= Time.deltaTime;
         }
-        if(Input.GetMouseButtonDown(0))
+        if (bowcooldown > 0)
+        {
+            bowcooldown -= Time.deltaTime;
+        }
+        if(Input.GetMouseButtonDown(0) && attackCooldownTimer <= 0)
         {
             Attack();
         }
 
-        if(Input.GetMouseButtonDown(1))
+        if(Input.GetMouseButtonDown(1) && bowcooldown <= 0)
         {
             Bow();
         }
@@ -106,6 +112,7 @@ private void EndAttack()
     private void Bow(){
         animator.SetTrigger("Bow");
         isAttacking = true;
+        Debug.Log("Bow");
         Invoke("EndAttack", 1f);
     }
 
@@ -133,12 +140,4 @@ private void EndAttack()
             transform.localScale = localScale;
         }
     }
-    // private void OnTriggerEnter2D(Collider2D collision)
-    // {
-    //     if (collision.gameObject.CompareTag("Sword") && Input.GetKey(KeyCode.E))
-    //     {
-    //         animator.SetBool("IsUsingSword",true);
-    //         Destroy(collision.gameObject);
-    //     }
-    // }
 } 
