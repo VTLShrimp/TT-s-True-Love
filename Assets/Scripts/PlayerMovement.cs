@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -18,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private float attackCooldownTimer = 0f;
     public float attackCooldownDuration = 1f;
 
+    private RangeWeapon rangeWeapon;
     public float bowcooldown = 1f;
 
     //yes testing//
@@ -30,15 +33,18 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         currenthealth = maxhealth;
-        
         Application.targetFrameRate = 60;
+        if (rangeWeapon == null)
+        {
+            rangeWeapon = GetComponent<RangeWeapon>();
+        }
 
     }
 
 
     void Update()
     {
-         if (attackCooldownTimer > 0)
+        if (attackCooldownTimer > 0)
         {
             attackCooldownTimer -= Time.deltaTime;
         }
@@ -46,48 +52,49 @@ public class PlayerMovement : MonoBehaviour
         {
             bowcooldown -= Time.deltaTime;
         }
-        if(Input.GetMouseButtonDown(0) && attackCooldownTimer <= 0)
+        if (Input.GetMouseButtonDown(0) && attackCooldownTimer <= 0)
         {
             Attack();
         }
 
-        if(Input.GetMouseButtonDown(1) && bowcooldown <= 0)
+        if (Input.GetMouseButtonDown(1) && bowcooldown <= 0)
         {
             Bow();
         }
-        if(!isAttacking){
-        horizontal = Input.GetAxisRaw("Horizontal");
-        if (Input.GetButtonDown("Jump") && IsGrounded())
+        if (!isAttacking)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-           if(jumpcount < 1)
+            horizontal = Input.GetAxisRaw("Horizontal");
+            if (Input.GetButtonDown("Jump") && IsGrounded())
             {
+                rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+                if (jumpcount < 1)
+                {
+                    jumpcount++;
+                }
+            }
+            else if (Input.GetButtonDown("Jump") && jumpcount < 1 && IsGrounded() == false)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
                 jumpcount++;
             }
-        }
-        else if (Input.GetButtonDown("Jump") && jumpcount < 1 && IsGrounded()==false)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-            jumpcount++;
-        }
-        animator.SetBool("IsGround", IsGrounded());
-        Flip();
-        if(IsGrounded())
-        {
-            jumpcount = 0;
-        }
-        animator.SetInteger("Speed", (int)Mathf.Abs(horizontal));
+            animator.SetBool("IsGround", IsGrounded());
+            Flip();
+            if (IsGrounded())
+            {
+                jumpcount = 0;
+            }
+            animator.SetInteger("Speed", (int)Mathf.Abs(horizontal));
         }
     }
- 
-private void EndAttack()
+
+    private void EndAttack()
     {
         isAttacking = false;
     }
 
     private void FixedUpdate()
     {
-          if (!isAttacking)
+        if (!isAttacking)
         {
             rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
         }
@@ -99,26 +106,31 @@ private void EndAttack()
     }
 
 
-    private void Attack(){
+    private void Attack()
+    {
         animator.SetTrigger("Attack");
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-        foreach(Collider2D enemy in hitEnemies){
-                // enemy.GetComponent<BoarScript>().TakeDamage(damage);    
-                Debug.Log("We hit " + enemy.name);   
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            // enemy.GetComponent<BoarScript>().TakeDamage(damage);    
+            Debug.Log("We hit " + enemy.name);
         }
         attackCooldownTimer = attackCooldownDuration;
     }
 
-    private void Bow(){
+    private void Bow()
+    {
         animator.SetTrigger("Bow");
         isAttacking = true;
-        Debug.Log("Bow");
+        rangeWeapon.Shoot();
         Invoke("EndAttack", 1f);
+        attackCooldownTimer = bowcooldown;
     }
 
-
-    void OnDrawGizmosSelected(){
-        if(attackPoint == null){
+    void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+        {
             return;
         }
 
@@ -140,4 +152,4 @@ private void EndAttack()
             transform.localScale = localScale;
         }
     }
-} 
+}

@@ -1,18 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+[System.Serializable]
+public class Weapon
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public string name;
+    public GameObject projectilePrefab;
+    public Transform firePoint;
+    public float fireCooldownDuration;
+    public int damage;
+    public float range;
 }

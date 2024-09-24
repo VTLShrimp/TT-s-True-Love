@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class RangeWeapon : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Transform firePoint;
+    public GameObject projectilePrefab;
+    public void Shoot()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
     }
 }
