@@ -19,10 +19,15 @@ public class PlayerMovement : MonoBehaviour
     private bool isDashing;
     public float dashCooldown = 1f;
     private float dashCooldownTimer;
-
+    private bool isTouchingWall;
+    private bool isSliding;
+    public float wallSlideSpeed = 3f;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private Transform wallCheck;
+    [SerializeField] private Transform wallCheck2;
+    [SerializeField] private LayerMask wallLayer;
 
     void Start()
     {
@@ -67,6 +72,46 @@ public class PlayerMovement : MonoBehaviour
             }
             animator.SetInteger("Speed", (int)Mathf.Abs(horizontal));
         }
+        isTouchingWall = Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
+        if (isTouchingWall && !IsGrounded() && rb.velocity.y < 0)
+        {
+            StartSliding();
+        }
+        else
+        {
+            StopSliding();
+        }
+
+        if (isTouchingWall && Input.GetButtonDown("Jump"))
+        {
+            WallJump();
+        }
+    }
+
+    private void StartSliding()
+    {
+        isSliding = true;
+        // animator.SetBool("IsSliding", true);
+    }
+
+    private void StopSliding()
+    {
+        isSliding = false;
+        // animator.SetBool("IsSliding", false);
+    }
+
+    private void WallJump()
+    {
+        rb.velocity = new Vector2(-Mathf.Sign(transform.localScale.x) * speed, jumpingPower);
+        Flip();
+    }
+
+    private bool IsTouchingWall()
+    {
+        return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer) ||
+               Physics2D.OverlapCircle(wallCheck2.position, 0.2f, wallLayer);
+
+
     }
 
     private void FixedUpdate()
@@ -79,6 +124,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 EndDash();
             }
+        }
+        else if (isSliding)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
         }
         else
         {
