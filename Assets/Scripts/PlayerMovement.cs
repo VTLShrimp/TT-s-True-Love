@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,16 +12,13 @@ public class PlayerMovement : MonoBehaviour
     private int jumpcount = 0;
     public int maxhealth = 100;
     public int currenthealth;
-    public int damage = 20;
-    private bool isAttacking = false;
-    public float attackRange = 0.5f;
-    public LayerMask enemyLayers;
-    public Transform attackPoint;
-    private float attackCooldownTimer = 0f;
-    public float attackCooldownDuration = 1f;
 
-    //yes testing//
-    // public HealthBar healthBar;
+    public float dashSpeed = 20f;
+    public float dashDuration = 0.2f;
+    private float dashTime;
+    private bool isDashing;
+    public float dashCooldown = 1f;
+    private float dashCooldownTimer;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -28,96 +27,64 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         currenthealth = maxhealth;
-        
         Application.targetFrameRate = 60;
-
     }
 
 
     void Update()
     {
-         if (attackCooldownTimer > 0)
+        if (dashCooldownTimer > 0)
         {
-            attackCooldownTimer -= Time.deltaTime;
+            dashCooldownTimer -= Time.deltaTime;
         }
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownTimer <= 0)
         {
-            Attack();
+            isDashing = true;
+            dashTime = dashDuration;
+            dashCooldownTimer = dashCooldown;
         }
-
-        if(Input.GetMouseButtonDown(1))
+        if (!isDashing)
         {
-            Bow();
-        }
-        if(!isAttacking){
-        horizontal = Input.GetAxisRaw("Horizontal");
-        if (Input.GetButtonDown("Jump") && IsGrounded())
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-           if(jumpcount < 1)
+            horizontal = Input.GetAxisRaw("Horizontal");
+            if (Input.GetButtonDown("Jump") && IsGrounded())
             {
+                rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+                if (jumpcount < 1)
+                {
+                    jumpcount++;
+                }
+            }
+            else if (Input.GetButtonDown("Jump") && jumpcount < 1 && IsGrounded() == false)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
                 jumpcount++;
             }
+            animator.SetBool("IsGround", IsGrounded());
+            Flip();
+            if (IsGrounded())
+            {
+                jumpcount = 0;
+            }
+            animator.SetInteger("Speed", (int)Mathf.Abs(horizontal));
         }
-        else if (Input.GetButtonDown("Jump") && jumpcount < 1 && IsGrounded()==false)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-            jumpcount++;
-        }
-        animator.SetBool("IsGround", IsGrounded());
-        Flip();
-        if(IsGrounded())
-        {
-            jumpcount = 0;
-        }
-        animator.SetInteger("Speed", (int)Mathf.Abs(horizontal));
-        }
-    }
- 
-private void EndAttack()
-    {
-        isAttacking = false;
     }
 
     private void FixedUpdate()
     {
-          if (!isAttacking)
+        if (isDashing)
         {
-            rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+            rb.velocity = new Vector2(transform.localScale.x * dashSpeed, rb.velocity.y);
+            dashTime -= Time.fixedDeltaTime;
+            if (dashTime <= 0)
+            {
+                EndDash();
+            }
         }
         else
         {
-            rb.velocity = new Vector2(0, rb.velocity.y);
+            rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
         }
-
     }
-
-
-    private void Attack(){
-        animator.SetTrigger("Attack");
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-        foreach(Collider2D enemy in hitEnemies){
-                // enemy.GetComponent<BoarScript>().TakeDamage(damage);    
-                Debug.Log("We hit " + enemy.name);   
-        }
-        attackCooldownTimer = attackCooldownDuration;
-    }
-
-    private void Bow(){
-        animator.SetTrigger("Bow");
-        isAttacking = true;
-        Invoke("EndAttack", 1f);
-    }
-
-
-    void OnDrawGizmosSelected(){
-        if(attackPoint == null){
-            return;
-        }
-
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
-    }
-
     private bool IsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
@@ -133,12 +100,16 @@ private void EndAttack()
             transform.localScale = localScale;
         }
     }
-    // private void OnTriggerEnter2D(Collider2D collision)
-    // {
-    //     if (collision.gameObject.CompareTag("Sword") && Input.GetKey(KeyCode.E))
-    //     {
-    //         animator.SetBool("IsUsingSword",true);
-    //         Destroy(collision.gameObject);
-    //     }
-    // }
-} 
+    private void StartDash()
+    {
+        isDashing = true;
+        dashTime = dashDuration;
+        dashCooldownTimer = dashCooldown;
+        // animator.SetTrigger("Dash");
+    }
+    private void EndDash()
+    {
+        isDashing = false;
+    }
+
+}
