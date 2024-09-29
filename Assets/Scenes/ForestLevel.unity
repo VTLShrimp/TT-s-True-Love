@@ -61515,7 +61515,7 @@ PrefabInstance:
     - target: {fileID: 3626916397498700004, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 2e20010491d5df942bea74a85558fb0d, type: 3}
+      objectReference: {fileID: 822927794, guid: 4e0cbf1d1ed6b8f4cad510d1d3a3860f, type: 3}
     - target: {fileID: 3626916397498700004, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
       propertyPath: m_SortingOrder
       value: 5
@@ -61616,7 +61616,7 @@ Animator:
   m_GameObject: {fileID: 1117981689}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 464629aad8b79e54980cff8f930e10c2, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7d836b5c11549b64d95cdc90732eebf4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -61644,13 +61644,6 @@ MonoBehaviour:
   animator: {fileID: 1117981691}
   maxhealth: 100
   currenthealth: 0
-  damage: 20
-  attackRange: 0.5
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  attackPoint: {fileID: 0}
-  attackCooldownDuration: 1
   rb: {fileID: 1117981694}
   groundCheck: {fileID: 2092861146}
   groundLayer:
