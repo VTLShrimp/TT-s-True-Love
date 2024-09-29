@@ -17,30 +17,7 @@ AnimationClip:
   m_PositionCurves: []
   m_ScaleCurves: []
   m_FloatCurves: []
-<<<<<<< Updated upstream
   m_PPtrCurves: []
-=======
-  m_PPtrCurves:
-  - serializedVersion: 2
-    curve:
-    - time: 0
-      value: {fileID: -310450619, guid: d465fe704c51b0f41b9879588a7785d7, type: 3}
-    - time: 0.033333335
-      value: {fileID: 1466972849, guid: d465fe704c51b0f41b9879588a7785d7, type: 3}
-    - time: 0.15
-      value: {fileID: -15131006, guid: d465fe704c51b0f41b9879588a7785d7, type: 3}
-    - time: 0.28333333
-      value: {fileID: 1850873548, guid: d465fe704c51b0f41b9879588a7785d7, type: 3}
-    - time: 0.4
-      value: {fileID: 793273732, guid: d465fe704c51b0f41b9879588a7785d7, type: 3}
-    - time: 0.5
-      value: {fileID: 1477959025, guid: d465fe704c51b0f41b9879588a7785d7, type: 3}
-    attribute: m_Sprite
-    path: 
-    classID: 212
-    script: {fileID: 0}
-    flags: 2
->>>>>>> Stashed changes
   m_SampleRate: 60
   m_WrapMode: 0
   m_Bounds:
@@ -54,11 +31,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-<<<<<<< Updated upstream
     m_StopTime: 1
-=======
-    m_StopTime: 0.51666665
->>>>>>> Stashed changes
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
