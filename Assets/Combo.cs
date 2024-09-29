@@ -17,10 +17,10 @@ public class PlayerAttack : MonoBehaviour
 
         animator = GetComponent<Animator>();
     }
-    public void Start_combo()
+    public void start_combo()
     {
         ataccando = false;
-        if (combo < 3)
+        if (combo < 2)
         {
             combo++;
         }
@@ -32,10 +32,12 @@ public class PlayerAttack : MonoBehaviour
     }
 
 
+
+
     public void Combos_()
     {
 
-        if (Input.GetKeyDown(KeyCode.C) && !ataccando)
+        if (Input.GetMouseButton(0) && !ataccando)
         {
             ataccando = true;
             animator.SetTrigger("" + combo);
