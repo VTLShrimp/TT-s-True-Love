@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,11 +15,12 @@ public class NewBehaviourScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void FixedUpdate()
+    private void Update() // Đổi từ FixedUpdate sang Update
     {
         float distance = cam.transform.position.x * paralaxEffect;
         float movement = cam.transform.position.x * (1 - paralaxEffect);
         transform.position = new Vector3(startPos + distance, transform.position.y, transform.position.z);
+
         if (movement > startPos + length)
         {
             startPos += length;
