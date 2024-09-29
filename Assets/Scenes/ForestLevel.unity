@@ -356,7 +356,7 @@ Transform:
   m_GameObject: {fileID: 348635791}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30.49, y: -19.84, z: -10}
+  m_LocalPosition: {x: -29.733, y: -20.296, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -968,7 +968,7 @@ Transform:
   m_GameObject: {fileID: 724717489}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30.49, y: -19.84, z: -10}
+  m_LocalPosition: {x: -29.733, y: -20.296, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -61534,11 +61534,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -31.49
+      value: -30.733
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -21.84
+      value: -22.296
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -61595,6 +61595,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -2253911629886400664, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1117981697}
+    - targetCorrespondingSourceObject: {fileID: -2253911629886400664, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1117981699}
   m_SourcePrefab: {fileID: -8435245712485981826, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
 --- !u!1 &1117981689 stripped
 GameObject:
@@ -61718,6 +61721,21 @@ CapsuleCollider2D:
   m_Offset: {x: 0.0061189355, y: -0.030447463}
   m_Size: {x: 0.515336, y: 1.4999278}
   m_Direction: 0
+--- !u!114 &1117981699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117981689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a99c22a2c04877489c56fc394eb7085, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  ataccando: 0
+  combo: 0
 --- !u!1 &1140110204
 GameObject:
   m_ObjectHideFlags: 0
