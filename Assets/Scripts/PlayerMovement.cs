@@ -27,11 +27,23 @@ public class PlayerMovement : MonoBehaviour
     private float wallJumpingTime = 0.2f;
     private float wallJumpingCounter;
     private float wallJumpingDuration = 0.4f;
-    private Vector2 wallJumpingPower = new Vector2(8f, 16f);
+    private Vector2 wallJumpingPower = new(8f, 16f);
+    private bool isCrouching = false;
+    public Collider2D standingCollider;
+    public Collider2D crouchingCollider;
+    private bool isDodging = false;
+    public float dodgecooldown = 1f;
+    private float dodgecooldownTimer;
+    public float dodgespeed = 20f;
+    public float dodgeduration = 0.9f;
+    private float dodgetime;
+
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private Transform platfromCheck;
+    [SerializeField] private LayerMask platfromLayer;
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
 
@@ -48,27 +60,51 @@ public class PlayerMovement : MonoBehaviour
         {
             dashCooldownTimer -= Time.deltaTime;
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownTimer <= 0)
+        if (dodgecooldownTimer > 0)
+        {
+            dodgecooldownTimer -= Time.deltaTime;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownTimer <= 0 && !isCrouching)
         {
             isDashing = true;
             dashTime = dashDuration;
             dashCooldownTimer = dashCooldown;
         }
+        if (Input.GetKeyDown(KeyCode.LeftControl) && dodgecooldownTimer <= 0)
+        {
+            isDodging = true;
+            dodgetime = dodgeduration;
+            dodgecooldownTimer = dodgecooldown;
+            standingCollider.enabled = false;
+            crouchingCollider.enabled = true;
+        }
         if (!isDashing)
         {
             horizontal = Input.GetAxisRaw("Horizontal");
-            if (Input.GetButtonDown("Jump") && IsGrounded())
+            if (Input.GetButtonDown("Jump") && IsGrounded() && !isCrouching)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+
                 if (jumpcount < 1)
                 {
                     jumpcount++;
                 }
             }
-            else if (Input.GetButtonDown("Jump") && jumpcount < 1 && IsGrounded() == false)
+            else if (Input.GetButtonDown("Jump") && jumpcount < 1 && !IsGrounded() && !isCrouching)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
                 jumpcount++;
+            }
+            if (Input.GetKeyDown(KeyCode.S) && (IsGrounded() || IsPlatfrom()))
+            {
+                isCrouching = true;
+                standingCollider.enabled = false;
+                crouchingCollider.enabled = true;
+            }
+
+            if (!standingCollider.enabled && !crouchingCollider.enabled && (IsGrounded() || IsPlatfrom()))
+            {
+                standingCollider.enabled = true;
             }
             animator.SetBool("IsGround", IsGrounded());
             Flip();
@@ -100,14 +136,29 @@ public class PlayerMovement : MonoBehaviour
                 EndDash();
             }
         }
+        else if (isDodging)
+        {
+            rb.velocity = new Vector2(transform.localScale.x * dodgespeed, rb.velocity.y);
+            dodgetime -= Time.fixedDeltaTime;
+            if (dodgetime <= 0)
+            {
+                EndDodge();
+            }
+        }
         else
         {
             rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
         }
     }
+
     private bool IsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+
+    }
+    private bool IsPlatfrom()
+    {
+        return Physics2D.OverlapCircle(platfromCheck.position, 0.2f, platfromLayer);
     }
 
     private void Flip()
@@ -132,6 +183,12 @@ public class PlayerMovement : MonoBehaviour
         isDashing = false;
     }
 
+    private void EndDodge()
+    {
+        isDodging = false;
+        standingCollider.enabled = true;
+        crouchingCollider.enabled = false;
+    }
     private bool IsWalled()
     {
         return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
