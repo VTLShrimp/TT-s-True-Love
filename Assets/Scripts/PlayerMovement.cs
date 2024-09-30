@@ -18,10 +18,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isDashing;
     public float dashCooldown = 1f;
     private float dashCooldownTimer;
-
     private bool isWallSliding;
     private float wallSlidingSpeed = 2f;
-
     private bool isWallJumping;
     private float wallJumpingDirection;
     private float wallJumpingTime = 0.2f;
@@ -29,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     private float wallJumpingDuration = 0.4f;
     private Vector2 wallJumpingPower = new(8f, 16f);
     private bool isCrouching = false;
+    private bool isDropping = false;
     public Collider2D standingCollider;
     public Collider2D crouchingCollider;
     private bool isDodging = false;
@@ -37,7 +36,6 @@ public class PlayerMovement : MonoBehaviour
     public float dodgespeed = 20f;
     public float dodgeduration = 0.9f;
     private float dodgetime;
-
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -95,17 +93,21 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
                 jumpcount++;
             }
-            if (Input.GetKeyDown(KeyCode.S) && (IsGrounded() || IsPlatfrom()))
+            if (Input.GetKey(KeyCode.S) && !isDropping)
             {
-                isCrouching = true;
-                standingCollider.enabled = false;
-                crouchingCollider.enabled = true;
+                Crouch();
+            }
+            else if (!Input.GetKey(KeyCode.S) && isCrouching)
+            {
+                StandUp();
             }
 
-            if (!standingCollider.enabled && !crouchingCollider.enabled && (IsGrounded() || IsPlatfrom()))
+            // Drop-down logic
+            if (Input.GetKeyDown(KeyCode.S) && isCrouching && !isDropping && IsPlatfrom())
             {
-                standingCollider.enabled = true;
+                DropDown();
             }
+
             animator.SetBool("IsGround", IsGrounded());
             Flip();
             if (IsGrounded())
@@ -205,6 +207,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isWallSliding = false;
         }
+        // animator.SetBool("IsWallSliding", isWallSliding);
     }
 
     private void WallJump()
@@ -244,5 +247,41 @@ public class PlayerMovement : MonoBehaviour
     {
         isWallJumping = false;
     }
+    void Crouch()
+    {
+        if (!isCrouching)
+        {
+            isCrouching = true;
+            standingCollider.enabled = false;
+            crouchingCollider.enabled = true;
+            // animator.SetBool("IsCrouching", true);
+        }
+    }
+    void StandUp()
+    {
+        if (isCrouching)
+        {
+            isCrouching = false;
+            standingCollider.enabled = true;
+            crouchingCollider.enabled = false;
+            // animator.SetBool("IsCrouching", false);
+        }
+    }
+    void DropDown()
+    {
+        if (!isDropping)
+        {
+            isDropping = true;
+            standingCollider.enabled = false;
+            crouchingCollider.enabled = false;
+            Invoke(nameof(EnableColliders), 0.2f);
+        }
+    }
 
+    void EnableColliders()
+    {
+        standingCollider.enabled = true;
+        isDropping = false;
+        isCrouching = false;
+    }
 }

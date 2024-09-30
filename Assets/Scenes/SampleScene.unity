@@ -134,10 +134,10 @@ GameObject:
   - component: {fileID: 433064441}
   - component: {fileID: 433064439}
   - component: {fileID: 433064443}
+  - component: {fileID: 433064447}
   - component: {fileID: 433064444}
   - component: {fileID: 433064445}
   - component: {fileID: 433064446}
-  - component: {fileID: 433064447}
   - component: {fileID: 433064448}
   m_Layer: 0
   m_Name: Player
@@ -384,7 +384,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 433064438}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
