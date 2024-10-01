@@ -64,9 +64,11 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownTimer <= 0 && !isCrouching)
         {
+            animator.SetBool("IsDash",true);    
             isDashing = true;
             dashTime = dashDuration;
             dashCooldownTimer = dashCooldown;
+            rb.gravityScale = 0f;
         }
         if (Input.GetKeyDown(KeyCode.LeftControl) && dodgecooldownTimer <= 0)
         {
@@ -82,6 +84,7 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetButtonDown("Jump") && IsGrounded() && !isCrouching)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+                animator.SetBool("IsGround",false);
 
                 if (jumpcount < 1)
                 {
@@ -91,6 +94,7 @@ public class PlayerMovement : MonoBehaviour
             else if (Input.GetButtonDown("Jump") && jumpcount < 1 && !IsGrounded() && !isCrouching)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+                animator.SetBool("IsGround", false);
                 jumpcount++;
             }
             if (Input.GetKey(KeyCode.S) && !isDropping)
@@ -113,6 +117,8 @@ public class PlayerMovement : MonoBehaviour
             if (IsGrounded())
             {
                 jumpcount = 0;
+                animator.SetBool("IsGround",true);
+               // animator.SetBool("IswallSide",false) ;
 
             }
             animator.SetInteger("Speed", (int)Mathf.Abs(horizontal));
@@ -131,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isDashing)
         {
-            rb.velocity = new Vector2(transform.localScale.x * dashSpeed, rb.velocity.y);
+            rb.velocity = new Vector2(transform.localScale.x * dashSpeed,0f );
             dashTime -= Time.fixedDeltaTime;
             if (dashTime <= 0)
             {
@@ -183,6 +189,8 @@ public class PlayerMovement : MonoBehaviour
     private void EndDash()
     {
         isDashing = false;
+        animator.SetBool("IsDash", false);
+        rb.gravityScale = 5;
     }
 
     private void EndDodge()
@@ -200,14 +208,16 @@ public class PlayerMovement : MonoBehaviour
     {
         if (IsWalled() && !IsGrounded() && horizontal != 0f)
         {
+            animator.SetBool("IswallSide",true);
             isWallSliding = true;
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
         }
         else
         {
             isWallSliding = false;
+            animator.SetBool("IswallSide",false);
         }
-        // animator.SetBool("IsWallSliding", isWallSliding);
+         
     }
 
     private void WallJump()
