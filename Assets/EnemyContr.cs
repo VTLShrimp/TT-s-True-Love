@@ -5,12 +5,16 @@ using UnityEngine;
 
 public class EnemyContr : MonoBehaviour
 {
+
     public GameObject pointA;
     public GameObject pointB;
     private Rigidbody2D rb;
     private Animator animator;
     private Transform currentPoint;
-    public float speed;
+    public float speed= 5f;
+    public int maxHealth = 100;
+    private int currentHealth;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +22,7 @@ public class EnemyContr : MonoBehaviour
         animator = GetComponent<Animator>();
         currentPoint = pointB.transform;
         animator.SetBool("isRunning", true);
+        currentHealth = maxHealth;
 
     }
 
@@ -45,6 +50,20 @@ public class EnemyContr : MonoBehaviour
             currentPoint = pointB.transform;
         }
 
+    }
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+    private void Die()
+    {
+        // animator.SetTrigger("Die");
+        rb.velocity = Vector2.zero;
+        gameObject.SetActive(false);
     }
     private void flip()
     {

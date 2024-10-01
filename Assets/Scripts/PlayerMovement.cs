@@ -18,20 +18,30 @@ public class PlayerMovement : MonoBehaviour
     private bool isDashing;
     public float dashCooldown = 1f;
     private float dashCooldownTimer;
-
     private bool isWallSliding;
     private float wallSlidingSpeed = 2f;
-
     private bool isWallJumping;
     private float wallJumpingDirection;
     private float wallJumpingTime = 0.2f;
     private float wallJumpingCounter;
     private float wallJumpingDuration = 0.4f;
-    private Vector2 wallJumpingPower = new Vector2(8f, 16f);
+    private Vector2 wallJumpingPower = new(8f, 16f);
+    private bool isCrouching = false;
+    private bool isDropping = false;
+    public Collider2D standingCollider;
+    public Collider2D crouchingCollider;
+    private bool isDodging = false;
+    public float dodgecooldown = 1f;
+    private float dodgecooldownTimer;
+    public float dodgespeed = 20f;
+    public float dodgeduration = 0.9f;
+    private float dodgetime;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private Transform platfromCheck;
+    [SerializeField] private LayerMask platfromLayer;
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
 
@@ -48,33 +58,67 @@ public class PlayerMovement : MonoBehaviour
         {
             dashCooldownTimer -= Time.deltaTime;
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownTimer <= 0)
+        if (dodgecooldownTimer > 0)
         {
+            dodgecooldownTimer -= Time.deltaTime;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownTimer <= 0 && !isCrouching)
+        {
+            animator.SetBool("IsDash",true);    
             isDashing = true;
             dashTime = dashDuration;
             dashCooldownTimer = dashCooldown;
+            rb.gravityScale = 0f;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftControl) && dodgecooldownTimer <= 0)
+        {
+            isDodging = true;
+            dodgetime = dodgeduration;
+            dodgecooldownTimer = dodgecooldown;
+            standingCollider.enabled = false;
+            crouchingCollider.enabled = true;
         }
         if (!isDashing)
         {
             horizontal = Input.GetAxisRaw("Horizontal");
-            if (Input.GetButtonDown("Jump") && IsGrounded())
+            if (Input.GetButtonDown("Jump") && IsGrounded() && !isCrouching)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+                animator.SetBool("IsGround",false);
+
                 if (jumpcount < 1)
                 {
                     jumpcount++;
                 }
             }
-            else if (Input.GetButtonDown("Jump") && jumpcount < 1 && IsGrounded() == false)
+            else if (Input.GetButtonDown("Jump") && jumpcount < 1 && !IsGrounded() && !isCrouching)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+                animator.SetBool("IsGround", false);
                 jumpcount++;
             }
+            if (Input.GetKey(KeyCode.S) && !isDropping)
+            {
+                Crouch();
+            }
+            else if (!Input.GetKey(KeyCode.S) && isCrouching)
+            {
+                StandUp();
+            }
+
+            // Drop-down logic
+            if (Input.GetKeyDown(KeyCode.S) && isCrouching && !isDropping && IsPlatfrom())
+            {
+                DropDown();
+            }
+
             animator.SetBool("IsGround", IsGrounded());
             Flip();
             if (IsGrounded())
             {
                 jumpcount = 0;
+                animator.SetBool("IsGround",true);
+               // animator.SetBool("IswallSide",false) ;
 
             }
             animator.SetInteger("Speed", (int)Mathf.Abs(horizontal));
@@ -93,11 +137,20 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isDashing)
         {
-            rb.velocity = new Vector2(transform.localScale.x * dashSpeed, rb.velocity.y);
+            rb.velocity = new Vector2(transform.localScale.x * dashSpeed,0f );
             dashTime -= Time.fixedDeltaTime;
             if (dashTime <= 0)
             {
                 EndDash();
+            }
+        }
+        else if (isDodging)
+        {
+            rb.velocity = new Vector2(transform.localScale.x * dodgespeed, rb.velocity.y);
+            dodgetime -= Time.fixedDeltaTime;
+            if (dodgetime <= 0)
+            {
+                EndDodge();
             }
         }
         else
@@ -105,9 +158,15 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
         }
     }
+
     private bool IsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+
+    }
+    private bool IsPlatfrom()
+    {
+        return Physics2D.OverlapCircle(platfromCheck.position, 0.2f, platfromLayer);
     }
 
     private void Flip()
@@ -130,8 +189,16 @@ public class PlayerMovement : MonoBehaviour
     private void EndDash()
     {
         isDashing = false;
+        animator.SetBool("IsDash", false);
+        rb.gravityScale = 5;
     }
 
+    private void EndDodge()
+    {
+        isDodging = false;
+        standingCollider.enabled = true;
+        crouchingCollider.enabled = false;
+    }
     private bool IsWalled()
     {
         return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
@@ -141,13 +208,16 @@ public class PlayerMovement : MonoBehaviour
     {
         if (IsWalled() && !IsGrounded() && horizontal != 0f)
         {
+            animator.SetBool("IswallSide",true);
             isWallSliding = true;
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
         }
         else
         {
             isWallSliding = false;
+            animator.SetBool("IswallSide",false);
         }
+         
     }
 
     private void WallJump()
@@ -187,5 +257,41 @@ public class PlayerMovement : MonoBehaviour
     {
         isWallJumping = false;
     }
+    void Crouch()
+    {
+        if (!isCrouching)
+        {
+            isCrouching = true;
+            standingCollider.enabled = false;
+            crouchingCollider.enabled = true;
+            // animator.SetBool("IsCrouching", true);
+        }
+    }
+    void StandUp()
+    {
+        if (isCrouching)
+        {
+            isCrouching = false;
+            standingCollider.enabled = true;
+            crouchingCollider.enabled = false;
+            // animator.SetBool("IsCrouching", false);
+        }
+    }
+    void DropDown()
+    {
+        if (!isDropping)
+        {
+            isDropping = true;
+            standingCollider.enabled = false;
+            crouchingCollider.enabled = false;
+            Invoke(nameof(EnableColliders), 0.2f);
+        }
+    }
 
+    void EnableColliders()
+    {
+        standingCollider.enabled = true;
+        isDropping = false;
+        isCrouching = false;
+    }
 }
