@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class transition3Script : StateMachineBehaviour
+public class transition4Script : StateMachineBehaviour
 {
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -15,7 +15,7 @@ public class transition3Script : StateMachineBehaviour
     {
         if (PlayerAttack.instance.isAttacking)
         {
-            PlayerAttack.instance.animator.Play("attack4");
+            PlayerAttack.instance.animator.Play("Attack5");
         }
     }
 

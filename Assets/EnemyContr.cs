@@ -1,80 +1,111 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
-public class EnemyContr : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
-
+    [Header("Movement Points")]
     public GameObject pointA;
     public GameObject pointB;
+
+    [Header("Movement Settings")]
+    public float moveSpeed;
+    public float pointReachThreshold;
+
+    [Header("Health Settings")]
+    public int maxHealth = 100;
+
     private Rigidbody2D rb;
     private Animator animator;
-    private Transform currentPoint;
-    public float speed= 5f;
-    public int maxHealth = 100;
+    private Transform currentTarget;
     private int currentHealth;
+    private bool isFacingRight = true;
 
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        currentPoint = pointB.transform;
-        animator.SetBool("isRunning", true);
+        currentTarget = pointB.transform;
         currentHealth = maxHealth;
 
+        // Ensure the enemy starts moving.
+        animator.SetBool("isRunning", true);
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        Vector2 point = currentPoint.position - transform.position;
-        if (currentPoint == pointB.transform)
+        MoveTowardsTarget();
+    }
+
+    void MoveTowardsTarget()
+    {
+        // Calculate the movement direction and move only on the X-axis
+        Vector2 direction = (currentTarget.position - transform.position).normalized;
+
+        // Set velocity in the direction of the target, ensure only x direction is applied
+        rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y);
+
+        // Check if the enemy is close enough to the target point
+        if (Vector2.Distance(transform.position, currentTarget.position) <= pointReachThreshold)
         {
-            rb.velocity = new Vector2(speed, 0);
+            SwitchTarget();
+        }
+    }
+
+    void SwitchTarget()
+    {
+        // Flip the target
+        if (currentTarget == pointB.transform)
+        {
+            currentTarget = pointA.transform;
         }
         else
         {
-           
-            rb.velocity = new Vector2(-speed, 0);
-        }
-        if(Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointB.transform)
-        {
-            flip();
-            currentPoint = pointA.transform;
-        }
-        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointA.transform)
-        {
-            flip();
-            currentPoint = pointB.transform;
+            currentTarget = pointB.transform;
         }
 
+        // Flip the sprite direction when switching target
+        Flip();
     }
+
+
+
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+
         if (currentHealth <= 0)
         {
             Die();
         }
     }
+
     private void Die()
     {
-        // animator.SetTrigger("Die");
+        // Stop all movement and disable the object
         rb.velocity = Vector2.zero;
+        animator.SetTrigger("Die");
         gameObject.SetActive(false);
     }
-    private void flip()
+
+    private void Flip()
     {
+        // Flip the sprite direction by inverting the local scale on the X-axis
+        isFacingRight = !isFacingRight;
         Vector3 localScale = transform.localScale;
-        localScale.x *= -1;
+        localScale.x *= -1; // Flip the X scale to change direction
         transform.localScale = localScale;
     }
+
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(pointA.transform.position, 0.5f);
-        Gizmos.DrawWireSphere(pointB.transform.position, 0.5f);
-        Gizmos.DrawLine(pointA.transform.position, pointB.transform.position);
+        // Visualize the points and path in the editor
+        if (pointA && pointB)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(pointA.transform.position, pointReachThreshold);
+            Gizmos.DrawWireSphere(pointB.transform.position, pointReachThreshold);
+            Gizmos.DrawLine(pointA.transform.position, pointB.transform.position);
+        }
     }
 }

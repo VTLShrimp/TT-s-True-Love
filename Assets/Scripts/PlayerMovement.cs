@@ -81,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
         if (!isDashing)
         {
             horizontal = Input.GetAxisRaw("Horizontal");
-            if (Input.GetButtonDown("Jump") && IsGrounded() && !isCrouching)
+            if (Input.GetButtonDown("Jump") && IsGrounded() && !isCrouching && !isWallSliding)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
                 animator.SetBool("IsGround",false);
@@ -91,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
                     jumpcount++;
                 }
             }
-            else if (Input.GetButtonDown("Jump") && jumpcount < 1 && !IsGrounded() && !isCrouching)
+            else if (Input.GetButtonDown("Jump") && jumpcount < 1 && !IsGrounded() && !isCrouching && !isWallSliding ) 
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
                 animator.SetBool("IsGround", false);
@@ -235,19 +235,12 @@ public class PlayerMovement : MonoBehaviour
             wallJumpingCounter -= Time.deltaTime;
         }
 
-        if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f)
+        // Allow wall jump only if the counter is active and the player isn't already jumping or sliding
+        if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f && !isWallSliding && !isWallJumping)
         {
             isWallJumping = true;
             rb.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
             wallJumpingCounter = 0f;
-
-            if (transform.localScale.x != wallJumpingDirection)
-            {
-                isFacingRight = !isFacingRight;
-                Vector3 localScale = transform.localScale;
-                localScale.x *= -1f;
-                transform.localScale = localScale;
-            }
 
             Invoke(nameof(StopWallJumping), wallJumpingDuration);
         }
