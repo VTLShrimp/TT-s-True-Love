@@ -1,6 +1,6 @@
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
 {
@@ -15,12 +15,11 @@ public class NewBehaviourScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void LateUpdate()
+    private void FixedUpdate()
     {
         float distance = cam.transform.position.x * paralaxEffect;
         float movement = cam.transform.position.x * (1 - paralaxEffect);
         transform.position = new Vector3(startPos + distance, transform.position.y, transform.position.z);
-
         if (movement > startPos + length)
         {
             startPos += length;
@@ -30,5 +29,4 @@ public class NewBehaviourScript : MonoBehaviour
             startPos -= length;
         }
     }
-
 }
