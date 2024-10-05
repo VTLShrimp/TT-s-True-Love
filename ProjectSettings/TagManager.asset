@@ -3,9 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Ground
-  - Sword
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -13,13 +11,9 @@ TagManager:
   - 
   - Water
   - UI
-  - Ground
-  - Enemy
-<<<<<<< HEAD
   - 
-=======
-  - Wall
->>>>>>> LamLmao2
+  - 
+  - 
   - 
   - 
   - 
