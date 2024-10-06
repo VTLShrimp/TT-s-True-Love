@@ -1,20 +1,22 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-
     public LayerMask enemyLayers;
-    public Transform attackPoint;
     public Animator animator;
+    public bool isAttacking = false; // Trạng thái tấn công
+    public static PlayerAttack instance;
+    public Transform attackPoint;
     public float attackRange = 0.5f;
     public int damage = 20;
     public RangeWeapon rangeWeapon;
-    public float attackcooldown;
-    public float bowcooldown;
-    public float cooldowntimer = Mathf.Infinity;
+    private void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
@@ -22,47 +24,31 @@ public class PlayerAttack : MonoBehaviour
         {
             rangeWeapon = GetComponent<RangeWeapon>();
         }
-        animator = GetComponent<Animator>();
     }
+
 
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && cooldowntimer > attackcooldown)
-        {
-            Attack();
-
-        }
-        cooldowntimer += Time.deltaTime;
-        if (Input.GetMouseButtonDown(1))
-        {
-            Bow();
-        }
+        Attack();
     }
-
-    public void Attack()
+    private void Attack()
     {
+        if (Input.GetKeyDown(KeyCode.C) && !isAttacking)
+        {
+            isAttacking = true;
+        }
         animator.SetTrigger("Attack");
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies)
         {
-            enemy.GetComponent<BoarScript>().TakeDamage(damage);
+            enemy.GetComponent<EnemyController>().TakeDamage(damage);
             Debug.Log("We hit " + enemy.name);
         }
-        cooldowntimer = 0;
+        //  cooldowntimer = 0;
     }
-
-    public void Bow()
+    private void OnDrawGizmos()
     {
-        animator.SetTrigger("Bow");
-        rangeWeapon.Shoot();
-    }
-    void OnDrawGizmosSelected()
-    {
-        if (attackPoint == null)
-        {
-            return;
-        }
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        Gizmos.DrawWireSphere(attackPoint.transform.position, 0.5f);
     }
 }
