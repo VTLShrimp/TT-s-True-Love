@@ -1115,6 +1115,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1 &639746368
 GameObject:
   m_ObjectHideFlags: 0
@@ -1486,6 +1487,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+=======
+>>>>>>> parent of 3e9420ab (10_04)
 =======
 >>>>>>> parent of 3e9420ab (10_04)
 =======
@@ -22150,6 +22153,7 @@ Tilemap:
     e33: 1
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1 &1526442929
 GameObject:
   m_ObjectHideFlags: 0
@@ -22570,6 +22574,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+=======
+>>>>>>> parent of 3e9420ab (10_04)
 =======
 >>>>>>> parent of 3e9420ab (10_04)
 =======
