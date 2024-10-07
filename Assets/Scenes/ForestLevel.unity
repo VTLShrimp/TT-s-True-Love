@@ -3567,6 +3567,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820806d6a537a614ab61eb0efa3ffcb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointA: {fileID: 0}
+  pointB: {fileID: 0}
+  moveSpeed: 0
+  pointReachThreshold: 0
+  maxHealth: 100
 --- !u!95 &706105914
 Animator:
   serializedVersion: 5
@@ -3806,6 +3811,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820806d6a537a614ab61eb0efa3ffcb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointA: {fileID: 0}
+  pointB: {fileID: 0}
+  moveSpeed: 0
+  pointReachThreshold: 0
+  maxHealth: 100
 --- !u!95 &724673377
 Animator:
   serializedVersion: 5
@@ -74664,6 +74674,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -2253911629886400664, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1117981705}
+    - targetCorrespondingSourceObject: {fileID: -2253911629886400664, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1117981708}
+    - targetCorrespondingSourceObject: {fileID: -2253911629886400664, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1117981707}
   m_SourcePrefab: {fileID: -8435245712485981826, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
 --- !u!1 &1117981689 stripped
 GameObject:
@@ -74765,7 +74781,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1117981689}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -74819,6 +74835,66 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  animator: {fileID: 0}
+--- !u!114 &1117981707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117981689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2191e02da9ff50344b226a7400a56e13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  animator: {fileID: 1117981691}
+  isAttacking: 0
+  attackPoint: {fileID: 2101921557}
+  attackRange: 0.5
+  damage: 20
+  attackCooldown: 0.5
+--- !u!114 &1117981708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117981689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 069debdc81f27c4438640ed1ba375991, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  jumpingPower: 16
+  animator: {fileID: 1117981691}
+  maxhealth: 100
+  currenthealth: 0
+  dashSpeed: 20
+  dashDuration: 0.2
+  dashCooldown: 1
+  standingCollider: {fileID: 1117981697}
+  crouchingCollider: {fileID: 1117981700}
+  dodgecooldown: 1
+  dodgespeed: 20
+  dodgeduration: 0.9
+  rb: {fileID: 1117981694}
+  groundCheck: {fileID: 2092861146}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  platfromCheck: {fileID: 1737477566}
+  platfromLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  wallCheck: {fileID: 269534265}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &1163136771 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2972737040637702977, guid: 00ba86134b0a00048910f1a1d6b75488, type: 3}
@@ -75301,7 +75377,7 @@ GameObject:
   - component: {fileID: 1360074333}
   - component: {fileID: 1360074332}
   - component: {fileID: 1360074331}
-  - component: {fileID: 1360074330}
+  - component: {fileID: 1360074335}
   m_Layer: 7
   m_Name: Pig (2)
   m_TagString: Untagged
@@ -75324,18 +75400,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 273881586}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1360074330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1360074328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 820806d6a537a614ab61eb0efa3ffcb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &1360074331
 Animator:
   serializedVersion: 5
@@ -75481,6 +75545,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1360074335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1360074328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 820806d6a537a614ab61eb0efa3ffcb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointA: {fileID: 0}
+  pointB: {fileID: 0}
+  moveSpeed: 0
+  pointReachThreshold: 0
+  maxHealth: 100
 --- !u!1 &1368373939
 GameObject:
   m_ObjectHideFlags: 0
