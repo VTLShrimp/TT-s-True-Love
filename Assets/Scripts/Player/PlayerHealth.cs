@@ -4,6 +4,7 @@ public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 100;
     private float currentHealth;
+    public Animator animator;
 
     void Start()
     {
@@ -25,5 +26,6 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         Debug.Log("Player died!");
+        // animator.SetBool("isDead", true);
     }
 }
