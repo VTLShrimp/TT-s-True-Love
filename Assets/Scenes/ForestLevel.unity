@@ -203,7 +203,7 @@ GameObject:
   m_Component:
   - component: {fileID: 35598310}
   m_Layer: 0
-  m_Name: 'PointB '
+  m_Name: 'PointB(2) '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -218,11 +218,11 @@ Transform:
   m_GameObject: {fileID: 35598309}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 284.83, y: -10, z: 0}
+  m_LocalPosition: {x: 177.06903, y: -9.962778, z: -0.1483763}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2001752419}
+  m_Father: {fileID: 273881586}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &64240169
 GameObject:
@@ -330,7 +330,7 @@ GameObject:
   m_Component:
   - component: {fileID: 125644679}
   m_Layer: 0
-  m_Name: 'PointA '
+  m_Name: 'PointA(2) '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -345,11 +345,11 @@ Transform:
   m_GameObject: {fileID: 125644678}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 272.39, y: -10, z: 0}
+  m_LocalPosition: {x: 158.55606, y: -9.962778, z: -0.1483763}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 532062801}
+  m_Father: {fileID: 273881586}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &165152175
 PrefabInstance:
@@ -922,11 +922,15 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2001752419}
-  - {fileID: 532062801}
   - {fileID: 724673381}
   - {fileID: 1360074329}
   - {fileID: 706105912}
+  - {fileID: 2001752419}
+  - {fileID: 35598310}
+  - {fileID: 532062801}
+  - {fileID: 125644679}
+  - {fileID: 1354541290}
+  - {fileID: 1080541702}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &286027562 stripped
@@ -1955,9 +1959,7 @@ Transform:
   m_LocalPosition: {x: -113.83397, y: 0.03722191, z: -0.1483763}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1354541290}
-  - {fileID: 125644679}
+  m_Children: []
   m_Father: {fileID: 273881586}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &537088794
@@ -3567,10 +3569,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820806d6a537a614ab61eb0efa3ffcb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointA: {fileID: 0}
-  pointB: {fileID: 0}
-  moveSpeed: 0
-  pointReachThreshold: 0
+  pointA: {fileID: 1354541289}
+  pointB: {fileID: 1080541701}
+  moveSpeed: 5
+  pointReachThreshold: 1
   maxHealth: 100
 --- !u!95 &706105914
 Animator:
@@ -3811,10 +3813,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820806d6a537a614ab61eb0efa3ffcb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointA: {fileID: 0}
-  pointB: {fileID: 0}
-  moveSpeed: 0
-  pointReachThreshold: 0
+  pointA: {fileID: 532062800}
+  pointB: {fileID: 2001752418}
+  moveSpeed: 5
+  pointReachThreshold: 1
   maxHealth: 100
 --- !u!95 &724673377
 Animator:
@@ -70625,7 +70627,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1080541702}
   m_Layer: 0
-  m_Name: 'PointB '
+  m_Name: 'PointB(1) '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70640,11 +70642,11 @@ Transform:
   m_GameObject: {fileID: 1080541701}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.85, y: -2.97, z: 0}
+  m_LocalPosition: {x: -96.910965, y: -2.9327774, z: -0.14837632}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2001752419}
+  m_Father: {fileID: 273881586}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1084549891
 GameObject:
@@ -75259,7 +75261,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1354541290}
   m_Layer: 0
-  m_Name: 'PointA '
+  m_Name: PointA(1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75274,11 +75276,11 @@ Transform:
   m_GameObject: {fileID: 1354541289}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.07, y: -2.99, z: 0}
+  m_LocalPosition: {x: -107.76397, y: -2.9527779, z: -0.14837632}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 532062801}
+  m_Father: {fileID: 273881586}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1358924092
 GameObject:
@@ -75557,10 +75559,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820806d6a537a614ab61eb0efa3ffcb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointA: {fileID: 0}
-  pointB: {fileID: 0}
-  moveSpeed: 0
-  pointReachThreshold: 0
+  pointA: {fileID: 125644678}
+  pointB: {fileID: 35598309}
+  moveSpeed: 5
+  pointReachThreshold: 1
   maxHealth: 100
 --- !u!1 &1368373939
 GameObject:
@@ -77021,9 +77023,7 @@ Transform:
   m_LocalPosition: {x: -107.76096, y: 0.03722191, z: -0.1483763}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 35598310}
-  - {fileID: 1080541702}
+  m_Children: []
   m_Father: {fileID: 273881586}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2043809566 stripped
