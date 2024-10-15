@@ -53,6 +53,7 @@ public class PlayerAttack : MonoBehaviour
         StartCoroutine(HandleAttack());
     }
 
+
     private IEnumerator HandleAttack()
     {
         // Đợi một chút trước khi thực hiện kiểm tra va chạm (phù hợp với thời gian hoạt ảnh)
@@ -67,7 +68,6 @@ public class PlayerAttack : MonoBehaviour
                 continue; // Bỏ qua vòng lặp nếu kẻ địch là null
             }
 
-            // Kiểm tra xem kẻ địch có BossHealth không
             BossHealth bossHealth = enemy.GetComponent<BossHealth>();
             if (bossHealth == null)
             {
@@ -79,10 +79,14 @@ public class PlayerAttack : MonoBehaviour
             Debug.Log("Chúng ta đã tấn công " + enemy.name);
         }
 
+        // Reset trigger để ngăn chặn kích hoạt lại
+        animator.ResetTrigger("Attack");
+
         // Đợi để kết thúc hành động tấn công và cho phép tiếp tục tấn công
         yield return new WaitForSeconds(0.3f);
         isAttacking = false;
     }
+
 
     private void OnDrawGizmos()
     {

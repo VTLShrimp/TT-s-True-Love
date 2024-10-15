@@ -8,6 +8,9 @@ public class Boss_Walk : StateMachineBehaviour
     Rigidbody2D rb;
     Boss boss;
 
+
+
+
     // OnStateEnter is called khi bắt đầu trạng thái di chuyển
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -20,7 +23,7 @@ public class Boss_Walk : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         boss.LookatPlayer(); // Boss nhìn về phía người chơi
-
+        
         // Di chuyển boss về phía người chơi
         Vector2 target = new Vector2(player.position.x, rb.position.y);
         Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);

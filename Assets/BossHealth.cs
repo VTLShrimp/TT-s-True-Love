@@ -1,44 +1,46 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class BossHealth : MonoBehaviour
 {
-    public int health = 500;
-    public GameObject deathEffect; // Gán prefab hiệu ứng chết
-    public bool isInvulnerable = false;
+    public int maxHealth = 100;
+    private float currentHealth;
+    public Animator animator;
+    public bool dead;
 
-    private void Awake()
+    // Add a reference to the die animation length
+    public float dieAnimationLength = 2.0f; // Set this to the actual length of your "die" animation
+
+    void Start()
     {
-        // Kiểm tra xem deathEffect có được gán không
-        if (deathEffect == null)
+        currentHealth = maxHealth;
+        animator = GetComponent<Animator>();
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth > 0)
         {
-            Debug.LogError("deathEffect chưa được gán!");
+            animator.SetTrigger("hurt");
+        }
+        else
+        {
+            if (!dead)
+            {
+                dead = true;
+                animator.SetTrigger("die");
+                StartCoroutine(DisableAnimatorAndDestroy());
+            }
         }
     }
 
-    public bool isDead = false;
-
-    public void TakeDamage(int damage)
+    private IEnumerator DisableAnimatorAndDestroy()
     {
-        if (isInvulnerable || isDead)
-            return;
+        // Wait for the die animation to finish
+        yield return new WaitForSeconds(dieAnimationLength);
 
-        health -= damage;
-
-        Debug.Log("Boss nhận sát thương. Máu còn lại: " + health); // Kiểm tra sát thương
-
-        if (health <= 0)
-        {
-            Die();
-        }
-    }
-
-    void Die()
-    {
-        isDead = true; // Đánh dấu boss là đã chết
-        isInvulnerable = true; // Đặt boss thành miễn dịch khi chết
-        Debug.Log("Boss đã chết!");
-        GameObject effect = Instantiate(deathEffect, transform.position, Quaternion.identity); // Tạo hiệu ứng chết
-        Destroy(effect, 1.5f); // Xóa hiệu ứng chết sau 2 giây
-        Destroy(gameObject); // Xóa đối tượng boss
+        // Destroy the GameObject after the animation finishes
+        Destroy(gameObject);
     }
 }
