@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
@@ -18,6 +16,18 @@ public class PlayerAttack : MonoBehaviour
     private void Awake()
     {
         instance = this;
+
+        // Kiểm tra xem attackPoint có được gán không
+        if (attackPoint == null)
+        {
+            Debug.LogError("AttackPoint chưa được gán!");
+        }
+
+        // Kiểm tra xem animator có được gán không
+        if (animator == null)
+        {
+            Debug.LogError("Animator chưa được gán!");
+        }
     }
 
     void Update()
@@ -51,8 +61,22 @@ public class PlayerAttack : MonoBehaviour
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies)
         {
-            enemy.GetComponent<EnemyController>().TakeDamage(damage);
-            Debug.Log("We hit " + enemy.name);
+            if (enemy == null)
+            {
+                Debug.LogError("Kẻ địch bị trúng không hợp lệ");
+                continue; // Bỏ qua vòng lặp nếu kẻ địch là null
+            }
+
+            // Kiểm tra xem kẻ địch có BossHealth không
+            BossHealth bossHealth = enemy.GetComponent<BossHealth>();
+            if (bossHealth == null)
+            {
+                Debug.LogError($"Không tìm thấy BossHealth trên {enemy.name}");
+                continue; // Bỏ qua vòng lặp nếu không tìm thấy BossHealth
+            }
+
+            bossHealth.TakeDamage(damage);
+            Debug.Log("Chúng ta đã tấn công " + enemy.name);
         }
 
         // Đợi để kết thúc hành động tấn công và cho phép tiếp tục tấn công
