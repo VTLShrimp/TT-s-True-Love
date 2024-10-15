@@ -14,10 +14,6 @@ public class PlayerAttack : MonoBehaviour
     public int damage = 20;
     public float attackCooldown = 0.5f; // Thời gian giữa các lần tấn công
     private float nextAttackTime = 0f;
-    private int attackIndex = 0; // Chỉ số combo
-    private float comboResetTime = 1f; // Thời gian để reset combo nếu không tấn công
-    private float lastAttackTime = 0f; // Thời gian lần tấn công cuối
-    private int maxCombo = 3; // Số lượng đòn trong chuỗi combo
 
     private void Awake()
     {
@@ -28,42 +24,20 @@ public class PlayerAttack : MonoBehaviour
     {
         if (Time.time >= nextAttackTime)
         {
-            if (Input.GetKeyDown(KeyCode.C) && !isAttacking)
+            if (Input.GetMouseButtonDown(0) && !isAttacking) // Nhấn chuột trái
             {
-                PerformComboAttack();
-                nextAttackTime = Time.time + attackCooldown; 
-            }
-
-            // Reset combo nếu không tấn công trong một khoảng thời gian
-            if (Time.time - lastAttackTime > comboResetTime)
-            {
-                attackIndex = 0; // Reset combo về đòn đầu tiên
+                PerformAttack();
+                nextAttackTime = Time.time + attackCooldown;
             }
         }
     }
 
-    private void PerformComboAttack()
+    private void PerformAttack()
     {
         isAttacking = true;
-        lastAttackTime = Time.time; // Cập nhật thời gian lần tấn công cuối
 
-        // Tăng chỉ số combo
-        attackIndex++;
-        if (attackIndex > maxCombo) attackIndex = 1; // Quay lại đòn đầu tiên nếu vượt quá số đòn tối đa
-
-        // Kích hoạt hoạt ảnh dựa trên chỉ số combo
-        switch (attackIndex)
-        {
-            case 1:
-                animator.SetTrigger("Attack1");
-                break;
-            case 2:
-                animator.SetTrigger("Attack2");
-                break;
-            case 3:
-                animator.SetTrigger("Attack3");
-                break;
-        }
+        // Kích hoạt hoạt ảnh tấn công
+        animator.SetTrigger("Attack");
 
         // Bắt đầu kiểm tra va chạm với kẻ địch
         StartCoroutine(HandleAttack());
