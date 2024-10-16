@@ -2,43 +2,47 @@
 
 public class Boss_Walk : StateMachineBehaviour
 {
-    public float attackRange = 5f; // Phạm vi để boss tấn công người chơi
+    public float attackRange = 5f; // Range within which the boss will attack the player
     public float speed = 10f;
     Transform player;
     Rigidbody2D rb;
     Boss boss;
 
-
-
-
-    // OnStateEnter is called khi bắt đầu trạng thái di chuyển
+    // OnStateEnter is called when the state starts
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        player = GameObject.FindWithTag("Player").transform; // Tìm đối tượng người chơi
-        rb = animator.GetComponent<Rigidbody2D>(); // Lấy rigidbody của boss
-        boss = animator.GetComponent<Boss>(); // Lấy script Boss
+        player = GameObject.FindWithTag("Player").transform; // Find the player object
+        rb = animator.GetComponent<Rigidbody2D>(); // Get the Rigidbody2D component of the boss
+        boss = animator.GetComponent<Boss>(); // Get the Boss script
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        boss.LookatPlayer(); // Boss nhìn về phía người chơi
-        
-        // Di chuyển boss về phía người chơi
-        Vector2 target = new Vector2(player.position.x, rb.position.y);
-        Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
-        rb.transform.position = newPos;
-
-        // Kiểm tra nếu boss ở trong phạm vi tấn công
-        if (Vector2.Distance(player.position, rb.position) <= attackRange)
+        if (boss.playerInzone)
         {
-            animator.SetTrigger("Attack"); // Kích hoạt hành động tấn công
+            boss.LookatPlayer(); // Boss looks at the player
+
+            // Move the boss towards the player
+            Vector2 target = new Vector2(player.position.x, rb.position.y);
+            Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
+            rb.transform.position = newPos;
+
+            // Check if the boss is within attack range
+            if (Vector2.Distance(player.position, rb.position) <= attackRange)
+            {
+                animator.SetTrigger("Attack"); // Trigger the attack action
+            }
+        }
+        else
+        {
+            // animator.SetTrigger("Idle"); // If the player is not in the detection zone, transition to the idle state
         }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.ResetTrigger("Attack"); // Reset lại trigger sau khi boss tấn công
+        animator.ResetTrigger("Attack"); // Reset the attack trigger after the boss attacks
     }
 }
