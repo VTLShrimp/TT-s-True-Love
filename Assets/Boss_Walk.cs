@@ -24,7 +24,7 @@ public class Boss_Walk : StateMachineBehaviour
             boss.LookatPlayer(); // Boss looks at the player
 
             // Move the boss towards the player
-            Vector2 target = new Vector2(player.position.x, rb.position.y);
+            Vector2 target = new(player.position.x, rb.position.y);
             Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
             rb.transform.position = newPos;
 
@@ -33,10 +33,6 @@ public class Boss_Walk : StateMachineBehaviour
             {
                 animator.SetTrigger("Attack"); // Trigger the attack action
             }
-        }
-        else
-        {
-            // animator.SetTrigger("Idle"); // If the player is not in the detection zone, transition to the idle state
         }
     }
 
