@@ -7,6 +7,7 @@ public class BossHealth : MonoBehaviour
     private float currentHealth;
     public Animator animator;
     public bool dead;
+
     // Add a reference to the die animation length
     public float dieAnimationLength = 2.0f; // Set this to the actual length of your "die" animation
 
