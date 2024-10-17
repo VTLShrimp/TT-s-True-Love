@@ -123,15 +123,15 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: Punch Trap - Level 1_Frame_0
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.84210515, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 4
-      width: 96
-      height: 32
+      y: 101
+      width: 19
+      height: 3
     spriteID: 3b1fd94d7e9dfc54395080175eb67ce6
     spriteBone: []
     spriteOutline: []
@@ -140,18 +140,18 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 4}
+    uvTransform: {x: 4, y: 101}
   - name: Punch Trap - Level 1_Frame_1
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.49999997, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 44
-      width: 96
-      height: 32
+      x: 72
+      y: 77
+      width: 32
+      height: 10
     spriteID: d4a955093589d6a4b83b7c8a939d829b
     spriteBone: []
     spriteOutline: []
@@ -160,18 +160,18 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 44}
+    uvTransform: {x: 72, y: 77}
   - name: Punch Trap - Level 1_Frame_2
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.6153846, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 84
-      width: 96
-      height: 32
+      x: 84
+      y: 4
+      width: 26
+      height: 16
     spriteID: 3eac702b78aaf3248a2fae6d26e1269e
     spriteBone: []
     spriteOutline: []
@@ -180,18 +180,18 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 84}
+    uvTransform: {x: 84, y: 4}
   - name: Punch Trap - Level 1_Frame_3
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.49999997, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 124
-      width: 96
-      height: 32
+      y: 4
+      width: 32
+      height: 17
     spriteID: 29ce1b8d8893e3d4a8aba9acb976a1d0
     spriteBone: []
     spriteOutline: []
@@ -200,18 +200,18 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 124}
+    uvTransform: {x: 4, y: 4}
   - name: Punch Trap - Level 1_Frame_4
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.49999997, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 164
-      width: 96
-      height: 32
+      x: 44
+      y: 4
+      width: 32
+      height: 17
     spriteID: 9fc0a83d2c0a3e8458181c9883904601
     spriteBone: []
     spriteOutline: []
@@ -220,18 +220,18 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 164}
+    uvTransform: {x: 44, y: 4}
   - name: Punch Trap - Level 1_Frame_5
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.6153846, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 204
-      width: 96
-      height: 32
+      y: 29
+      width: 26
+      height: 16
     spriteID: 811f0094b483596428f6130f10778a39
     spriteBone: []
     spriteOutline: []
@@ -240,18 +240,18 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 204}
+    uvTransform: {x: 4, y: 29}
   - name: Punch Trap - Level 1_Frame_6
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.6153846, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 244
-      width: 96
-      height: 32
+      x: 38
+      y: 29
+      width: 26
+      height: 16
     spriteID: 3a80fa9d3888b2949a34c55f46254618
     spriteBone: []
     spriteOutline: []
@@ -260,18 +260,18 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 244}
+    uvTransform: {x: 38, y: 29}
   - name: Punch Trap - Level 1_Frame_7
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.6153846, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 284
-      width: 96
-      height: 32
+      x: 72
+      y: 29
+      width: 26
+      height: 16
     spriteID: 544fdbd8852081248a984597157207a9
     spriteBone: []
     spriteOutline: []
@@ -280,18 +280,18 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 284}
+    uvTransform: {x: 72, y: 29}
   - name: Punch Trap - Level 1_Frame_8
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.6153846, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 324
-      width: 96
-      height: 32
+      y: 53
+      width: 26
+      height: 16
     spriteID: 40ee57f34695af948a5c4fab07010fd2
     spriteBone: []
     spriteOutline: []
@@ -300,18 +300,18 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 324}
+    uvTransform: {x: 4, y: 53}
   - name: Punch Trap - Level 1_Frame_9
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.6153846, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 364
-      width: 96
-      height: 32
+      x: 38
+      y: 53
+      width: 26
+      height: 16
     spriteID: fa33eed8858351548bc3a574c99e0098
     spriteBone: []
     spriteOutline: []
@@ -320,18 +320,18 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 364}
+    uvTransform: {x: 38, y: 53}
   - name: Punch Trap - Level 1_Frame_10
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.6153846, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 404
-      width: 96
-      height: 32
+      x: 72
+      y: 53
+      width: 26
+      height: 16
     spriteID: 9019818aadfd5544da20d40a3c72251b
     spriteBone: []
     spriteOutline: []
@@ -340,18 +340,18 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 404}
+    uvTransform: {x: 72, y: 53}
   - name: Punch Trap - Level 1_Frame_11
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.6153846, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 444
-      width: 96
-      height: 32
+      y: 77
+      width: 26
+      height: 16
     spriteID: 9aa4def33738b164dae1ddf568bd3ebd
     spriteBone: []
     spriteOutline: []
@@ -360,18 +360,18 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 444}
+    uvTransform: {x: 4, y: 77}
   - name: Punch Trap - Level 1_Frame_12
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.6153846, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 108
-      y: 4
-      width: 96
-      height: 32
+      x: 38
+      y: 77
+      width: 26
+      height: 16
     spriteID: aed0061b7d7b8db439844bbbf4a9a853
     spriteBone: []
     spriteOutline: []
@@ -380,7 +380,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 108, y: 4}
+    uvTransform: {x: 38, y: 77}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
@@ -394,118 +394,118 @@ ScriptedImporter:
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 0
+        x: 32
         y: 0
-        width: 96
-        height: 32
+        width: 19
+        height: 3
       spriteId: 3b1fd94d7e9dfc54395080175eb67ce6
     - name: Punch Trap - Level 1_Frame_1
       frameIndex: 1
       additiveSortOrder: 0
       cellRect:
-        x: 0
+        x: 32
         y: 0
-        width: 96
-        height: 32
+        width: 32
+        height: 10
       spriteId: d4a955093589d6a4b83b7c8a939d829b
-    - name: Punch Trap - Level 1_Frame_2
-      frameIndex: 2
-      additiveSortOrder: 0
-      cellRect:
-        x: 0
-        y: 0
-        width: 96
-        height: 32
-      spriteId: 3eac702b78aaf3248a2fae6d26e1269e
-    - name: Punch Trap - Level 1_Frame_3
-      frameIndex: 3
-      additiveSortOrder: 0
-      cellRect:
-        x: 0
-        y: 0
-        width: 96
-        height: 32
-      spriteId: 29ce1b8d8893e3d4a8aba9acb976a1d0
-    - name: Punch Trap - Level 1_Frame_4
-      frameIndex: 4
-      additiveSortOrder: 0
-      cellRect:
-        x: 0
-        y: 0
-        width: 96
-        height: 32
-      spriteId: 9fc0a83d2c0a3e8458181c9883904601
-    - name: Punch Trap - Level 1_Frame_5
-      frameIndex: 5
-      additiveSortOrder: 0
-      cellRect:
-        x: 0
-        y: 0
-        width: 96
-        height: 32
-      spriteId: 811f0094b483596428f6130f10778a39
-    - name: Punch Trap - Level 1_Frame_6
-      frameIndex: 6
-      additiveSortOrder: 0
-      cellRect:
-        x: 0
-        y: 0
-        width: 96
-        height: 32
-      spriteId: 3a80fa9d3888b2949a34c55f46254618
-    - name: Punch Trap - Level 1_Frame_7
-      frameIndex: 7
-      additiveSortOrder: 0
-      cellRect:
-        x: 0
-        y: 0
-        width: 96
-        height: 32
-      spriteId: 544fdbd8852081248a984597157207a9
-    - name: Punch Trap - Level 1_Frame_8
-      frameIndex: 8
-      additiveSortOrder: 0
-      cellRect:
-        x: 0
-        y: 0
-        width: 96
-        height: 32
-      spriteId: 40ee57f34695af948a5c4fab07010fd2
-    - name: Punch Trap - Level 1_Frame_9
-      frameIndex: 9
-      additiveSortOrder: 0
-      cellRect:
-        x: 0
-        y: 0
-        width: 96
-        height: 32
-      spriteId: fa33eed8858351548bc3a574c99e0098
-    - name: Punch Trap - Level 1_Frame_10
-      frameIndex: 10
-      additiveSortOrder: 0
-      cellRect:
-        x: 0
-        y: 0
-        width: 96
-        height: 32
-      spriteId: 9019818aadfd5544da20d40a3c72251b
     - name: Punch Trap - Level 1_Frame_11
       frameIndex: 11
       additiveSortOrder: 0
       cellRect:
-        x: 0
+        x: 32
         y: 0
-        width: 96
-        height: 32
-      spriteId: 9aa4def33738b164dae1ddf568bd3ebd
+        width: 26
+        height: 16
+      spriteId: 3eac702b78aaf3248a2fae6d26e1269e
     - name: Punch Trap - Level 1_Frame_12
       frameIndex: 12
       additiveSortOrder: 0
       cellRect:
-        x: 0
+        x: 32
         y: 0
-        width: 96
-        height: 32
+        width: 32
+        height: 17
+      spriteId: 29ce1b8d8893e3d4a8aba9acb976a1d0
+    - name: Punch Trap - Level 1_Frame_2
+      frameIndex: 2
+      additiveSortOrder: 0
+      cellRect:
+        x: 32
+        y: 0
+        width: 32
+        height: 17
+      spriteId: 9fc0a83d2c0a3e8458181c9883904601
+    - name: Punch Trap - Level 1_Frame_3
+      frameIndex: 3
+      additiveSortOrder: 0
+      cellRect:
+        x: 32
+        y: 0
+        width: 26
+        height: 16
+      spriteId: 811f0094b483596428f6130f10778a39
+    - name: Punch Trap - Level 1_Frame_4
+      frameIndex: 4
+      additiveSortOrder: 0
+      cellRect:
+        x: 32
+        y: 0
+        width: 26
+        height: 16
+      spriteId: 3a80fa9d3888b2949a34c55f46254618
+    - name: Punch Trap - Level 1_Frame_5
+      frameIndex: 5
+      additiveSortOrder: 0
+      cellRect:
+        x: 32
+        y: 0
+        width: 26
+        height: 16
+      spriteId: 544fdbd8852081248a984597157207a9
+    - name: Punch Trap - Level 1_Frame_6
+      frameIndex: 6
+      additiveSortOrder: 0
+      cellRect:
+        x: 32
+        y: 0
+        width: 26
+        height: 16
+      spriteId: 40ee57f34695af948a5c4fab07010fd2
+    - name: Punch Trap - Level 1_Frame_7
+      frameIndex: 7
+      additiveSortOrder: 0
+      cellRect:
+        x: 32
+        y: 0
+        width: 26
+        height: 16
+      spriteId: fa33eed8858351548bc3a574c99e0098
+    - name: Punch Trap - Level 1_Frame_8
+      frameIndex: 8
+      additiveSortOrder: 0
+      cellRect:
+        x: 32
+        y: 0
+        width: 26
+        height: 16
+      spriteId: 9019818aadfd5544da20d40a3c72251b
+    - name: Punch Trap - Level 1_Frame_9
+      frameIndex: 9
+      additiveSortOrder: 0
+      cellRect:
+        x: 32
+        y: 0
+        width: 26
+        height: 16
+      spriteId: 9aa4def33738b164dae1ddf568bd3ebd
+    - name: Punch Trap - Level 1_Frame_10
+      frameIndex: 10
+      additiveSortOrder: 0
+      cellRect:
+        x: 32
+        y: 0
+        width: 26
+        height: 16
       spriteId: aed0061b7d7b8db439844bbbf4a9a853
     linkedCells: []
     parentIndex: -1
