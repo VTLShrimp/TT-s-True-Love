@@ -14,10 +14,19 @@ public class DetectionZone : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        Debug.Log("OnTriggerExit2D called");
         if (other.CompareTag("Player"))
         {
-            boss.playerInzone = false;
-            Debug.Log("Player left zone");
+            Debug.Log("Player left the zone");
+            if (boss != null)
+            {
+                boss.playerInzone = false;
+                Debug.Log("Player in zone set to false");
+            }
+            else
+            {
+                Debug.LogError("Boss is not assigned!");
+            }
         }
     }
 }
