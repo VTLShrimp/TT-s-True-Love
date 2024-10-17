@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Mob/LavaBoss/01_demon_idle/demon_idle_1.png.meta
-guid: b7ee7785e775d1f45b64342324d02154
-========
-guid: 813bcc52f5abb44498a9e4245fa0a0bd
->>>>>>>> origin/Tan3:Assets/Map/Map1-Home/Remove-bg.ai_1728270715309.png.meta
+guid: 07c3692e555b3884c9bf2547d1d8db21
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -38,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -86,6 +82,19 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
