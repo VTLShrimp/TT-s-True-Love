@@ -7,20 +7,31 @@ public class BossHealth : MonoBehaviour
     private float currentHealth;
     public Animator animator;
     public bool dead;
-    // Add a reference to the die animation length
-    public float dieAnimationLength = 2.0f; // Set this to the actual length of your "die" animation
+    public float dieAnimationLength = 2.0f; // Set this to the length of your "die" animation
+    public DetectionZone zone;
 
     void Start()
     {
         currentHealth = maxHealth;
+
+        // Make sure the animator is assigned correctly
         animator = GetComponent<Animator>();
+        if (animator == null)
+        {
+            Debug.LogError("Animator not found on Boss!");
+        }
     }
 
     public void TakeDamage(float damage)
     {
+        if (dead)
+            return; // If already dead, don't take damage again
+
         currentHealth -= damage;
+
         if (currentHealth > 0)
         {
+            // Trigger the "hurt" animation if still alive
             animator.SetTrigger("hurt");
         }
         else
@@ -29,6 +40,14 @@ public class BossHealth : MonoBehaviour
             {
                 dead = true;
                 animator.SetTrigger("die");
+
+                // Destroy the DetectionZone when the boss dies
+                if (zone != null)
+                {
+                    Destroy(zone.gameObject); // Destroy the entire zone GameObject if applicable
+                }
+
+                // Start the coroutine to disable the animator and destroy the boss
                 StartCoroutine(DisableAnimatorAndDestroy());
             }
         }

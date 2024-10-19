@@ -56,36 +56,41 @@ public class PlayerAttack : MonoBehaviour
 
     private IEnumerator HandleAttack()
     {
-        // Đợi một chút trước khi thực hiện kiểm tra va chạm (phù hợp với thời gian hoạt ảnh)
+        // Wait for a moment before checking for collision (to sync with animation)
         yield return new WaitForSeconds(0.1f);
 
+        // Get all enemies in the attack range
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies)
         {
             if (enemy == null)
             {
-                Debug.LogError("Kẻ địch bị trúng không hợp lệ");
-                continue; // Bỏ qua vòng lặp nếu kẻ địch là null
+                Debug.LogError("Invalid enemy hit");
+                continue; // Skip this iteration if the enemy is null
             }
 
+            // Check if the enemy has a BossHealth component
             BossHealth bossHealth = enemy.GetComponent<BossHealth>();
-            if (bossHealth == null)
+            if (bossHealth != null)
             {
-                Debug.LogError($"Không tìm thấy BossHealth trên {enemy.name}");
-                continue; // Bỏ qua vòng lặp nếu không tìm thấy BossHealth
+                // Apply damage if the BossHealth component exists
+                bossHealth.TakeDamage(damage);
+                Debug.Log("We attacked " + enemy.name);
             }
-
-            bossHealth.TakeDamage(damage);
-            Debug.Log("Chúng ta đã tấn công " + enemy.name);
+            else
+            {
+                Debug.LogWarning(enemy.name + " does not have a BossHealth component");
+            }
         }
 
-        // Reset trigger để ngăn chặn kích hoạt lại
+        // Reset attack trigger to avoid re-triggering
         animator.ResetTrigger("Attack");
 
-        // Đợi để kết thúc hành động tấn công và cho phép tiếp tục tấn công
+        // Wait for a short duration to finish attack action before allowing another attack
         yield return new WaitForSeconds(0.3f);
         isAttacking = false;
     }
+
 
 
     private void OnDrawGizmos()

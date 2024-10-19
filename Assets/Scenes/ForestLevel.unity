@@ -3226,7 +3226,7 @@ Transform:
   m_GameObject: {fileID: 348635791}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 36.160576, y: 10.848, z: -10}
+  m_LocalPosition: {x: 237.7493, y: -26.012, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -3713,10 +3713,10 @@ GameObject:
   - component: {fileID: 387602911}
   - component: {fileID: 387602910}
   - component: {fileID: 387602917}
-  - component: {fileID: 387602916}
   - component: {fileID: 387602915}
   - component: {fileID: 387602914}
   - component: {fileID: 387602913}
+  - component: {fileID: 387602918}
   m_Layer: 7
   m_Name: BossSmile
   m_TagString: Untagged
@@ -3903,18 +3903,6 @@ MonoBehaviour:
   attackMask:
     serializedVersion: 2
     m_Bits: 8
---- !u!114 &387602916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 387602909}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f4813f48b31635469f37ebdf8ce1e37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &387602917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3927,6 +3915,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 179424f83a8609b41bd8ef0f63043b4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1117981690}
+  isFlipped: 0
+  playerInzone: 0
+--- !u!114 &387602918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387602909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f4813f48b31635469f37ebdf8ce1e37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  animator: {fileID: 387602910}
+  dead: 0
+  dieAnimationLength: 2
+  zone: {fileID: 0}
 --- !u!1001 &400150520
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6846,7 +6854,7 @@ Transform:
   m_GameObject: {fileID: 724717489}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 36.160576, y: 10.848, z: -10}
+  m_LocalPosition: {x: 237.7493, y: -26.012, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -36916,11 +36924,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 32.92
+      value: 234.2
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.06
+      value: -29.8
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
       propertyPath: m_LocalPosition.z
