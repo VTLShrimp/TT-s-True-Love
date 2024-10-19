@@ -1169,9 +1169,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4274197fbdd85a4ca9639736d114f72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
-  activationDelay: 2
-  activeTime: 0
+  damage: 1
+  damageInterval: 0.1
+  damageDuration: 0.36
+  activationDelay: 1
+  activeTime: 2
 --- !u!212 &1236467744
 SpriteRenderer:
   m_ObjectHideFlags: 0

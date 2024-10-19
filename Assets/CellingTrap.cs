@@ -1,19 +1,22 @@
 using UnityEngine;
 using System.Collections;
 
-public class CellingTrap : MonoBehaviour
+public class CeilingTrap : MonoBehaviour
 {
     [SerializeField] private float damage;
+    [SerializeField] private float damageInterval = 0.5f; // Time between damage applications
+    [SerializeField] private float damageDuration = 2f;   // Total time the trap can deal damage (e.g., 2 seconds)
 
-    [Header("Firetrap Timers")]
-    [SerializeField] private float activationDelay;
-    [SerializeField] private float activeTime;
+    [Header("Trap Timing")]
+    [SerializeField] private float activationDelay = 1f; // Delay before trap starts
+    [SerializeField] private float activeTime = 2f;      // Total length of the activated animation
+
     private Animator anim;
     private SpriteRenderer spriteRend;
 
-    private bool triggered; // when the trap gets triggered
-    private bool active; // when the trap is active and can hurt the player
-    private bool hasDamaged; // to track if the player has already been damaged
+    private bool triggered;  // When the trap is triggered
+    private Coroutine damageCoroutine; // Reference to the damage coroutine
+    private bool hasDamaged; // Flag to track if the player has been damaged
 
     private PlayerHealth player;
 
@@ -27,16 +30,11 @@ public class CellingTrap : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            player = collision.GetComponent<PlayerHealth>();
+
             if (!triggered)
             {
                 StartCoroutine(ActivateFiretrap());
-            }
-            Debug.Log("Player entered trap");
-            player = collision.GetComponent<PlayerHealth>();
-
-            if (player == null)
-            {
-                Debug.LogError("PlayerHealth component not found on the player!");
             }
         }
     }
@@ -45,40 +43,70 @@ public class CellingTrap : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            player = null;
-            Debug.Log("Player exited trap");
-        }
-    }
-
-    private void Update()
-    {
-        if (active && player != null && !hasDamaged)
-        {
-            player.TakeDamage(damage);
-            hasDamaged = true; // Set the flag to true after dealing damage
-            Debug.Log("Player took damage: " + damage);
+            player = null; // Reset player reference when they leave
+            StopDamage();  // Stop applying damage when the player exits
         }
     }
 
     private IEnumerator ActivateFiretrap()
     {
-        // Turn the sprite red to notify the player and trigger the trap
         triggered = true;
-        spriteRend.color = Color.red;
+        hasDamaged = false; // Reset the damage flag when activating the trap
 
-        // Wait for delay, activate trap, turn on animation, return color back to normal
+        // Delay before the trap starts
         yield return new WaitForSeconds(activationDelay);
-        spriteRend.color = Color.white; // Turn the sprite back to its initial color
-        active = true;
-        anim.SetBool("activated", true);
-        Debug.Log("Trap activated");
+        anim.SetBool("activated", true);  // Start the activation animation
 
-        // Wait until X seconds, deactivate trap and reset all variables and animator
+        // Start dealing damage to the player over time
+        damageCoroutine = StartCoroutine(DealDamageOverTime());
+
+        // Wait for the rest of the animation to finish
         yield return new WaitForSeconds(activeTime);
-        active = false;
+
+        // Reset the trap after the animation is complete
+        ResetTrap();
+    }
+
+    private IEnumerator DealDamageOverTime()
+    {
+        float elapsedTime = 0f; // Track how long the trap has been dealing damage
+
+        // Apply damage only once when the trap is activated
+        if (player != null && !hasDamaged)
+        {
+            player.TakeDamage(damage);
+            hasDamaged = true; // Set the flag to true after dealing damage
+            Debug.Log("Player took damage: " + damage);
+        }
+
+        // Wait for the damage interval
+        yield return new WaitForSeconds(damageInterval);
+
+        // Continue applying damage until the total damage duration is reached
+        elapsedTime += damageInterval;
+
+        while (elapsedTime < damageDuration)
+        {
+            // After the first hit, we do not apply damage again
+            yield return new WaitForSeconds(damageInterval); // Wait for the next interval
+            elapsedTime += damageInterval; // Increase elapsed time
+        }
+    }
+
+    private void StopDamage()
+    {
+        if (damageCoroutine != null)
+        {
+            StopCoroutine(damageCoroutine); // Stop the damage coroutine if the player exits
+            damageCoroutine = null;
+        }
+    }
+
+    private void ResetTrap()
+    {
         triggered = false;
-        hasDamaged = false; // Reset the flag when the trap is deactivated
-        anim.SetBool("activated", false);
-        Debug.Log("Trap deactivated");
+        StopDamage(); // Ensure damage application is stopped when resetting
+        anim.SetBool("activated", false); // Reset animation to idle
+        spriteRend.color = Color.white;   // Reset color to normal
     }
 }
