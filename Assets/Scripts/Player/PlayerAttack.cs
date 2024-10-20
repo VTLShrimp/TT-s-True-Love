@@ -16,82 +16,45 @@ public class PlayerAttack : MonoBehaviour
     private void Awake()
     {
         instance = this;
-
-        // Kiểm tra xem attackPoint có được gán không
-        if (attackPoint == null)
-        {
-            Debug.LogError("AttackPoint chưa được gán!");
-        }
-
-        // Kiểm tra xem animator có được gán không
-        if (animator == null)
-        {
-            Debug.LogError("Animator chưa được gán!");
-        }
     }
 
     void Update()
     {
-        if (Time.time >= nextAttackTime)
+        if (Time.time >= nextAttackTime && Input.GetMouseButtonDown(0) && !isAttacking)
         {
-            if (Input.GetMouseButtonDown(0) && !isAttacking) // Nhấn chuột trái
-            {
-                PerformAttack();
-                nextAttackTime = Time.time + attackCooldown;
-            }
+            PerformAttack();
+            nextAttackTime = Time.time + attackCooldown;
         }
     }
 
     private void PerformAttack()
     {
         isAttacking = true;
-
         // Kích hoạt hoạt ảnh tấn công
         animator.SetTrigger("Attack");
-
         // Bắt đầu kiểm tra va chạm với kẻ địch
         StartCoroutine(HandleAttack());
     }
 
-
     private IEnumerator HandleAttack()
     {
-        // Wait for a moment before checking for collision (to sync with animation)
-        yield return new WaitForSeconds(0.1f);
-
-        // Get all enemies in the attack range
+        yield return new WaitForSeconds(0.1f); // Chờ để đồng bộ hóa với hoạt ảnh
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies)
         {
-            if (enemy == null)
+            if (enemy != null)
             {
-                Debug.LogError("Invalid enemy hit");
-                continue; // Skip this iteration if the enemy is null
-            }
-
-            // Check if the enemy has a BossHealth component
-            BossHealth bossHealth = enemy.GetComponent<BossHealth>();
-            if (bossHealth != null)
-            {
-                // Apply damage if the BossHealth component exists
-                bossHealth.TakeDamage(damage);
-                Debug.Log("We attacked " + enemy.name);
-            }
-            else
-            {
-                Debug.LogWarning(enemy.name + " does not have a BossHealth component");
+                IHealth enemyHealth = enemy.GetComponent<IHealth>();
+                if (enemyHealth != null)
+                {
+                    enemyHealth.TakeDamage(damage);
+                    Debug.Log("We attacked " + enemy.name);
+                }
             }
         }
-
-        // Reset attack trigger to avoid re-triggering
-        animator.ResetTrigger("Attack");
-
-        // Wait for a short duration to finish attack action before allowing another attack
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.3f); // Chờ để hoàn thành hành động tấn công
         isAttacking = false;
     }
-
-
 
     private void OnDrawGizmos()
     {
