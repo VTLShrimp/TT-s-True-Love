@@ -3,6 +3,7 @@ using UnityEngine;
 public class SawTrap : MonoBehaviour
 {
     public int damage = 10; // Damage dealt by the trap
+    public float knockbackForce = 10f; // Knockback force
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -13,7 +14,11 @@ public class SawTrap : MonoBehaviour
             PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
-                playerHealth.TakeDamage(damage);
+                // Calculate knockback direction
+                Vector2 knockbackDirection = (other.transform.position - transform.position).normalized;
+
+                // Apply damage and knockback
+                playerHealth.TakeDamage(damage, knockbackDirection);
                 Debug.Log("Player took " + damage + " damage from the saw trap!");
             }
             else

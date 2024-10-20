@@ -11,7 +11,6 @@ public class PunchTrap : MonoBehaviour
     public float punchRange = 1f; // Phạm vi cú đấm
     public LayerMask playerLayer; // Lớp của người chơi
     public AudioClip punchSound; // Âm thanh của cú đấm
-
     private Animator animator;
     private AudioSource audioSource;
     private bool isPlayerInRange = false; // Cờ để kiểm tra người chơi có trong phạm vi không
@@ -45,7 +44,6 @@ public class PunchTrap : MonoBehaviour
         }
     }
 
-
     IEnumerator PunchRoutine()
     {
         while (isPlayerInRange) // Chỉ đấm khi người chơi trong phạm vi
@@ -62,13 +60,11 @@ public class PunchTrap : MonoBehaviour
         {
             animator.SetTrigger("Punch");
         }
-
         // Phát âm thanh cú đấm
         if (audioSource != null && punchSound != null)
         {
             audioSource.PlayOneShot(punchSound);
         }
-
         // Phát hiện người chơi trong phạm vi
         Collider2D[] hitPlayers = Physics2D.OverlapCircleAll(punchPoint.position, punchRange, playerLayer);
         foreach (Collider2D player in hitPlayers)
@@ -77,9 +73,9 @@ public class PunchTrap : MonoBehaviour
             if (playerHealth != null)
             {
                 // Gây sát thương cho người chơi
-                ApplyDamage(playerHealth);
+                Vector2 knockbackDirection = (player.transform.position - punchPoint.position).normalized;
+                playerHealth.TakeDamage(punchDamage, knockbackDirection);
             }
-
             Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
@@ -89,9 +85,9 @@ public class PunchTrap : MonoBehaviour
         }
     }
 
-    void ApplyDamage(PlayerHealth playerHealth)
+    void ApplyDamage(PlayerHealth playerHealth, Vector2 knockbackDirection)
     {
-        playerHealth.TakeDamage(punchDamage);
+        playerHealth.TakeDamage(punchDamage, knockbackDirection);
     }
 
     void ApplyForce(Rigidbody2D rb, Vector3 playerPosition)
@@ -104,7 +100,6 @@ public class PunchTrap : MonoBehaviour
     {
         if (punchPoint == null)
             return;
-
         Gizmos.DrawWireSphere(punchPoint.position, punchRange);
     }
 }

@@ -11,10 +11,25 @@ public class Boss_Walk : StateMachineBehaviour
     // OnStateEnter is called when the state starts
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        player = GameObject.FindWithTag("Player").transform; // Find the player object
+        player = GameObject.FindWithTag("Player")?.transform; // Find the player object
+        if (player == null)
+        {
+            Debug.LogError("Player not found! Make sure the player object has the 'Player' tag.");
+        }
+
         rb = animator.GetComponent<Rigidbody2D>(); // Get the Rigidbody2D component of the boss
+        if (rb == null)
+        {
+            Debug.LogError("Rigidbody2D not found! Make sure the animator is on a GameObject with a Rigidbody2D.");
+        }
+
         boss = animator.GetComponent<Boss>(); // Get the Boss script
+        if (boss == null)
+        {
+            Debug.LogError("Boss script not found! Make sure the animator is on a GameObject with the Boss script.");
+        }
     }
+
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

@@ -7,19 +7,23 @@ public class PlayerHealth : MonoBehaviour
     private float currentHealth;
     public Animator animator;
     public bool dead;
+    public ReSpawn respawnScript;
+    public float knockbackForce = 10f; // Ensure this is set
 
     void Start()
     {
         currentHealth = maxHealth;
         animator = GetComponent<Animator>();
+        respawnScript = GetComponent<ReSpawn>();
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, Vector2 knockbackDirection)
     {
         currentHealth -= damage;
         if (currentHealth > 0)
         {
             animator.SetTrigger("hurt");
+            Knockback(knockbackDirection); // Apply knockback
         }
         else
         {
@@ -27,20 +31,38 @@ public class PlayerHealth : MonoBehaviour
             {
                 dead = true;
                 animator.SetTrigger("die");
-                StartCoroutine(DisableAnimatorAndDestroy());
+                StartCoroutine(RespawnPlayer());
             }
         }
     }
 
-    private IEnumerator DisableAnimatorAndDestroy()
+
+    private void Knockback(Vector2 direction)
     {
-        // Chờ cho đến khi hoạt ảnh "die" hoàn thành
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
-
-        // Sau khi hoạt ảnh hoàn thành, vô hiệu hóa Animator
-        GetComponent<Animator>().enabled = false;
-
-        // Xóa đối tượng khỏi game
-        Destroy(gameObject);
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
+        }
     }
-}
+
+
+    private IEnumerator RespawnPlayer()
+    {
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        respawnScript.Respawn();
+        currentHealth = maxHealth;
+        dead = false;
+        animator.ResetTrigger("die");
+     
+        animator.SetTrigger("idle" );
+        // Find the boss and reset it
+        BossHealth boss = FindObjectOfType<BossHealth>();
+            if (boss != null)
+            {
+                boss.ResetBoss();
+            }
+        }
+
+
+    }

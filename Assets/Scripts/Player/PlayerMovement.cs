@@ -64,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownTimer <= 0 && !isCrouching)
         {
-            animator.SetBool("IsDash",true);    
+            animator.SetBool("IsDash", true);
             isDashing = true;
             dashTime = dashDuration;
             dashCooldownTimer = dashCooldown;
@@ -84,14 +84,14 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetButtonDown("Jump") && IsGrounded() && !isCrouching && !isWallSliding)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-                animator.SetBool("IsGround",false);
+                animator.SetBool("IsGround", false);
 
                 if (jumpcount < 1)
                 {
                     jumpcount++;
                 }
             }
-            else if (Input.GetButtonDown("Jump") && jumpcount < 1 && !IsGrounded() && !isCrouching && !isWallSliding ) 
+            else if (Input.GetButtonDown("Jump") && jumpcount < 1 && !IsGrounded() && !isCrouching && !isWallSliding)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
                 animator.SetBool("IsGround", false);
@@ -117,8 +117,8 @@ public class PlayerMovement : MonoBehaviour
             if (IsGrounded())
             {
                 jumpcount = 0;
-                animator.SetBool("IsGround",true);
-               // animator.SetBool("IswallSide",false) ;
+                animator.SetBool("IsGround", true);
+                // animator.SetBool("IswallSide",false) ;
 
             }
             animator.SetInteger("Speed", (int)Mathf.Abs(horizontal));
@@ -137,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isDashing)
         {
-            rb.velocity = new Vector2(transform.localScale.x * dashSpeed,0f );
+            rb.velocity = new Vector2(transform.localScale.x * dashSpeed, 0f);
             dashTime -= Time.fixedDeltaTime;
             if (dashTime <= 0)
             {
@@ -208,16 +208,16 @@ public class PlayerMovement : MonoBehaviour
     {
         if (IsWalled() && !IsGrounded() && horizontal != 0f)
         {
-            animator.SetBool("IswallSide",true);
+            animator.SetBool("IswallSide", true);
             isWallSliding = true;
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
         }
         else
         {
             isWallSliding = false;
-            animator.SetBool("IswallSide",false);
+            animator.SetBool("IswallSide", false);
         }
-         
+
     }
 
     private void WallJump()

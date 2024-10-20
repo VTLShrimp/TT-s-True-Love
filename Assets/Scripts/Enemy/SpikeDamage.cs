@@ -2,22 +2,24 @@
 
 public class SpikeDamage : MonoBehaviour
 {
-    // Số lượng sát thương mà bẫy gai gây ra
-    public int damageAmount;
+    public int damageAmount; // Damage amount dealt by the spike trap
+    public float knockbackForce = 10f; // Knockback force
 
-    // Hàm xử lý va chạm khi nhân vật đi vào vùng gai
+    // Handle collision when the character enters the spike trap area
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Kiểm tra xem đối tượng va chạm có phải là nhân vật không (bằng tag "Player")
+        // Check if the colliding object is the player (by tag "Player")
         if (collision.CompareTag("Player"))
         {
-            // Lấy script điều khiển nhân vật, ví dụ là PlayerHealth, để trừ máu
+            // Get the PlayerHealth script to apply damage
             PlayerHealth playerHealth = collision.GetComponent<PlayerHealth>();
-
-            // Nếu nhân vật có thành phần PlayerHealth, gây sát thương
             if (playerHealth != null)
             {
-                playerHealth.TakeDamage(damageAmount);
+                // Calculate knockback direction
+                Vector2 knockbackDirection = (collision.transform.position - transform.position).normalized;
+
+                // Apply damage and knockback
+                playerHealth.TakeDamage(damageAmount, knockbackDirection);
             }
         }
     }
