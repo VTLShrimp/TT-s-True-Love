@@ -6,8 +6,11 @@ public class LightningTrap2D : MonoBehaviour
     public float activationDelay = 5.0f;  // Time between trap activations
     public Animator animator;  // Reference to the trap's animator
     public int damage = 20;  // Damage amount
+    public float damageInterval = 0.5f;  // Interval between damage ticks (if player stays in trap)
 
     private Collider2D playerCollider;  // To track the player in the trap's trigger
+    private bool isDealingDamage = false;  // To track if the trap should be dealing damage
+    private Coroutine damageCoroutine;  // To handle repeated damage
 
     void Start()
     {
@@ -47,13 +50,39 @@ public class LightningTrap2D : MonoBehaviour
         }
     }
 
-    // This method will be triggered by the animation event
-    public void TriggerDamage()
+    // Animation Event: Start dealing continuous damage
+    public void StartDamage()
     {
-        // Check if the player is inside the collider when the trap is activated
-        if (playerCollider != null)
+        if (!isDealingDamage && playerCollider != null)
         {
-            playerCollider.GetComponent<PlayerHealth>()?.TakeDamage(damage);
+            isDealingDamage = true;
+            damageCoroutine = StartCoroutine(DealDamageOverTime());
+        }
+    }
+
+    // Animation Event: Stop dealing damage
+    public void StopDamage()
+    {
+        if (isDealingDamage)
+        {
+            isDealingDamage = false;
+            if (damageCoroutine != null)
+            {
+                StopCoroutine(damageCoroutine);
+            }
+        }
+    }
+
+    // Coroutine to deal damage over time during the activation phase
+    IEnumerator DealDamageOverTime()
+    {
+        while (isDealingDamage)
+        {
+            if (playerCollider != null)  // Ensure player is still in the trigger
+            {
+                playerCollider.GetComponent<PlayerHealth>()?.TakeDamage(damage);
+            }
+            yield return new WaitForSeconds(damageInterval);  // Wait before applying damage again
         }
     }
 }
