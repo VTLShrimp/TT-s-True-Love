@@ -17,13 +17,13 @@ public class PlayerHealth : MonoBehaviour
         respawnScript = GetComponent<ReSpawn>();
     }
 
-    public void TakeDamage(float damage, Vector2 knockbackDirection)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage;
         if (currentHealth > 0)
         {
             animator.SetTrigger("hurt");
-            Knockback(knockbackDirection); // Apply knockback
+            
         }
         else
         {

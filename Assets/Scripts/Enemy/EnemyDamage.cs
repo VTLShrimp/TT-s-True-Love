@@ -16,7 +16,7 @@ public class EnemyDamage : MonoBehaviour
                 Vector2 knockbackDirection = (collision.transform.position - transform.position).normalized;
 
                 // Apply damage and knockback
-                playerHealth.TakeDamage(damage, knockbackDirection);
+                playerHealth.TakeDamage(damage);
             }
         }
     }

@@ -88,7 +88,7 @@ public class CeilingTrap : MonoBehaviour
         Vector2 knockbackDirection = (playerHealth.transform.position - transform.position).normalized;
 
         // Apply damage and knockback
-        playerHealth.TakeDamage(damage, knockbackDirection);
+        playerHealth.TakeDamage(damage);
 
         // Apply knockback force
         Rigidbody2D rb = playerHealth.GetComponent<Rigidbody2D>();

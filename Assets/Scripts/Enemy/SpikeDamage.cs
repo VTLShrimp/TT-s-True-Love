@@ -19,7 +19,7 @@ public class SpikeDamage : MonoBehaviour
                 Vector2 knockbackDirection = (collision.transform.position - transform.position).normalized;
 
                 // Apply damage and knockback
-                playerHealth.TakeDamage(damageAmount, knockbackDirection);
+                playerHealth.TakeDamage(damageAmount);
             }
         }
     }

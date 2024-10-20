@@ -26,7 +26,7 @@ public class BossWeapon : MonoBehaviour
                 Vector2 knockbackDirection = (colInfo.transform.position - transform.position).normalized;
 
                 // Apply damage and knockback
-                playerHealth.TakeDamage(attackDamage, knockbackDirection);
+                playerHealth.TakeDamage(attackDamage);
             }
         }
     }
@@ -44,7 +44,7 @@ public class BossWeapon : MonoBehaviour
             if (playerHealth != null)
             {
                 Vector2 knockbackDirection = (colInfo.transform.position - transform.position).normalized;
-                playerHealth.TakeDamage(enragedAttackDamage, knockbackDirection);
+                playerHealth.TakeDamage(enragedAttackDamage);
             }
         }
     }

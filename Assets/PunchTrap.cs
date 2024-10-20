@@ -74,32 +74,32 @@ public class PunchTrap : MonoBehaviour
             {
                 // Gây sát thương cho người chơi
                 Vector2 knockbackDirection = (player.transform.position - punchPoint.position).normalized;
-                playerHealth.TakeDamage(punchDamage, knockbackDirection);
-            }
-            Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
-            if (rb != null)
-            {
-                // Tác động lực lên người chơi
-                ApplyForce(rb, player.transform.position);
+                playerHealth.TakeDamage(punchDamage);
+                Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+                if (rb != null)
+                {
+                    // Tác động lực lên người chơi
+                    ApplyForce(rb, player.transform.position);
+                }
             }
         }
-    }
 
-    void ApplyDamage(PlayerHealth playerHealth, Vector2 knockbackDirection)
-    {
-        playerHealth.TakeDamage(punchDamage, knockbackDirection);
-    }
+        void ApplyDamage(PlayerHealth playerHealth)
+        {
+            playerHealth.TakeDamage(punchDamage);
+        }
 
-    void ApplyForce(Rigidbody2D rb, Vector3 playerPosition)
-    {
-        Vector2 direction = playerPosition - punchPoint.position;
-        rb.AddForce(direction.normalized * punchForce, ForceMode2D.Impulse);
-    }
+        void ApplyForce(Rigidbody2D rb, Vector3 playerPosition)
+        {
+            Vector2 direction = playerPosition - punchPoint.position;
+            rb.AddForce(direction.normalized * punchForce, ForceMode2D.Impulse);
+        }
 
-    void OnDrawGizmosSelected()
-    {
-        if (punchPoint == null)
-            return;
-        Gizmos.DrawWireSphere(punchPoint.position, punchRange);
+        void OnDrawGizmosSelected()
+        {
+            if (punchPoint == null)
+                return;
+            Gizmos.DrawWireSphere(punchPoint.position, punchRange);
+        }
     }
 }

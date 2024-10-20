@@ -18,7 +18,7 @@ public class SawTrap : MonoBehaviour
                 Vector2 knockbackDirection = (other.transform.position - transform.position).normalized;
 
                 // Apply damage and knockback
-                playerHealth.TakeDamage(damage, knockbackDirection);
+                playerHealth.TakeDamage(damage);
                 Debug.Log("Player took " + damage + " damage from the saw trap!");
             }
             else
