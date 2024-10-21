@@ -38,6 +38,7 @@ public class PlayerHealth : MonoBehaviour
         {
             dead = true;
             animator.SetTrigger("die");  // Kích hoạt animation chết
+            Respanwn();
             StartCoroutine(DisableAnimatorAndDestroy());
         }
 
