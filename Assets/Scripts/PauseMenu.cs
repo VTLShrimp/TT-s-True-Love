@@ -15,12 +15,14 @@ public class PauseMenu : MonoBehaviour
     public Button optionsButton; // Button to open options
     public Button quitButton; // Button to quit the game
 
+    public GameObject PaurseGamePanel;
     void Start()
     {
 
         // Make sure the options panel is hidden at the start
         optionsPanelUI.SetActive(false);
-        Resume();
+    
+        pauseMenuUI.SetActive(false); // Hide the pause menu at the start
         // Attach the button listeners here
         resumeButton.onClick.AddListener(Resume);
         optionsButton.onClick.AddListener(OpenOptions);
@@ -86,7 +88,7 @@ public class PauseMenu : MonoBehaviour
         healthBarCanvas.SetActive(false);
         nutCanvas.SetActive(false);
         inventoryHealthCanvas.SetActive(false);
-        pauseMenuCanvas.SetActive(false);
+        PaurseGamePanel.SetActive(false);
     }
 
     public void LoadMainMenu()
