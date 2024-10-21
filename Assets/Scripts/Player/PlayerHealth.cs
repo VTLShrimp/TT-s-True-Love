@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth = 100f;      // Máu tối đa của nhân vật
@@ -62,7 +62,7 @@ public class PlayerHealth : MonoBehaviour
             healthbar.fillAmount = currentHealth / maxHealth;
         }
     }
-
+  
     private IEnumerator DisableAnimatorAndDestroy()
     {
         // Chờ cho đến khi hoạt ảnh "die" hoàn thành
@@ -82,4 +82,10 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         UpdateHealthBar();              // Cập nhật thanh máu
     }
+
+    void Respanwn()
+    {
+        SceneManager.LoadScene("Home");
+    }
+
 }
