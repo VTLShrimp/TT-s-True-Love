@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 100;
@@ -28,10 +28,11 @@ public class PlayerHealth : MonoBehaviour
                 dead = true;
                 animator.SetTrigger("die");
                 StartCoroutine(DisableAnimatorAndDestroy());
+                Respanwn();
             }
         }
     }
-
+  
     private IEnumerator DisableAnimatorAndDestroy()
     {
         // Chờ cho đến khi hoạt ảnh "die" hoàn thành
@@ -42,5 +43,10 @@ public class PlayerHealth : MonoBehaviour
 
         // Xóa đối tượng khỏi game
         Destroy(gameObject);
+    }
+
+    void Respanwn()
+    {
+        SceneManager.LoadScene("Home");
     }
 }
