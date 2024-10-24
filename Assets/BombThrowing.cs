@@ -5,31 +5,34 @@ public class Goblin : MonoBehaviour
 {
     [Header("Patrol Settings")]
     [SerializeField] float moveSpeed = 2f;
-    [SerializeField] Transform[] waypoints; // Waypoints to patrol between
+    [SerializeField] Transform[] waypoints;
     private int currentWaypointIndex = 0;
 
     [Header("Melee Attack Settings")]
-    [SerializeField] float meleeAttackRange = 1.5f; // Range for melee attack
-    [SerializeField] int meleeDamage = 10;          // Damage dealt by melee attack
-    [SerializeField] float meleeAttackCooldown = 1f; // Time between melee attacks
+    [SerializeField] float meleeAttackRange = 1.5f;
+    [SerializeField] int meleeDamage = 10;
+    [SerializeField] float meleeAttackCooldown = 1f;
     private float lastMeleeAttackTime;
 
     [Header("Bomb Throwing Settings")]
-    [SerializeField] GameObject bombPrefab;          // Reference to the bomb prefab
-    [SerializeField] Transform throwPoint;           // Point where the bomb will be thrown from
-    [SerializeField] float throwForce = 10f;         // Force applied to throw the bomb
-    [SerializeField] float bombThrowCooldown = 2f;   // Cooldown time between bomb throws
-    private float lastBombThrowTime;                 // Last time a bomb was thrown
+    [SerializeField] GameObject bombPrefab;
+    [SerializeField] Transform throwPoint;
+    [SerializeField] float throwForce = 10f;
+    [SerializeField] float bombThrowCooldown = 2f;
+    [SerializeField] float bombThrowRange = 5f;
+    private float lastBombThrowTime;
 
     [Header("Detection Settings")]
-    [SerializeField] float detectionRange = 5f;      // Range to detect player
-    [SerializeField] float bombThrowRange = 5f;      // Range for throwing bombs
-    [SerializeField] Transform player;                // Reference to the player
+    [SerializeField] float detectionRange = 5f;
+    [SerializeField] float chaseRange = 7f;
+    [SerializeField] float chaseTimeout = 2f;
+    [SerializeField] Transform player;
 
     private Rigidbody2D rb;
     private Animator animator;
     private bool isAttacking = false;
-    private bool isThrowingBomb = false; // Flag to track if the Goblin is throwing a bomb
+    private bool isThrowingBomb = false;
+    private float lastPlayerSeenTime;
 
     void Start()
     {
@@ -39,7 +42,7 @@ public class Goblin : MonoBehaviour
 
     void Update()
     {
-        if (isAttacking) return; // If attacking, skip all actions
+        if (isAttacking) return;
 
         if (PlayerInRange(meleeAttackRange))
         {
@@ -50,14 +53,22 @@ public class Goblin : MonoBehaviour
         }
         else if (PlayerInRange(bombThrowRange))
         {
-            if (Time.time - lastBombThrowTime >= bombThrowCooldown && !isThrowingBomb) // Check the flag
+            if (Time.time - lastBombThrowTime >= bombThrowCooldown && !isThrowingBomb)
             {
                 StartCoroutine(ThrowBombCoroutine());
             }
         }
-        else if (PlayerInRange(detectionRange))
+        else if (PlayerInRange(detectionRange) || Time.time - lastPlayerSeenTime <= chaseTimeout)
         {
-            ChasePlayer();
+            if (PlayerInRange(chaseRange))
+            {
+                ChasePlayer();
+                lastPlayerSeenTime = Time.time;
+            }
+            else if (Time.time - lastPlayerSeenTime > chaseTimeout)
+            {
+                Patrol();
+            }
         }
         else
         {
@@ -67,40 +78,34 @@ public class Goblin : MonoBehaviour
 
     void Patrol()
     {
-        // Move toward the next waypoint
         Transform targetWaypoint = waypoints[currentWaypointIndex];
         Vector2 direction = (targetWaypoint.position - transform.position).normalized;
         rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y);
 
-        // Check if we’ve reached the waypoint
         if (Vector2.Distance(transform.position, targetWaypoint.position) < 0.2f)
         {
-            currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length; // Cycle through waypoints
+            currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
         }
 
-        // Flip the sprite depending on movement direction
         UpdateSpriteDirection(direction.x);
-        animator.SetBool("isMoving", rb.velocity.x != 0); // Trigger moving animation
+        animator.SetBool("isMoving", rb.velocity.x != 0);
     }
 
     bool PlayerInRange(float range)
     {
-        // Check if the player is within a specified range
         return Vector2.Distance(transform.position, player.position) <= range;
     }
 
     IEnumerator MeleeAttack()
     {
         isAttacking = true;
-        rb.velocity = Vector2.zero; // Stop movement during attack
-        animator.SetTrigger("Attack"); // Trigger melee attack animation
+        rb.velocity = Vector2.zero;
+        animator.SetTrigger("Attack");
 
-        // Wait for attack animation to finish (adjust this to match your animation timing)
-        yield return new WaitForSeconds(0.5f); // Adjust based on your melee attack animation length
+        yield return new WaitForSeconds(0.5f);
 
         if (PlayerInRange(meleeAttackRange))
         {
-            // Deal damage to the player
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
@@ -109,55 +114,55 @@ public class Goblin : MonoBehaviour
             }
         }
 
-        lastMeleeAttackTime = Time.time; // Reset melee attack cooldown
-        isAttacking = false; // Allow the enemy to patrol again
+        lastMeleeAttackTime = Time.time;
+        isAttacking = false;
     }
 
     IEnumerator ThrowBombCoroutine()
     {
-        isThrowingBomb = true; // Set flag to indicate a bomb is being thrown
-        isAttacking = true; // Prevent patrol
+        isThrowingBomb = true;
+        isAttacking = true;
 
-        rb.velocity = Vector2.zero; // Stop movement during bomb throw
-        animator.SetBool("isMoving", false); // Ensure the moving animation is stopped
-        animator.SetTrigger("ThrowBomb"); // Trigger bomb throw animation
+        rb.velocity = Vector2.zero;
+        animator.SetBool("isMoving", false);
 
-        // Wait for a portion of the animation, if needed
-        yield return new WaitForSeconds(0.5f); // Adjust based on timing of the throwing animation
+        // Ensure the goblin faces the player before throwing the bomb
+        FacePlayer();
 
-        // This is optional if you are using an animation event to call ThrowBomb
-        // ThrowBomb(); // Call the bomb throwing function here if not using animation event
+        animator.SetTrigger("ThrowBomb");
 
-        lastBombThrowTime = Time.time; // Update the last throw time
-        isThrowingBomb = false; // Reset the flag
-        isAttacking = false; // Allow the enemy to patrol again
+        yield return new WaitForSeconds(0.5f); // Wait for the bomb throw animation to progress
+
+        lastBombThrowTime = Time.time;
+        isThrowingBomb = false;
+        isAttacking = false;
     }
 
     public void ThrowBomb()
     {
-        // This function can now be called via an animation event.
-        GameObject bomb = Instantiate(bombPrefab, throwPoint.position, throwPoint.rotation);
+        // Ensure the goblin is facing the player when the bomb is thrown
+        FacePlayer();
 
+        GameObject bomb = Instantiate(bombPrefab, throwPoint.position, throwPoint.rotation);
         Rigidbody2D bombRb = bomb.GetComponent<Rigidbody2D>();
+
         if (bombRb != null)
         {
-            // Calculate direction toward the player and apply force to throw the bomb
             Vector2 throwDirection = (player.position - throwPoint.position).normalized;
             bombRb.AddForce(throwDirection * throwForce, ForceMode2D.Impulse);
         }
 
-        lastBombThrowTime = Time.time; // Update the last throw time
+        lastBombThrowTime = Time.time;
         Debug.Log("Bomb thrown at player!");
     }
 
     void ChasePlayer()
     {
-        // Move towards the player
         Vector2 direction = (player.position - transform.position).normalized;
         rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y);
 
-        UpdateSpriteDirection(direction.x); // Update sprite direction based on chase
-        animator.SetBool("isMoving", true); // Trigger moving animation
+        UpdateSpriteDirection(direction.x);
+        animator.SetBool("isMoving", true);
     }
 
     void UpdateSpriteDirection(float horizontalInput)
@@ -170,5 +175,35 @@ public class Goblin : MonoBehaviour
         {
             transform.localScale = new Vector3(-1, 1, 1); // Facing left
         }
+    }
+
+    void FacePlayer()
+    {
+        // Face the player based on the player's position relative to the goblin
+        Vector3 playerDirection = player.position - transform.position;
+
+        if (playerDirection.x > 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1); // Face right
+        }
+        else
+        {
+            transform.localScale = new Vector3(-1, 1, 1); // Face left
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, meleeAttackRange);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, bombThrowRange);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, chaseRange);
     }
 }
