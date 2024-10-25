@@ -33,17 +33,29 @@ public class Goblin : MonoBehaviour
     private bool isAttacking = false;
     private bool isThrowingBomb = false;
     private float lastPlayerSeenTime;
+    private Collider2D goblinCollider;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        goblinCollider = GetComponent<Collider2D>();
+        if (player != null)
+        {
+            Collider2D playerCollider = player.GetComponent<Collider2D>();
+            if (playerCollider != null)
+            {
+                Physics2D.IgnoreCollision(goblinCollider, playerCollider);
+            }
+        }
     }
 
     void Update()
     {
-        if (isAttacking) return;
+        // If currently attacking or throwing a bomb, do not chase or patrol
+        if (isAttacking || isThrowingBomb) return;
 
+        // Check if the player is within melee or bomb range, prioritize attacks
         if (PlayerInRange(meleeAttackRange))
         {
             if (Time.time - lastMeleeAttackTime >= meleeAttackCooldown)
@@ -58,37 +70,49 @@ public class Goblin : MonoBehaviour
                 StartCoroutine(ThrowBombCoroutine());
             }
         }
-        else if (PlayerInRange(detectionRange) || Time.time - lastPlayerSeenTime <= chaseTimeout)
+        else if (PlayerInRange(detectionRange))
         {
-            if (PlayerInRange(chaseRange))
-            {
-                ChasePlayer();
-                lastPlayerSeenTime = Time.time;
-            }
-            else if (Time.time - lastPlayerSeenTime > chaseTimeout)
-            {
-                Patrol();
-            }
+            // If player is within detection range, chase them
+            lastPlayerSeenTime = Time.time;
+            ChasePlayer();
+        }
+        else if (Time.time - lastPlayerSeenTime <= chaseTimeout)
+        {
+            // Continue chasing for a short duration after the player leaves detection range
+            ChasePlayer();
         }
         else
         {
+            // If player is out of detection range and chase timeout has expired, patrol
             Patrol();
         }
     }
 
     void Patrol()
     {
-        Transform targetWaypoint = waypoints[currentWaypointIndex];
-        Vector2 direction = (targetWaypoint.position - transform.position).normalized;
-        rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y);
+        // Set Rigidbody to kinematic for patrol to prevent unwanted physics interactions
+        rb.isKinematic = true; // Ensure physics doesn't interfere with patrolling
 
-        if (Vector2.Distance(transform.position, targetWaypoint.position) < 0.2f)
+        Transform targetWaypoint = waypoints[currentWaypointIndex];
+        float step = moveSpeed * Time.deltaTime;
+
+        // Move towards the waypoint
+        transform.position = Vector2.MoveTowards(transform.position, targetWaypoint.position, step);
+
+        // Increase distance threshold slightly to avoid missing the waypoint
+        if (Vector2.Distance(transform.position, targetWaypoint.position) < 0.3f)
         {
+            // Log the current waypoint for debugging purposes
+            Debug.Log("Reached waypoint " + currentWaypointIndex);
+
+            // Move to the next waypoint
             currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
         }
 
+        // Update sprite direction for consistent visuals
+        Vector2 direction = (targetWaypoint.position - transform.position).normalized;
         UpdateSpriteDirection(direction.x);
-        animator.SetBool("isMoving", rb.velocity.x != 0);
+        animator.SetBool("isMoving", true);
     }
 
     bool PlayerInRange(float range)

@@ -136,9 +136,10 @@ GameObject:
   - component: {fileID: 60329593}
   - component: {fileID: 60329595}
   - component: {fileID: 60329596}
-  m_Layer: 0
+  - component: {fileID: 60329597}
+  m_Layer: 7
   m_Name: BoomEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -204,7 +205,7 @@ Transform:
   m_GameObject: {fileID: 60329589}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.74, y: -1.09, z: 0}
+  m_LocalPosition: {x: 29.534, y: -1.138, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -282,8 +283,10 @@ MonoBehaviour:
   throwPoint: {fileID: 957527713}
   throwForce: 10
   bombThrowCooldown: 2
-  detectionRange: 5
   bombThrowRange: 5
+  detectionRange: 4
+  chaseRange: 5
+  chaseTimeout: 1
   player: {fileID: 433064442}
 --- !u!61 &60329596
 BoxCollider2D:
@@ -330,6 +333,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8534794, y: 1.1987786}
   m_EdgeRadius: 0
+--- !u!114 &60329597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 60329589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b7089ed36a443d47a28421a80813c53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
 --- !u!1 &177268266
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,7 +888,7 @@ Transform:
   m_GameObject: {fileID: 572500349}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.98, y: -1.26, z: -9.981193}
+  m_LocalPosition: {x: 22.91, y: -1.47, z: -9.981193}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1538,7 +1554,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 957527713}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ThrowPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1691,7 +1707,7 @@ Transform:
   m_GameObject: {fileID: 1226540673}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.32, y: -1.24, z: -9.981193}
+  m_LocalPosition: {x: 36.72, y: -1.35, z: -9.981193}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
