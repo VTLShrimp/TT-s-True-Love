@@ -159,11 +159,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private bool IsGrounded()
-    {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
-
-    }
+  
     private bool IsPlatfrom()
     {
         return Physics2D.OverlapCircle(platfromCheck.position, 0.2f, platfromLayer);
@@ -280,6 +276,11 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(EnableColliders), 0.2f);
         }
     }
+    public bool IsGrounded()
+    {
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+    }
+
 
     void EnableColliders()
     {

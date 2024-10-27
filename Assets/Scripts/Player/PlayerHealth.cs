@@ -10,12 +10,14 @@ public class PlayerHealth : MonoBehaviour
     public Animator animator;           // Animator để xử lý các hoạt ảnh
     public GameObject Player;           // Đối tượng Player trong game
     private bool dead = false;          // Trạng thái chết của nhân vật
+    private PlayerAttack playerAttack;
 
     private void Start()
     {
         currentHealth = maxHealth;      // Khởi tạo máu ban đầu là máu tối đa
         Debug.Log("Máu ban đầu của nhân vật: " + currentHealth); // Log kiểm tra máu ban đầu
         UpdateHealthBar();              // Cập nhật thanh máu khi bắt đầu game
+        playerAttack = GetComponent<PlayerAttack>();
     }
 
     private void Update()
@@ -33,6 +35,7 @@ public class PlayerHealth : MonoBehaviour
         if (currentHealth > 0)
         {
             animator.SetTrigger("hurt"); // Kích hoạt animation bị thương
+            playerAttack.InterruptAttack();
         }
         else if (!dead)
         {
