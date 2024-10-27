@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 67356d4ac916c054b87f8dbb9e254a25
+guid: 6566af7710a2f9b4e90be134ef674452
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -121,18 +121,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: Name
+  - name: Red
     originalName: 
-    pivot: {x: 0.5, y: -0.27272728}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 77
-      height: 11
-    spriteID: 580d33d44ce4caa459e052ff5a664423
+      width: 50
+      height: 3
+    spriteID: ecae868052f9ae547ae265e9e9769519
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -144,25 +144,25 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 885350319
-    name: Name
+    guid: 1291159383
+    name: Red
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: Name
+    - name: Red
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 1
-        y: 3
-        width: 77
-        height: 11
-      spriteId: 580d33d44ce4caa459e052ff5a664423
+        x: 0
+        y: 0
+        width: 50
+        height: 3
+      spriteId: ecae868052f9ae547ae265e9e9769519
     linkedCells: []
     parentIndex: -1
   platformSettings: []
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 79, y: 17}
+  canvasSize: {x: 50, y: 3}
