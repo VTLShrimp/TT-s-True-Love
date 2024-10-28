@@ -36,6 +36,8 @@ public class PlayerMovement : MonoBehaviour
     public float dodgespeed = 20f;
     public float dodgeduration = 0.9f;
     private float dodgetime;
+    private StaminaBar staminaBar;
+
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -49,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
     {
         currenthealth = maxhealth;
         Application.targetFrameRate = 60;
+        staminaBar = FindObjectOfType<StaminaBar>();
     }
 
 
@@ -62,40 +65,47 @@ public class PlayerMovement : MonoBehaviour
         {
             dodgecooldownTimer -= Time.deltaTime;
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownTimer <= 0 && !isCrouching)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownTimer <= 0 && !isCrouching && staminaBar.currentStamina >= staminaBar.dashStaminaCost)
         {
             animator.SetBool("IsDash",true);    
             isDashing = true;
             dashTime = dashDuration;
             dashCooldownTimer = dashCooldown;
             rb.gravityScale = 0f;
+            staminaBar.UseStamina(staminaBar.dashStaminaCost);
         }
-        if (Input.GetKeyDown(KeyCode.LeftControl) && dodgecooldownTimer <= 0)
+        if (Input.GetKeyDown(KeyCode.LeftControl) && dodgecooldownTimer <= 0 && staminaBar.currentStamina >= staminaBar.dashStaminaCost)
         {
             isDodging = true;
             dodgetime = dodgeduration;
             dodgecooldownTimer = dodgecooldown;
             standingCollider.enabled = false;
             crouchingCollider.enabled = true;
+            staminaBar.UseStamina(staminaBar.dodgeStaminaCost);
+
         }
         if (!isDashing)
         {
             horizontal = Input.GetAxisRaw("Horizontal");
-            if (Input.GetButtonDown("Jump") && IsGrounded() && !isCrouching && !isWallSliding)
+            if (Input.GetButtonDown("Jump") && IsGrounded() && !isCrouching && !isWallSliding && staminaBar.currentStamina >= staminaBar.jumpStaminaCost)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
                 animator.SetBool("IsGround",false);
+                staminaBar.UseStamina(staminaBar.jumpStaminaCost);
+
 
                 if (jumpcount < 1)
                 {
                     jumpcount++;
                 }
             }
-            else if (Input.GetButtonDown("Jump") && jumpcount < 1 && !IsGrounded() && !isCrouching && !isWallSliding ) 
+            else if (Input.GetButtonDown("Jump") && jumpcount < 1 && !IsGrounded() && !isCrouching && !isWallSliding && staminaBar.currentStamina >= staminaBar.jumpStaminaCost)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
                 animator.SetBool("IsGround", false);
                 jumpcount++;
+                staminaBar.UseStamina(staminaBar.jumpStaminaCost);
+
             }
             if (Input.GetKey(KeyCode.S) && !isDropping)
             {
@@ -232,11 +242,12 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Allow wall jump only if the counter is active and the player isn't already jumping or sliding
-        if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f && !isWallSliding && !isWallJumping)
+        if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f && !isWallSliding && !isWallJumping && staminaBar.currentStamina >= staminaBar.jumpStaminaCost)
         {
             isWallJumping = true;
             rb.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
             wallJumpingCounter = 0f;
+            staminaBar.UseStamina(staminaBar.jumpStaminaCost);
 
             Invoke(nameof(StopWallJumping), wallJumpingDuration);
         }
