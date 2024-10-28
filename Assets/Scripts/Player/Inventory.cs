@@ -1,36 +1,55 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    public Weapon[] weapons; 
-    private int currentWeaponIndex = 0;
+    public Image[] slots; // Mảng chứa các slot
+    private Color selectedColor = Color.green; // Màu sắc khi slot được chọn
+    private Color defaultColor = Color.white; // Màu sắc mặc định
 
-    public Weapon GetCurrentWeapon()
+    private void Start()
     {
-        return weapons[currentWeaponIndex];
-    }
-
-    public void SwitchWeapon(int weaponIndex)
-    {
-        if (weaponIndex >= 0 && weaponIndex < weapons.Length)
+        // Đặt tất cả các slot về màu mặc định
+        foreach (var slot in slots)
         {
-            currentWeaponIndex = weaponIndex;
-            Debug.Log("Switched to weapon: " + weapons[currentWeaponIndex].name);
+            slot.color = defaultColor;
         }
     }
 
-    public void PickUpWeapon(Weapon newWeapon)
+    private void Update()
     {
-        
-        for (int i = 0; i < weapons.Length; i++)
+        // Kiểm tra phím được nhấn và gọi SelectSlot tương ứng
+        if (Input.GetKeyDown(KeyCode.Alpha0)) // Phím "7"
         {
-            if (weapons[i] == null)
-            {
-                weapons[i] = newWeapon;
-                Debug.Log("Picked up weapon: " + newWeapon.name);
-                return;
-            }
+            SelectSlot(0);
         }
-        Debug.Log("Inventory is full!");
+        else if (Input.GetKeyDown(KeyCode.Alpha9)) // Phím "8"
+        {
+            SelectSlot(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha8)) // Phím "9"
+        {
+            SelectSlot(2);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha7)) // Phím "0"
+        {
+            SelectSlot(3);
+        }
+    }
+
+    public void SelectSlot(int index)
+    {
+        // Kiểm tra chỉ số hợp lệ
+        if (index < 0 || index >= slots.Length)
+            return;
+
+        // Đặt tất cả slot về màu mặc định
+        foreach (var slot in slots)
+        {
+            slot.color = defaultColor;
+        }
+
+        // Đặt màu cho slot được chọn
+        slots[index].color = selectedColor;
     }
 }
