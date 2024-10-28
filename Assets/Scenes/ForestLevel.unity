@@ -3074,6 +3074,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 40
+  coinPrefab: {fileID: 0}
+  minCoins: 1
+  maxCoins: 5
 --- !u!114 &322091380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5712,6 +5715,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 40
+  coinPrefab: {fileID: 0}
+  minCoins: 1
+  maxCoins: 5
 --- !u!114 &478224867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5941,6 +5947,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 40
+  coinPrefab: {fileID: 0}
+  minCoins: 1
+  maxCoins: 5
 --- !u!114 &488231745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10340,6 +10349,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 40
+  coinPrefab: {fileID: 0}
+  minCoins: 1
+  maxCoins: 5
 --- !u!114 &654886996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11235,6 +11247,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 40
+  coinPrefab: {fileID: 0}
+  minCoins: 1
+  maxCoins: 5
 --- !u!114 &724673384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55255,6 +55270,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 40
+  coinPrefab: {fileID: 0}
+  minCoins: 1
+  maxCoins: 5
 --- !u!114 &1204164795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55845,6 +55863,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 40
+  coinPrefab: {fileID: 0}
+  minCoins: 1
+  maxCoins: 5
 --- !u!114 &1252099012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161119,6 +161140,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 40
+  coinPrefab: {fileID: 0}
+  minCoins: 1
+  maxCoins: 5
 --- !u!114 &1634857206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167538,6 +167562,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 40
+  coinPrefab: {fileID: 0}
+  minCoins: 1
+  maxCoins: 5
 --- !u!114 &1690703877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171901,6 +171928,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 40
+  coinPrefab: {fileID: 0}
+  minCoins: 1
+  maxCoins: 5
 --- !u!114 &1849234706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173139,6 +173169,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 40
+  coinPrefab: {fileID: 0}
+  minCoins: 1
+  maxCoins: 5
 --- !u!114 &1966462257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173802,6 +173835,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 40
+  coinPrefab: {fileID: 0}
+  minCoins: 1
+  maxCoins: 5
 --- !u!114 &2108301403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174356,6 +174392,14 @@ PrefabInstance:
     - target: {fileID: 2907046604042068198, guid: 53d16994e2d44de4bb163be3182ff3ea, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641556621062010148, guid: 53d16994e2d44de4bb163be3182ff3ea, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -10.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641556621062010148, guid: 53d16994e2d44de4bb163be3182ff3ea, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.15
       objectReference: {fileID: 0}
     - target: {fileID: 7322464112627700778, guid: 53d16994e2d44de4bb163be3182ff3ea, type: 3}
       propertyPath: m_Name

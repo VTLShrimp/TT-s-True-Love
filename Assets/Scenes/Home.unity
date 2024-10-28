@@ -6719,7 +6719,7 @@ Transform:
   m_GameObject: {fileID: 275452403}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.5720005, y: 5.928, z: -10}
+  m_LocalPosition: {x: 10.570965, y: 5.928, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -18434,6 +18434,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -2253911629886400664, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1747899533}
+    - targetCorrespondingSourceObject: {fileID: -2253911629886400664, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1747899544}
   m_SourcePrefab: {fileID: -8435245712485981826, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
 --- !u!1 &1298254114
 GameObject:
@@ -19834,7 +19837,7 @@ Transform:
   m_GameObject: {fileID: 1598953267}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.5720005, y: 5.928, z: -10}
+  m_LocalPosition: {x: 10.570965, y: 5.928, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19948,8 +19951,10 @@ MonoBehaviour:
   isAttacking: 0
   attackPoint: {fileID: 965457251}
   attackRange: 0.5
-  damage: 20
-  rangeWeapon: {fileID: 0}
+  airAttackRange: 1
+  groundDamage: 20
+  airDamage: 15
+  attackCooldown: 0.5
 --- !u!114 &1747899534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20001,6 +20006,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  currentHealth: 0
+  healthbar: {fileID: 0}
+  maxStamina: 100
+  currentStamina: 0
+  staminabar: {fileID: 0}
+  animator: {fileID: 0}
+  Player: {fileID: 0}
 --- !u!114 &1747899536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20137,6 +20149,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7878350319992209165, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
   m_PrefabInstance: {fileID: 1247575341}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1747899544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747899532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 440d81944cac21a4ab60281f6022b9d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStamina: 100
+  currentStamina: 0
+  staminaBar: {fileID: 0}
+  staminaRegenRate: 10
+  jumpStaminaCost: 5
+  dashStaminaCost: 10
+  dodgeStaminaCost: 50
 --- !u!1 &1781821114
 GameObject:
   m_ObjectHideFlags: 0
