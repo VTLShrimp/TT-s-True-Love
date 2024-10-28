@@ -1,0 +1,20 @@
+[
+  {
+    "MountId": "56e62dd7-241f-41e9-8c6b-dd4ca4513e62",
+    "AncestorCsetIds": [
+      102
+    ],
+    "SourceCsetId": 108,
+    "DestinationCsetId": 102,
+    "FileConflicts": [
+      {
+        "Path": "/Assets/Scenes/ForestLevel.unity",
+        "ItemId": 3870,
+        "ParentItemId": 348,
+        "BaseRevId": 30276,
+        "SourceRevId": 30398,
+        "DestinationRevId": 30276
+      }
+    ]
+  }
+]
