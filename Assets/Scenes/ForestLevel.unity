@@ -54268,6 +54268,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -2253911629886400664, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1117981711}
+    - targetCorrespondingSourceObject: {fileID: -2253911629886400664, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1117981713}
   m_SourcePrefab: {fileID: -8435245712485981826, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
 --- !u!1 &1117981689 stripped
 GameObject:
@@ -54425,6 +54428,9 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   healthbar: {fileID: 1337296053}
+  maxStamina: 100
+  currentStamina: 0
+  staminabar: {fileID: 0}
   animator: {fileID: 1117981691}
   Player: {fileID: 1117981689}
 --- !u!114 &1117981707
@@ -54515,6 +54521,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 0}
+--- !u!114 &1117981713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117981689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 440d81944cac21a4ab60281f6022b9d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStamina: 100
+  currentStamina: 0
+  staminaBar: {fileID: 0}
+  staminaRegenRate: 10
+  jumpStaminaCost: 5
+  dashStaminaCost: 10
+  dodgeStaminaCost: 50
 --- !u!1001 &1121786853
 PrefabInstance:
   m_ObjectHideFlags: 0
