@@ -1,29 +1,60 @@
-﻿using System.Collections;
+﻿using BarthaSzabolcs.Tutorial_SpriteFlash;
+using System.Collections;
 using UnityEngine;
 
 public class BossHealth : MonoBehaviour, IHealth
 {
-    public int maxHealth = 100;
+    public int maxHealth;
     private float currentHealth;
-    public Animator animator;
     public bool dead;
     public float dieAnimationLength = 2.0f; // Set this to the length of your "die" animation
     public DetectionZone zone;
     private Vector2 startPosition;
-    private  Rigidbody2D rb; // Adding 'new' keyword to hide inherited member
-    private new Collider2D collider; // Adding 'new' keyword to hide inherited member
+    public bool isInvulnerable = false;
+
+    // Use SerializeField to expose these variables in the Inspector
+    [SerializeField] private Animator animator;
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Collider2D collider;
+    [SerializeField] private SimpleFlash flash; // Reference to SimpleFlash script
+    public Transform player; // Tham chiếu đến người chơi
+    public float aggroRange = 5.0f;
+
+    private bool isEnraged; // Variable to track enrage status
 
     void Start()
     {
         currentHealth = maxHealth;
         startPosition = transform.position;
-        collider = GetComponent<Collider2D>();
-        rb = GetComponent<Rigidbody2D>();
-        // Make sure the animator is assigned correctly
-        animator = GetComponent<Animator>();
+        isEnraged = false; // Initialize enrage status
+
+        // Initialize components if not assigned via the Inspector
         if (animator == null)
         {
-            Debug.LogError("Animator not found on Boss!");
+            animator = GetComponent<Animator>();
+            if (animator == null)
+            {
+                Debug.LogError("Animator not found on Boss!");
+            }
+        }
+
+        if (rb == null)
+        {
+            rb = GetComponent<Rigidbody2D>();
+        }
+
+        if (collider == null)
+        {
+            collider = GetComponent<Collider2D>();
+        }
+
+        if (flash == null)
+        {
+            flash = GetComponent<SimpleFlash>();
+            if (flash == null)
+            {
+                Debug.LogError("SimpleFlash not found on Boss!");
+            }
         }
     }
 
@@ -34,16 +65,49 @@ public class BossHealth : MonoBehaviour, IHealth
         collider.enabled = true;
         rb.velocity = Vector2.zero; // Reset velocity to ensure no movement
         rb.gravityScale = 1; // Restore gravity scale if altered
+        isEnraged = false; // Reset enrage status
+        animator.SetBool("IsEnrage", false); // Reset animator enrage status
+    }
+    void Update()
+    {
+        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+        Debug.Log("Distance to player: " + distanceToPlayer); // Kiểm tra khoảng cách
+
+        if (distanceToPlayer < aggroRange)
+        {
+            if (currentHealth < 500 && !isEnraged)
+            {
+                isEnraged = true;
+                animator.SetTrigger("IsEnraged");
+                Debug.Log("Boss is enraged due to proximity to player!");
+            }
+        }
     }
 
-    public void TakeDamage(int damage) // Implementing IHealth interface
+
+    public void TakeDamage(int damage)
     {
-        if (dead) return; // If already dead, don't take damage again
+        if (isInvulnerable)
+        {
+            Debug.Log("Boss is invulnerable, no damage taken!");
+            return;
+        }
+
         currentHealth -= damage;
+
+        Debug.Log("Boss takes damage: " + damage + ". Current health: " + currentHealth);
+
+        if (currentHealth < 500 && !isEnraged)
+        {
+            isEnraged = true; // Đánh dấu boss là làm giận
+            Debug.Log("Triggering enrage state!"); // Thông báo trước khi gọi trigger
+            animator.SetTrigger("IsEnraged");
+        }
+
+
         if (currentHealth > 0)
         {
-            // Trigger the "hurt" animation if still alive
-            animator.SetTrigger("hurt");
+            flash.Flash();
         }
         else
         {
@@ -52,18 +116,18 @@ public class BossHealth : MonoBehaviour, IHealth
                 dead = true;
                 animator.SetTrigger("die");
                 collider.enabled = false;
-                rb.velocity = Vector2.zero; // Stop any movement
-                rb.gravityScale = 0; // Freeze the boss in place by setting gravity scale to zero
-                // Destroy the DetectionZone when the boss dies
+                rb.velocity = Vector2.zero;
+                rb.gravityScale = 0;
                 if (zone != null)
                 {
-                    Destroy(zone.gameObject); // Destroy the entire zone GameObject if applicable
+                    Destroy(zone.gameObject);
                 }
-                // Start the coroutine to disable the animator and destroy the boss
                 StartCoroutine(DisableAnimatorAndDestroy());
             }
         }
     }
+
+
 
     private IEnumerator DisableAnimatorAndDestroy()
     {

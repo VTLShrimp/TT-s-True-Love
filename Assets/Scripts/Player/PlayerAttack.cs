@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public class PlayerAttack : MonoBehaviour
 {
     public LayerMask enemyLayers;
@@ -18,6 +19,8 @@ public class PlayerAttack : MonoBehaviour
     private PlayerMovement playerMovement;
     private Coroutine attackCoroutine; // Biến để lưu Coroutine của đòn tấn công
 
+    private bool canAttack = true; // Track if the player can attack
+
     private void Awake()
     {
         instance = this;
@@ -30,7 +33,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        if (Time.time >= nextAttackTime && Input.GetMouseButtonDown(0) && !isAttacking)
+        if (Time.time >= nextAttackTime && Input.GetMouseButtonDown(0) && canAttack && !isAttacking)
         {
             PerformAttack();
             nextAttackTime = Time.time + attackCooldown;
@@ -113,6 +116,20 @@ public class PlayerAttack : MonoBehaviour
 
             Debug.Log("Attack interrupted!");
         }
+    }
+
+    // Method to disable attacking temporarily
+    public void DisableAttacking(float duration)
+    {
+        canAttack = false; // Disable attacking
+        StartCoroutine(EnableAttackingAfterDelay(duration));
+    }
+
+    // Coroutine to re-enable attacking after a delay
+    private IEnumerator EnableAttackingAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        canAttack = true; // Re-enable attacking
     }
 
     private void OnDrawGizmos()

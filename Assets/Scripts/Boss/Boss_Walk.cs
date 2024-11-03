@@ -23,15 +23,19 @@ public class Boss_Walk : StateMachineBehaviour
         {
             boss.LookatPlayer(); // Boss looks at the player
 
-            // Move the boss towards the player
-            Vector2 target = new(player.position.x, rb.position.y);
-            Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
-            rb.transform.position = newPos;
-
             // Check if the boss is within attack range
-            if (Vector2.Distance(player.position, rb.position) <= attackRange)
+            float distanceToPlayer = Vector2.Distance(player.position, rb.position);
+            if (distanceToPlayer > attackRange)
             {
-                animator.SetTrigger("Attack"); // Trigger the attack action
+                // Move the boss towards the player if outside attack range
+                Vector2 target = new(player.position.x, rb.position.y);
+                Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
+                rb.transform.position = newPos;
+            }
+            else
+            {
+                // Trigger the attack if within range
+                animator.SetTrigger("Attack");
             }
         }
     }
