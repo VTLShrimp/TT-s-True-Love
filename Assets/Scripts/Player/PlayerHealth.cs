@@ -68,7 +68,7 @@ public class PlayerHealth : MonoBehaviour
             StartCoroutine(HandleKnockback());
 
             // Trigger the flash effect
-            flash.Flash(); // Call the flash effect when taking damage
+            //flash.Flash(); // Call the flash effect when taking damage*/
         }
         else if (!dead)
         {

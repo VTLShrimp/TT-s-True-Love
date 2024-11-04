@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1618257384354696078}
   - component: {fileID: 3698398234492905897}
   - component: {fileID: 5985109794791461233}
-  - component: {fileID: 8464380195635906327}
+  - component: {fileID: 8067890969514651451}
   m_Layer: 0
   m_Name: coin
   m_TagString: Untagged
@@ -76,8 +76,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -489113056, guid: ca6a85ff0c4801e4c919dfcc8982f3f0, type: 3}
+  m_SortingOrder: 6
+  m_Sprite: {fileID: -489113056, guid: 1bb5cb546b13b31448c66d046e7cb720, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,7 +98,7 @@ Animator:
   m_GameObject: {fileID: 3050795039237815555}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: dc52227604320944b93b733614d43d15, type: 2}
+  m_Controller: {fileID: 9100000, guid: 94ce7726ccbf8ab4680b9fdd6d5bdd0b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -171,7 +171,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &8464380195635906327
+--- !u!114 &8067890969514651451
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -180,6 +180,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3050795039237815555}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e33e9e2e48c0cfa4c981258b084e97f4, type: 3}
+  m_Script: {fileID: 11500000, guid: e0e2d03249009d04d942fbfd1624e416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
