@@ -2,8 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, IDataPersistence
 {
+
     public float maxHealth = 100f;      // Máu tối đa của nhân vật
     public float currentHealth;         // Máu hiện tại của nhân vật
     public Image healthbar;             // UI Image để hiển thị thanh máu
@@ -11,18 +12,29 @@ public class PlayerHealth : MonoBehaviour
     public GameObject Player;           // Đối tượng Player trong game
     private bool dead = false;          // Trạng thái chết của nhân vật
     private PlayerAttack playerAttack;
-
+    public int money;
     private void Start()
     {
-        currentHealth = maxHealth;      // Khởi tạo máu ban đầu là máu tối đa
+        DontDestroyOnLoad(gameObject);
         Debug.Log("Máu ban đầu của nhân vật: " + currentHealth); // Log kiểm tra máu ban đầu
         UpdateHealthBar();              // Cập nhật thanh máu khi bắt đầu game
         playerAttack = GetComponent<PlayerAttack>();
     }
 
-    private void Update()
+    public void SaveData(ref GameData data)
     {
-        // Logic update khác nếu cần
+        data.maxhealth = (int)this.maxHealth;
+        data.currentHealth = (int)this.currentHealth;
+        data.playerPosition = this.transform.position;
+        data.money = this.money;
+    }
+    public void LoadData(GameData data)
+    {
+        this.maxHealth = data.maxhealth;
+        this.currentHealth = data.currentHealth;
+        this.healthbar.fillAmount = currentHealth / maxHealth;
+        this.transform.position = data.playerPosition;
+        this.money = data.money;
     }
 
     public void TakeDamage(float damage)
@@ -66,7 +78,7 @@ public class PlayerHealth : MonoBehaviour
             healthbar.fillAmount = currentHealth / maxHealth;
         }
     }
-  
+
     private IEnumerator DisableAnimatorAndDestroy()
     {
         // Chờ cho đến khi hoạt ảnh "die" hoàn thành

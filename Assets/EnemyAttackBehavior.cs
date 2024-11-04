@@ -8,7 +8,7 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] int attackDamage = 10; // Sát thương
     [SerializeField] float attackInterval = 1.5f; // Thời gian giữa các lần tấn công
     [SerializeField] float chargeSpeed = 5f; // Tốc độ khi tấn công lao vào
-    [SerializeField] float retreatDistance = 2f; // Khoảng cách lùi lại sau khi tấn công
+    // [SerializeField] float retreatDistance = 2f; // Khoảng cách lùi lại sau khi tấn công
     [SerializeField] LayerMask playerLayer; // Lớp để phát hiện người chơi
 
     private float nextAttackTime;
