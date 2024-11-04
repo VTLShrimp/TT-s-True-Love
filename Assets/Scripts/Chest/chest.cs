@@ -7,6 +7,7 @@ public class Chest : MonoBehaviour
     public GameObject chestClose, chestOpen;
     public GameObject coinPrefab; // Reference to the coin prefab
     private bool isPlayerNear = false;
+    private bool isOpened = false; // Flag to track if the chest has been opened
 
     // Start is called before the first frame update
     void Start()
@@ -18,11 +19,12 @@ public class Chest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isPlayerNear && Input.GetKeyDown(KeyCode.E))
+        if (isPlayerNear && Input.GetKeyDown(KeyCode.E) && !isOpened)
         {
             chestClose.SetActive(false);
             chestOpen.SetActive(true);
             DropCoin();
+            isOpened = true; // Mark the chest as opened
         }
     }
 
@@ -39,8 +41,6 @@ public class Chest : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             isPlayerNear = false;
-            chestClose.SetActive(false);
-            chestOpen.SetActive(true);
         }
     }
 
