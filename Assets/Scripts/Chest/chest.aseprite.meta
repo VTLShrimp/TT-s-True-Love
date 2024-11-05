@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 451162396f5180b4a91b16c363a5f470
+guid: 920a5879641b10d4280eaf9e16d04db0
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -121,18 +121,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: coin
+  - name: chest
     originalName: 
-    pivot: {x: 0.50549453, y: 0}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 91
-      height: 11
-    spriteID: 40dfa1faccd43bb44bc689f1df35e1f1
+      width: 64
+      height: 17
+    spriteID: 6a8ad2a73f38f0542a915eb6811604f9
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -144,25 +144,25 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 1608901255
-    name: coin
+    guid: -1810329559
+    name: chest
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: coin
+    - name: chest
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 2
+        x: 0
         y: 0
-        width: 91
-        height: 11
-      spriteId: 40dfa1faccd43bb44bc689f1df35e1f1
+        width: 64
+        height: 17
+      spriteId: 6a8ad2a73f38f0542a915eb6811604f9
     linkedCells: []
     parentIndex: -1
   platformSettings: []
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 96, y: 16}
+  canvasSize: {x: 64, y: 17}
