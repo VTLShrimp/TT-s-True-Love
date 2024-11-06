@@ -349,6 +349,7 @@ MonoBehaviour:
   coinPrefab: {fileID: 0}
   minCoins: 1
   maxCoins: 5
+  spawnDelay: 0.1
 --- !u!1 &177268266
 GameObject:
   m_ObjectHideFlags: 0
@@ -705,7 +706,7 @@ MonoBehaviour:
   attackPoint: {fileID: 2100462415}
   attackRange: 0.51
   airAttackRange: 1
-  groundDamage: 20
+  groundDamage: 200
   airDamage: 15
   attackCooldown: 0.5
 --- !u!58 &433064448
@@ -755,7 +756,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab8452796d4a246408372985b64b6cf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 1000
   currentHealth: 0
   healthbar: {fileID: 0}
   maxStamina: 100
@@ -1070,9 +1071,9 @@ GameObject:
   - component: {fileID: 654409919}
   - component: {fileID: 654409918}
   - component: {fileID: 654409917}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Grid
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3764,6 +3765,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1722110186096488465, guid: 53d16994e2d44de4bb163be3182ff3ea, type: 3}
+      propertyPath: minCoins
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1722110186096488465, guid: 53d16994e2d44de4bb163be3182ff3ea, type: 3}
+      propertyPath: maxHealth
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1722110186096488465, guid: 53d16994e2d44de4bb163be3182ff3ea, type: 3}
       propertyPath: coinPrefab
       value: 

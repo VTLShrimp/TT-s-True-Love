@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class coinscripts : MonoBehaviour
+public class CoinScripts : MonoBehaviour
 {
     private Rigidbody2D rb;
 
@@ -17,28 +17,34 @@ public class coinscripts : MonoBehaviour
             rb = gameObject.AddComponent<Rigidbody2D>();
         }
 
-        // Freeze the Y position to prevent the coin from falling out of the map
-        rb.constraints = RigidbodyConstraints2D.FreezePositionY;
+        // Apply an upward force to make the coin "jump"
+        rb.AddForce(new Vector2(0, 5), ForceMode2D.Impulse);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            // Change Rigidbody2D to kinematic when it hits the ground
+            rb.isKinematic = true;
+            rb.velocity = Vector2.zero; // Stop any remaining movement
+            Debug.Log("Coin hit the ground.");
+        }
     }
 
-    // Xử lý khi có va chạm với coin
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            // Logic xử lý khi người chơi thu thập coin
             Debug.Log("Coin collected!");
-
-            // Tăng điểm hoặc thực hiện các hành động khác ở đây
-
-            // Xóa đối tượng coin khỏi game
             Destroy(gameObject);
+        }
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            // Change Rigidbody2D to kinematic when it hits the ground
+            rb.isKinematic = true;
+            rb.velocity = Vector2.zero; // Stop any remaining movement
+            Debug.Log("Coin hit the ground.");
         }
     }
 }
