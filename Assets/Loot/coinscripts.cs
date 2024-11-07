@@ -5,6 +5,8 @@ using UnityEngine;
 public class CoinScripts : MonoBehaviour
 {
     private Rigidbody2D rb;
+    private PlayerHealth playerHealth;
+    private int coinValue;
 
     // Start is called before the first frame update
     void Start()
@@ -16,9 +18,18 @@ public class CoinScripts : MonoBehaviour
         {
             rb = gameObject.AddComponent<Rigidbody2D>();
         }
-
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            playerHealth = player.GetComponent<PlayerHealth>();
+        }
+        else
+        {
+            Debug.LogError("Player object not found.");
+        }
         // Apply an upward force to make the coin "jump"
         rb.AddForce(new Vector2(0, 5), ForceMode2D.Impulse);
+        coinValue = Random.Range(10, 51);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -37,6 +48,7 @@ public class CoinScripts : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("Coin collected!");
+            playerHealth.money += coinValue;
             Destroy(gameObject);
         }
         if (collision.gameObject.CompareTag("Ground"))

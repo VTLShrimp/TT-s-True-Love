@@ -9,6 +9,7 @@ public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth = 100f;
     public float currentHealth;
+    public int money = 0;
     public Image healthbar;
     public float maxStamina = 100f;
     public float currentStamina;
