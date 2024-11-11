@@ -4113,7 +4113,7 @@ Transform:
   m_GameObject: {fileID: 348635791}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 232.372, y: -25.512, z: -10}
+  m_LocalPosition: {x: 267.9736, y: -30.662, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -5164,7 +5164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e55741a39274874ab2a0a4a55cfbd29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 20
+  attackDamage: 50
   enragedAttackDamage: 500
   attackOffset: {x: -2, y: -2, z: 0}
   attackSize: {x: 9, y: 6}
@@ -11379,7 +11379,7 @@ Transform:
   m_GameObject: {fileID: 724717489}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 232.372, y: -25.512, z: -10}
+  m_LocalPosition: {x: 267.9736, y: -30.662, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -54345,11 +54345,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 229.9
+      value: 265.2
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -29.3
+      value: -34.45
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -54593,7 +54593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab8452796d4a246408372985b64b6cf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1e+15
+  maxHealth: 1000
   currentHealth: 0
   healthbar: {fileID: 1337296053}
   maxStamina: 100
@@ -54625,7 +54625,7 @@ MonoBehaviour:
   attackPoint: {fileID: 2101921557}
   attackRange: 0.5
   airAttackRange: 1.8
-  groundDamage: 501
+  groundDamage: 100
   airDamage: 50
   attackCooldown: 1
 --- !u!114 &1117981708
