@@ -4174,7 +4174,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 11
+  m_Priority: 12
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 1117981690}
@@ -4206,7 +4206,7 @@ Transform:
   m_GameObject: {fileID: 348635791}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.127001, y: 1.9879999, z: -10}
+  m_LocalPosition: {x: -17.246782, y: 2.748, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -5277,7 +5277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4813f48b31635469f37ebdf8ce1e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1000
+  maxHealth: 300
   dead: 0
   dieAnimationLength: 2
   zone: {fileID: 40252999}
@@ -11476,7 +11476,7 @@ Transform:
   m_GameObject: {fileID: 724717489}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.127001, y: 1.9879999, z: -10}
+  m_LocalPosition: {x: -17.246782, y: 2.748, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -54442,11 +54442,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15.6
+      value: -19.72
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.8
+      value: -1.04
       objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: 38cb6adde9ac1674c855c081665baddb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -54723,7 +54723,7 @@ MonoBehaviour:
   attackPoint: {fileID: 2101921557}
   attackRange: 0.5
   airAttackRange: 1.8
-  groundDamage: 501
+  groundDamage: 30
   airDamage: 50
   attackCooldown: 1
 --- !u!114 &1117981708
