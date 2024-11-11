@@ -54,6 +54,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (DialogueManager.GetInstance().isDialogueActive)
+        {
+            return;
+        }
         // Dash and dodge cooldown timers
         if (dashCooldownTimer > 0) dashCooldownTimer -= Time.deltaTime;
         if (dodgecooldownTimer > 0) dodgecooldownTimer -= Time.deltaTime;
@@ -133,6 +137,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (DialogueManager.GetInstance().isDialogueActive)
+        {
+            return;
+        }
         if (isDashing)
         {
             rb.velocity = new Vector2(transform.localScale.x * dashSpeed, 0f);
@@ -256,7 +264,7 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(EnableColliders), 0.2f);
         }
     }
-      private void EndDodge()
+    private void EndDodge()
     {
         isDodging = false;
         standingCollider.enabled = true;
