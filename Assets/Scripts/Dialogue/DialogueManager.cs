@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using Ink.Runtime;
 using Unity.VisualScripting;
+using UnityEngine.EventSystems;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -14,8 +15,12 @@ public class DialogueManager : MonoBehaviour
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choicesText;
+
+    [Header("Additional UI Panels")]
+    [SerializeField] private GameObject yesPanel; // Panel to open on "Yes" selection
+
     public bool isDialogueActive { get; private set; }
-    private Story currentstory;
+    private Story currentStory;
 
     private void Awake()
     {
@@ -30,10 +35,12 @@ public class DialogueManager : MonoBehaviour
             Debug.LogWarning("There is already an instance of DialogueManager in the scene");
         }
     }
+
     public static DialogueManager GetInstance()
     {
         return instance;
     }
+
     private void Start()
     {
         dialoguePanel.SetActive(false);
@@ -46,6 +53,7 @@ public class DialogueManager : MonoBehaviour
             index++;
         }
     }
+
     private void Update()
     {
         if (!isDialogueActive)
@@ -57,13 +65,15 @@ public class DialogueManager : MonoBehaviour
             ContinueStory();
         }
     }
+
     public void EnterDialogueMode(TextAsset inkJSON)
     {
-        currentstory = new Story(inkJSON.text);
+        currentStory = new Story(inkJSON.text);
         isDialogueActive = true;
         dialoguePanel.SetActive(true);
         ContinueStory();
     }
+
     private void ExitDialogueMode()
     {
         isDialogueActive = false;
@@ -73,9 +83,18 @@ public class DialogueManager : MonoBehaviour
 
     private void ContinueStory()
     {
-        if (currentstory.canContinue)
+        if (currentStory.canContinue)
         {
-            dialogueText.text = currentstory.Continue();
+            // Capture the text to display
+            string storyText = currentStory.Continue();
+
+            // Process any tags to handle custom UI actions
+            ProcessTags();
+
+            // Display the dialogue text only, without any tags
+            dialogueText.text = storyText;
+
+            // Display available choices if there are any
             DisplayChoices();
         }
         else
@@ -83,9 +102,10 @@ public class DialogueManager : MonoBehaviour
             ExitDialogueMode();
         }
     }
+
     private void DisplayChoices()
     {
-        List<Choice> currentChoices = currentstory.currentChoices;
+        List<Choice> currentChoices = currentStory.currentChoices;
         if (currentChoices.Count > choices.Length)
         {
             Debug.LogWarning("There are more choices than the number of choice buttons");
@@ -101,6 +121,35 @@ public class DialogueManager : MonoBehaviour
         for (int i = index; i < choices.Length; i++)
         {
             choices[i].SetActive(false);
+        }
+        StartCoroutine(SelectChoice());
+    }
+
+    private IEnumerator SelectChoice()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        yield return new WaitForEndOfFrame();
+        EventSystem.current.SetSelectedGameObject(choices[0].gameObject);
+    }
+
+    public void MakeChoice(int choiceIndex)
+    {
+        currentStory.ChooseChoiceIndex(choiceIndex);
+        ContinueStory();
+    }
+
+    private void ProcessTags()
+    {
+        foreach (string tag in currentStory.currentTags)
+        {
+            if (tag == "open_panel")
+            {
+                yesPanel.SetActive(true); // Activate the panel for the "Yes" choice
+            }
+            else if (tag == "close_panel")
+            {
+                yesPanel.SetActive(false); // Deactivate the panel if necessary
+            }
         }
     }
 }
