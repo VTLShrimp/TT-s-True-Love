@@ -33,8 +33,7 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth = maxHealth;
         currentStamina = maxStamina;
-
-        Debug.Log("Initial health of the character: " + currentHealth);
+        DontDestroyOnLoad(gameObject);
         UpdateHealthBar();
         UpdateStaminaBar();
         UpdateHealUsesText();

@@ -78,27 +78,26 @@ public class DialogueManager : MonoBehaviour
     {
         isDialogueActive = false;
         dialoguePanel.SetActive(false);
-        dialogueText.text = "";
+        dialogueText.text = ""; // Clear dialogue text
+        PlayerAttack.instance.DisableAttacking(0.2f);
     }
 
     private void ContinueStory()
     {
         if (currentStory.canContinue)
         {
-            // Capture the text to display
-            string storyText = currentStory.Continue();
-
-            // Process any tags to handle custom UI actions
-            ProcessTags();
-
-            // Display the dialogue text only, without any tags
-            dialogueText.text = storyText;
-
-            // Display available choices if there are any
+            dialogueText.text = currentStory.Continue();
+            DisplayChoices(); // Display choices after showing the line
+            ProcessTags(); // Process any tags within the story
+        }
+        else if (currentStory.currentChoices.Count > 0)
+        {
+            // If there are choices to be made, display them and don't exit
             DisplayChoices();
         }
         else
         {
+            // If no lines or choices are left, exit the dialogue
             ExitDialogueMode();
         }
     }
@@ -111,6 +110,7 @@ public class DialogueManager : MonoBehaviour
             Debug.LogWarning("There are more choices than the number of choice buttons");
             return;
         }
+
         int index = 0;
         foreach (Choice choice in currentChoices)
         {
@@ -122,6 +122,8 @@ public class DialogueManager : MonoBehaviour
         {
             choices[i].SetActive(false);
         }
+
+        // Ensure the first choice is selected when choices appear
         StartCoroutine(SelectChoice());
     }
 
@@ -129,7 +131,11 @@ public class DialogueManager : MonoBehaviour
     {
         EventSystem.current.SetSelectedGameObject(null);
         yield return new WaitForEndOfFrame();
-        EventSystem.current.SetSelectedGameObject(choices[0].gameObject);
+        // Set focus to the first choice only if keyboard navigation is detected
+        if (Input.anyKey && !Input.GetMouseButton(0)) // Ensures mouse click doesn't trigger selection
+        {
+            EventSystem.current.SetSelectedGameObject(choices[0].gameObject);
+        }
     }
 
     public void MakeChoice(int choiceIndex)
@@ -145,10 +151,6 @@ public class DialogueManager : MonoBehaviour
             if (tag == "open_panel")
             {
                 yesPanel.SetActive(true); // Activate the panel for the "Yes" choice
-            }
-            else if (tag == "close_panel")
-            {
-                yesPanel.SetActive(false); // Deactivate the panel if necessary
             }
         }
     }

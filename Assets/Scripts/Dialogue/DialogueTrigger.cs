@@ -4,26 +4,35 @@ using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
 {
-    [Header("Visual Cue")]
     [SerializeField] private GameObject visualCue;
-    [Header("Ink Json")]
     [SerializeField] private TextAsset inkJSON;
-
     private bool PlayerInRange;
+    private PlayerMovement playerMovement;
 
     private void Awake()
     {
         visualCue.SetActive(false);
         PlayerInRange = false;
     }
+
+    private void Start()
+    {
+        playerMovement = FindObjectOfType<PlayerMovement>();
+        if (playerMovement == null)
+        {
+            Debug.LogError("PlayerMovement component not found in the scene.");
+        }
+    }
+
     private void Update()
     {
         if (PlayerInRange)
         {
             visualCue.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.E))
+            DialogueManager dialogueManager = DialogueManager.GetInstance();
+            if (dialogueManager != null && !dialogueManager.isDialogueActive && Input.GetKeyDown(KeyCode.E) && playerMovement != null && playerMovement.IsStandingStill())
             {
-                DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+                dialogueManager.EnterDialogueMode(inkJSON);
             }
         }
         else
@@ -31,21 +40,20 @@ public class DialogueTrigger : MonoBehaviour
             visualCue.SetActive(false);
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
 
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Player"))
+        {
             PlayerInRange = true;
         }
     }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
 
+    private void OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Player"))
+        {
             PlayerInRange = false;
         }
     }
-
 }

@@ -347,8 +347,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   coinPrefab: {fileID: 0}
-  minCoins: 1
-  maxCoins: 5
   spawnDelay: 0.1
 --- !u!1 &177268266
 GameObject:
@@ -709,6 +707,9 @@ MonoBehaviour:
   groundDamage: 200
   airDamage: 15
   attackCooldown: 0.5
+  swordWavePrefab: {fileID: 0}
+  spawnPoint: {fileID: 0}
+  swordWaveDamage: 20
 --- !u!58 &433064448
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -759,14 +760,15 @@ MonoBehaviour:
   maxHealth: 1000
   currentHealth: 0
   money: 0
-  healthbar: {fileID: 0}
+  healthbar: {fileID: 1701319433}
   maxStamina: 100
   currentStamina: 0
-  staminabar: {fileID: 0}
+  staminabar: {fileID: 1097382619}
   animator: {fileID: 433064445}
   Player: {fileID: 433064438}
   healUsesText: {fileID: 0}
   flash: {fileID: 0}
+  moneyText: {fileID: 0}
   knockbackForce: 5
   hurtDuration: 1
 --- !u!114 &433064450
@@ -1336,6 +1338,7 @@ MonoBehaviour:
   chestClose: {fileID: 1732779440}
   chestOpen: {fileID: 1617097268}
   coinPrefab: {fileID: 3050795039237815555, guid: 7c4e38768dd649648aaf313b707ab1be, type: 3}
+  spawnDelay: 0.1
 --- !u!61 &757968445
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1743,6 +1746,7 @@ MonoBehaviour:
   chestClose: {fileID: 1789714822}
   chestOpen: {fileID: 1437640583}
   coinPrefab: {fileID: 3050795039237815555, guid: 7c4e38768dd649648aaf313b707ab1be, type: 3}
+  spawnDelay: 0.1
 --- !u!61 &905151670
 BoxCollider2D:
   m_ObjectHideFlags: 0
