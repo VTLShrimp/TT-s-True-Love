@@ -13,6 +13,9 @@ public class PlayerHealth : MonoBehaviour
     public Image healthbar;
     public float maxStamina = 100f;
     public float currentStamina;
+
+    public int maxMana = 100;
+    public int currentMana;
     public Image staminabar;
     public Animator animator;
     public GameObject Player;
@@ -31,6 +34,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Start()
     {
+        currentMana = maxMana;
         currentHealth = maxHealth;
         currentStamina = maxStamina;
         DontDestroyOnLoad(gameObject);

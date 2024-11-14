@@ -3,21 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Ink.Runtime;
-using Unity.VisualScripting;
 using UnityEngine.EventSystems;
 
 public class DialogueManager : MonoBehaviour
 {
     private static DialogueManager instance;
+
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
+
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choicesText;
 
-    [Header("Additional UI Panels")]
-    [SerializeField] private GameObject yesPanel; // Panel to open on "Yes" selection
+    [Header("Upgrade Panels")]
+    [SerializeField] private GameObject npc1UpgradePanel; // Panel for NPC 1
+    [SerializeField] private GameObject npc2UpgradePanel; // Panel for NPC 2
 
     public bool isDialogueActive { get; private set; }
     private Story currentStory;
@@ -46,11 +48,9 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(false);
         isDialogueActive = false;
         choicesText = new TextMeshProUGUI[choices.Length];
-        int index = 0;
-        foreach (GameObject choice in choices)
+        for (int i = 0; i < choices.Length; i++)
         {
-            choicesText[index] = choice.GetComponentInChildren<TextMeshProUGUI>();
-            index++;
+            choicesText[i] = choices[i].GetComponentInChildren<TextMeshProUGUI>();
         }
     }
 
@@ -66,9 +66,10 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void EnterDialogueMode(TextAsset inkJSON)
+    public void EnterDialogueMode(TextAsset inkJSON, string startingKnot)
     {
         currentStory = new Story(inkJSON.text);
+        currentStory.ChoosePathString(startingKnot); // Start at the specified knot
         isDialogueActive = true;
         dialoguePanel.SetActive(true);
         ContinueStory();
@@ -79,7 +80,6 @@ public class DialogueManager : MonoBehaviour
         isDialogueActive = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = ""; // Clear dialogue text
-        PlayerAttack.instance.DisableAttacking(0.2f);
     }
 
     private void ContinueStory()
@@ -87,17 +87,15 @@ public class DialogueManager : MonoBehaviour
         if (currentStory.canContinue)
         {
             dialogueText.text = currentStory.Continue();
-            DisplayChoices(); // Display choices after showing the line
-            ProcessTags(); // Process any tags within the story
+            DisplayChoices();
+            ProcessTags();
         }
         else if (currentStory.currentChoices.Count > 0)
         {
-            // If there are choices to be made, display them and don't exit
             DisplayChoices();
         }
         else
         {
-            // If no lines or choices are left, exit the dialogue
             ExitDialogueMode();
         }
     }
@@ -123,7 +121,6 @@ public class DialogueManager : MonoBehaviour
             choices[i].SetActive(false);
         }
 
-        // Ensure the first choice is selected when choices appear
         StartCoroutine(SelectChoice());
     }
 
@@ -131,8 +128,7 @@ public class DialogueManager : MonoBehaviour
     {
         EventSystem.current.SetSelectedGameObject(null);
         yield return new WaitForEndOfFrame();
-        // Set focus to the first choice only if keyboard navigation is detected
-        if (Input.anyKey && !Input.GetMouseButton(0)) // Ensures mouse click doesn't trigger selection
+        if (Input.anyKey && !Input.GetMouseButton(0))
         {
             EventSystem.current.SetSelectedGameObject(choices[0].gameObject);
         }
@@ -148,9 +144,15 @@ public class DialogueManager : MonoBehaviour
     {
         foreach (string tag in currentStory.currentTags)
         {
-            if (tag == "open_panel")
+            if (tag == "open_panel_npc1")
             {
-                yesPanel.SetActive(true); // Activate the panel for the "Yes" choice
+                npc1UpgradePanel.SetActive(true); // Activate NPC 1's upgrade panel
+                ExitDialogueMode();
+            }
+            else if (tag == "open_panel_npc2")
+            {
+                npc2UpgradePanel.SetActive(true); // Activate NPC 2's upgrade panel
+                ExitDialogueMode();
             }
         }
     }

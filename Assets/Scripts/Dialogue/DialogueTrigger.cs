@@ -6,6 +6,8 @@ public class DialogueTrigger : MonoBehaviour
 {
     [SerializeField] private GameObject visualCue;
     [SerializeField] private TextAsset inkJSON;
+    [SerializeField] private string startingKnot; // New field for the starting knot name
+
     private bool PlayerInRange;
     private PlayerMovement playerMovement;
 
@@ -32,7 +34,8 @@ public class DialogueTrigger : MonoBehaviour
             DialogueManager dialogueManager = DialogueManager.GetInstance();
             if (dialogueManager != null && !dialogueManager.isDialogueActive && Input.GetKeyDown(KeyCode.E) && playerMovement != null && playerMovement.IsStandingStill())
             {
-                dialogueManager.EnterDialogueMode(inkJSON);
+                // Pass the inkJSON and startingKnot to start the dialogue at the specific conversation
+                dialogueManager.EnterDialogueMode(inkJSON, startingKnot);
             }
         }
         else
