@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
@@ -21,6 +22,10 @@ public class PlayerAttack : MonoBehaviour
 
     private bool canAttack = true; // Track if the player can attack
 
+    public GameObject swordWavePrefab; // Prefab kiếm khí
+    public Transform spawnPoint;       // Điểm xuất phát của kiếm khí
+    public int swordWaveDamage = 20;   // Sát thương của kiếm khí
+
     private void Awake()
     {
         instance = this;
@@ -29,15 +34,25 @@ public class PlayerAttack : MonoBehaviour
     void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();  // Lấy tham chiếu tới PlayerMovement
+        
     }
 
     void Update()
     {
+        if (DialogueManager.GetInstance().isDialogueActive)
+        {
+            return;
+        }
         if (Time.time >= nextAttackTime && Input.GetMouseButtonDown(0) && canAttack && !isAttacking)
         {
             PerformAttack();
             nextAttackTime = Time.time + attackCooldown;
         }
+        if (Input.GetMouseButtonDown(1))  // 1 là chuột phải
+        {
+            LaunchSwordWave();
+        }
+
     }
 
     private void PerformAttack()
@@ -55,7 +70,22 @@ public class PlayerAttack : MonoBehaviour
             attackCoroutine = StartCoroutine(HandleAirAttack());
         }
     }
+    private void LaunchSwordWave()
+    {
 
+        // Tạo kiếm khí từ prefab tại vị trí spawnPoint
+        GameObject swordWave = Instantiate(swordWavePrefab, spawnPoint.position, Quaternion.identity);
+
+        // Lấy component SwordWave từ kiếm khí đã tạo
+        SwordWave wave = swordWave.GetComponent<SwordWave>();
+
+        // Thiết lập sát thương cho kiếm khí
+        wave.damage = swordWaveDamage;
+
+        // Xác định hướng di chuyển của kiếm khí dựa vào hướng của nhân vật
+        Vector2 direction = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
+        wave.SetDirection(direction); // Gọi hàm SetDirection để kiếm khí bay theo hướng của nhân vật
+    }
     // Xử lý tấn công trên mặt đất
     private IEnumerator HandleGroundAttack()
     {

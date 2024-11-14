@@ -5,32 +5,31 @@ using UnityEngine.UI;
 public class PauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false;
-    
+
     [Header("UI References")]
     public GameObject pauseMenuUI;
     public GameObject optionsPanelUI;
-    public GameObject healthBarCanvas;
-    public GameObject nutCanvas;
-    public GameObject pauseMenuCanvas;
-    public GameObject pauseGamePanel;
-
-    [Header("Buttons")]
     public Button resumeButton;
     public Button optionsButton;
     public Button quitButton;
+    public Button saveButton;
 
     void Start()
     {
-        optionsPanelUI.SetActive(false);
+        // Ẩn các menu khi bắt đầu game
         pauseMenuUI.SetActive(false);
-        
+        optionsPanelUI.SetActive(false);
+
+        // Thêm các sự kiện cho các nút
         resumeButton.onClick.AddListener(Resume);
         optionsButton.onClick.AddListener(OpenOptions);
         quitButton.onClick.AddListener(QuitGame);
+        saveButton.onClick.AddListener(SaveGame);
     }
 
     void Update()
     {
+        // Nhấn phím Escape để dừng hoặc tiếp tục game
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (GameIsPaused) Resume();
@@ -38,46 +37,37 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    public void Resume()
+    void Resume()
     {
+        // Tắt tất cả các UI và tiếp tục game
         pauseMenuUI.SetActive(false);
         optionsPanelUI.SetActive(false);
-        SetGameplayUI(true);
-
         Time.timeScale = 1f;
         GameIsPaused = false;
     }
 
     void Pause()
     {
+        // Hiển thị menu tạm dừng và dừng game
         pauseMenuUI.SetActive(true);
-        SetGameplayUI(false);
-
+        optionsPanelUI.SetActive(false); // Đảm bảo Options Panel tắt khi vào Pause Menu
         Time.timeScale = 0f;
         GameIsPaused = true;
     }
 
-    public void OpenOptions()
+    void OpenOptions()
     {
+        // Hiển thị Options Panel và ẩn Pause Menu UI
         optionsPanelUI.SetActive(true);
-        SetGameplayUI(false);
+        pauseMenuUI.SetActive(false);
+        Debug.Log("Options menu opened."); // Thêm logic tuỳ chọn tại đây
     }
 
-    void SetGameplayUI(bool isActive)
+    void SaveGame()
     {
-        // Keep healthBarCanvas always active and control other elements only
-        nutCanvas.SetActive(isActive);
-        pauseMenuCanvas.SetActive(isActive);
-        pauseGamePanel.SetActive(isActive);
     }
 
-    public void LoadMainMenu()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
-    }
-
-    public void QuitGame()
+    void QuitGame()
     {
         Debug.Log("Quitting game...");
         Application.Quit();

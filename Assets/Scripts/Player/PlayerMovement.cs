@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -45,15 +45,27 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
 
+    private DialogueManager dialogueManager;
+
     void Start()
     {
         currenthealth = maxhealth;
         Application.targetFrameRate = 60;
         staminaBar = FindObjectOfType<StaminaBar>();
+        dialogueManager = FindObjectOfType<DialogueManager>();
     }
 
     void Update()
     {
+        // Check if dialogue is active
+        if (dialogueManager != null && dialogueManager.isDialogueActive)
+        {
+            // If dialogue is active, prevent player movement
+            rb.velocity = Vector2.zero;
+            animator.SetInteger("Speed", 0);
+            return;
+        }
+
         // Dash and dodge cooldown timers
         if (dashCooldownTimer > 0) dashCooldownTimer -= Time.deltaTime;
         if (dodgecooldownTimer > 0) dodgecooldownTimer -= Time.deltaTime;
@@ -133,6 +145,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // Check if dialogue is active
+        if (dialogueManager != null && dialogueManager.isDialogueActive)
+        {
+            // If dialogue is active, prevent player movement
+            rb.velocity = Vector2.zero;
+            return;
+        }
+
         if (isDashing)
         {
             rb.velocity = new Vector2(transform.localScale.x * dashSpeed, 0f);
@@ -256,12 +276,14 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(EnableColliders), 0.2f);
         }
     }
-      private void EndDodge()
+
+    private void EndDodge()
     {
         isDodging = false;
         standingCollider.enabled = true;
         crouchingCollider.enabled = false;
     }
+
     private bool IsWalled()
     {
         return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
@@ -270,6 +292,11 @@ public class PlayerMovement : MonoBehaviour
     public bool IsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+    }
+
+    public bool IsStandingStill()
+    {
+        return Mathf.Abs(rb.velocity.x) < 0.1f && Mathf.Abs(rb.velocity.y) < 0.1f;
     }
 
     void EnableColliders()

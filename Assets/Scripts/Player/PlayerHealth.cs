@@ -9,6 +9,7 @@ public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth = 100f;
     public float currentHealth;
+    public int money = 0;
     public Image healthbar;
     public float maxStamina = 100f;
     public float currentStamina;
@@ -20,7 +21,7 @@ public class PlayerHealth : MonoBehaviour
     private bool dead = false;
     private PlayerAttack playerAttack;
     [SerializeField] private SimpleFlash flash; // Reference to the SimpleFlash script
-
+    [SerializeField] private TextMeshProUGUI moneyText;
     private int healUses = 5;
     private float healAmount = 20f;
     private bool isHurt = false;
@@ -32,12 +33,11 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth = maxHealth;
         currentStamina = maxStamina;
-
-        Debug.Log("Initial health of the character: " + currentHealth);
+        DontDestroyOnLoad(gameObject);
         UpdateHealthBar();
         UpdateStaminaBar();
         UpdateHealUsesText();
-
+        updatemoney();
         playerAttack = GetComponent<PlayerAttack>();
         flash = GetComponent<SimpleFlash>(); // Ensure the SimpleFlash component is assigned
     }
@@ -51,8 +51,17 @@ public class PlayerHealth : MonoBehaviour
             Debug.Log("Used healing, remaining: " + healUses + " uses");
             UpdateHealUsesText();
         }
+        updatemoney();
     }
-
+    public void AddMoney(int amount)
+    {
+        money += amount;
+        moneyText.text = money.ToString();
+    }
+    private void updatemoney()
+    {
+        moneyText.text = money.ToString();
+    }
     public void TakeDamage(float damage)
     {
         if (dead || isHurt) return;
