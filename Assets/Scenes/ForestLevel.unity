@@ -4173,8 +4173,8 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 10
-  m_StandbyUpdate: 2
+  m_Priority: 11
+  m_StandbyUpdate: 1
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 1117981690}
   m_Lens:
@@ -148912,7 +148912,7 @@ MonoBehaviour:
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
   m_Priority: 10
-  m_StandbyUpdate: 2
+  m_StandbyUpdate: 0
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 387602912}
   m_Lens:
@@ -174994,9 +174994,9 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 724717492}
-  - {fileID: 1334961617}
   - {fileID: 348635793}
   - {fileID: 1117981688}
+  - {fileID: 1334961617}
   - {fileID: 333053612}
   - {fileID: 1296038139}
   - {fileID: 1877971615}

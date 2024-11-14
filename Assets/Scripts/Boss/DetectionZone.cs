@@ -51,6 +51,6 @@ public class DetectionZone : MonoBehaviour
 
         // Switch back to PlayerCam
         PlayerCam.Priority = 10;
-        BossCam.Priority = 10;
+        BossCam.Priority = 0;
     }
 }
