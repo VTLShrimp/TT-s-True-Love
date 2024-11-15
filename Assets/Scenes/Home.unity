@@ -8713,7 +8713,7 @@ Transform:
   m_GameObject: {fileID: 275452403}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 85.37132, y: 6.088, z: -10}
+  m_LocalPosition: {x: 85.37128, y: 6.088, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -15878,6 +15878,8 @@ MonoBehaviour:
   visualCue: {fileID: 878776720}
   inkJSON: {fileID: 4900000, guid: 10a887e44b6939f4e8a859e9f1075165, type: 3}
   startingKnot: npc2_conversation
+  fogremenu: {fileID: 860453991}
+  priestessmenu: {fileID: 820553054}
 --- !u!61 &960866726
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -15954,6 +15956,7 @@ Transform:
   m_Children:
   - {fileID: 150551261}
   - {fileID: 1483564507}
+  - {fileID: 1020893796}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963308154
@@ -16771,6 +16774,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1009999363}
   m_CullTransparentMesh: 1
+--- !u!1 &1020893795
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1020893796}
+  - component: {fileID: 1020893797}
+  m_Layer: 0
+  m_Name: SaveManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1020893796
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1020893795}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 962268863}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1020893797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1020893795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 390b4cc3fbf2e1041b0460f9b5881251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileName: PlayerData.json
 --- !u!1 &1023710351
 GameObject:
   m_ObjectHideFlags: 0
@@ -27609,6 +27657,8 @@ MonoBehaviour:
   visualCue: {fileID: 1648658989}
   inkJSON: {fileID: 4900000, guid: 10a887e44b6939f4e8a859e9f1075165, type: 3}
   startingKnot: npc1_conversation
+  fogremenu: {fileID: 860453991}
+  priestessmenu: {fileID: 820553054}
 --- !u!61 &1319071210
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -28951,7 +29001,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 1747899535}
   playerAttack: {fileID: 1747899533}
-  playerMovement: {fileID: 0}
   staminaBar: {fileID: 1747899544}
   forgemenu: {fileID: 860453991}
   priestessmenu: {fileID: 820553054}
@@ -30417,7 +30466,7 @@ Transform:
   m_GameObject: {fileID: 1598953267}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 85.37132, y: 6.088, z: -10}
+  m_LocalPosition: {x: 85.37128, y: 6.088, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

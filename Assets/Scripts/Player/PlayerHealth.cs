@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using BarthaSzabolcs.Tutorial_SpriteFlash;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, IDataPersistence
 {
     public float maxHealth = 100f;
     public float currentHealth;
@@ -94,7 +94,19 @@ public class PlayerHealth : MonoBehaviour
         UpdateHealthBar();
     }
 
-
+    public void SavePlayerData(PlayerData playerData)
+    {
+        playerData.maxhealth = (int)maxHealth;
+        playerData.money = money;
+    }
+    public void LoadPlayerData(PlayerData playerData)
+    {
+        maxHealth = playerData.maxhealth;
+        currentHealth = maxHealth;
+        money = playerData.money;
+        UpdateHealthBar();
+        updatemoney();
+    }
     private IEnumerator HandleKnockback()
     {
         isHurt = true;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 
-public class PlayerAttack : MonoBehaviour
+public class PlayerAttack : MonoBehaviour, IDataPersistence
 {
     public LayerMask enemyLayers;
     public Animator animator;
@@ -59,7 +59,18 @@ public class PlayerAttack : MonoBehaviour
         }
 
     }
-
+    public void SavePlayerData(PlayerData playerData)
+    {
+        playerData.groundDMG = groundDamage;
+        playerData.airDMG = airDamage;
+        playerData.swordWaveDMG = swordWaveDamage;
+    }
+    public void LoadPlayerData(PlayerData playerData)
+    {
+        groundDamage = playerData.groundDMG;
+        airDamage = playerData.airDMG;
+        swordWaveDamage = playerData.swordWaveDMG;
+    }
     private void PerformAttack()
     {
         isAttacking = true;
