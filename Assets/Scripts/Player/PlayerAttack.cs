@@ -16,7 +16,8 @@ public class PlayerAttack : MonoBehaviour
     public int airDamage = 15;  // Sát thương khi trên không
     public float attackCooldown = 0.5f;  // Thời gian giữa các lần tấn công
     private float nextAttackTime = 0f;
-
+    public GameObject forgemenu;
+    public GameObject priestessmenu;
     private PlayerMovement playerMovement;
     private Coroutine attackCoroutine; // Biến để lưu Coroutine của đòn tấn công
 
@@ -34,12 +35,16 @@ public class PlayerAttack : MonoBehaviour
     void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();  // Lấy tham chiếu tới PlayerMovement
-        
+
     }
 
     void Update()
     {
         if (DialogueManager.GetInstance().isDialogueActive)
+        {
+            return;
+        }
+        if (forgemenu.activeInHierarchy || priestessmenu.activeInHierarchy)
         {
             return;
         }

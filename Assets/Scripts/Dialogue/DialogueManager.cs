@@ -9,6 +9,7 @@ public class DialogueManager : MonoBehaviour
 {
     private static DialogueManager instance;
 
+
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
@@ -147,11 +148,13 @@ public class DialogueManager : MonoBehaviour
             if (tag == "open_panel_npc1")
             {
                 npc1UpgradePanel.SetActive(true); // Activate NPC 1's upgrade panel
+
                 ExitDialogueMode();
             }
             else if (tag == "open_panel_npc2")
             {
                 npc2UpgradePanel.SetActive(true); // Activate NPC 2's upgrade panel
+
                 ExitDialogueMode();
             }
         }
