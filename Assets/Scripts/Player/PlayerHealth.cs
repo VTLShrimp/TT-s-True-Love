@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using BarthaSzabolcs.Tutorial_SpriteFlash;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, IDataPersistence
 {
     public float maxHealth = 100f;
     public float currentHealth;
@@ -26,7 +26,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private SimpleFlash flash; // Reference to the SimpleFlash script
     [SerializeField] private TextMeshProUGUI moneyText;
     private int healUses = 5;
-    private float healAmount = 20f;
+    public float healAmount = 20f;
     private bool isHurt = false;
 
     public float knockbackForce = 5f;
@@ -94,7 +94,19 @@ public class PlayerHealth : MonoBehaviour
         UpdateHealthBar();
     }
 
-
+    public void SavePlayerData(PlayerData playerData)
+    {
+        playerData.maxhealth = (int)maxHealth;
+        playerData.money = money;
+    }
+    public void LoadPlayerData(PlayerData playerData)
+    {
+        maxHealth = playerData.maxhealth;
+        currentHealth = maxHealth;
+        money = playerData.money;
+        UpdateHealthBar();
+        updatemoney();
+    }
     private IEnumerator HandleKnockback()
     {
         isHurt = true;
@@ -116,20 +128,6 @@ public class PlayerHealth : MonoBehaviour
         currentHealth += healingAmount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         UpdateHealthBar();
-    }
-
-    public void ConsumeStamina(float amount)
-    {
-        currentStamina -= amount;
-        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
-        UpdateStaminaBar();
-    }
-
-    public void RegenerateStamina(float amount)
-    {
-        currentStamina += amount;
-        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
-        UpdateStaminaBar();
     }
 
     private void UpdateHealthBar()

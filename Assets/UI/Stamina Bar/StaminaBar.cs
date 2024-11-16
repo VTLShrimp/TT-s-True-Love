@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StaminaBar : MonoBehaviour
+public class StaminaBar : MonoBehaviour, IDataPersistence
 {
     public float maxStamina = 100f;      // Thể lực tối đa
     public float currentStamina;         // Thể lực hiện tại
@@ -48,5 +48,15 @@ public class StaminaBar : MonoBehaviour
         {
             staminaBar.fillAmount = currentStamina / maxStamina;
         }
+    }
+    public void SavePlayerData(PlayerData playerData)
+    {
+        playerData.maxStamina = (int)maxStamina;
+        playerData.staminaRegenRate = (int)staminaRegenRate;
+    }
+    public void LoadPlayerData(PlayerData playerData)
+    {
+        maxStamina = playerData.maxStamina;
+        staminaRegenRate = playerData.staminaRegenRate;
     }
 }

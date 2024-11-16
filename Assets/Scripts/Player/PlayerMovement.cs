@@ -36,7 +36,8 @@ public class PlayerMovement : MonoBehaviour
     public float dodgeduration = 0.9f;
     private float dodgetime;
     private StaminaBar staminaBar;
-
+    public GameObject forgemenu;
+    public GameObject priestessmenu;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
@@ -57,16 +58,20 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // Check if dialogue is active
         if (dialogueManager != null && dialogueManager.isDialogueActive)
         {
-            // If dialogue is active, prevent player movement
+
             rb.velocity = Vector2.zero;
             animator.SetInteger("Speed", 0);
             return;
         }
+        if (forgemenu.activeInHierarchy || priestessmenu.activeInHierarchy)
+        {
+            rb.velocity = Vector2.zero;
+            animator.SetInteger("Speed", 0);
+            return;
 
-        // Dash and dodge cooldown timers
+        }
         if (dashCooldownTimer > 0) dashCooldownTimer -= Time.deltaTime;
         if (dodgecooldownTimer > 0) dodgecooldownTimer -= Time.deltaTime;
 
@@ -145,10 +150,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Check if dialogue is active
+
         if (dialogueManager != null && dialogueManager.isDialogueActive)
         {
-            // If dialogue is active, prevent player movement
             rb.velocity = Vector2.zero;
             return;
         }

@@ -7,7 +7,8 @@ public class DialogueTrigger : MonoBehaviour
     [SerializeField] private GameObject visualCue;
     [SerializeField] private TextAsset inkJSON;
     [SerializeField] private string startingKnot; // New field for the starting knot name
-
+    public GameObject fogremenu;
+    public GameObject priestessmenu;
     private bool PlayerInRange;
     private PlayerMovement playerMovement;
 
@@ -28,6 +29,10 @@ public class DialogueTrigger : MonoBehaviour
 
     private void Update()
     {
+        if (fogremenu.activeInHierarchy || priestessmenu.activeInHierarchy)
+        {
+            return;
+        }
         if (PlayerInRange)
         {
             visualCue.SetActive(true);
