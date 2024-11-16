@@ -39,10 +39,10 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        if (DialogueManager.GetInstance().isDialogueActive)
-        {
-            return;
-        }
+        //if (DialogueManager.GetInstance().isDialogueActive)
+        //{
+        //    return;
+        //}
         if (Time.time >= nextAttackTime && Input.GetMouseButtonDown(0) && canAttack && !isAttacking)
         {
             PerformAttack();

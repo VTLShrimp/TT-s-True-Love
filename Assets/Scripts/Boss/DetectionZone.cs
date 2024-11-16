@@ -1,56 +1,30 @@
-using UnityEngine;
-using Cinemachine;
-using System.Collections;
+﻿using UnityEngine;
 
-public class DetectionZone : MonoBehaviour
+public class BossZoneTrigger : MonoBehaviour
 {
-    public Boss boss;
-    public CinemachineVirtualCamera PlayerCam;
-    public CinemachineVirtualCamera BossCam;
-    public Transform player;
-    public float focusDuration = 1.0f;
+    public BossActions bossActions; // Tham chiếu đến script BossActions
 
-    private void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other) // Sử dụng OnTriggerEnter2D thay vì OnTriggerEnter
     {
         if (other.CompareTag("Player"))
         {
-            boss.playerInzone = true;
-            Debug.Log("Player in zone");
-            StartCoroutine(SwitchToBossCam());
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        Debug.Log("OnTriggerExit2D called");
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("Player left the zone");
-            if (boss != null)
+            Debug.Log("Player has entered the zone");
+            if (bossActions != null)
             {
-                boss.playerInzone = false;
-                Debug.Log("Player in zone set to false");
-                PlayerCam.Priority = 10;
-                BossCam.Priority = 0;
-            }
-            else
-            {
-                Debug.LogError("Boss is not assigned!");
+                bossActions.EnableBossActions(); // Kích hoạt hành động của boss
             }
         }
     }
 
-    private IEnumerator SwitchToBossCam()
+    void OnTriggerExit2D(Collider2D other) // Sử dụng OnTriggerExit2D thay vì OnTriggerExit
     {
-        // Switch to BossCam
-        PlayerCam.Priority = 0;
-        BossCam.Priority = 10;
-
-        // Wait for focusDuration
-        yield return new WaitForSeconds(focusDuration);
-
-        // Switch back to PlayerCam
-        PlayerCam.Priority = 10;
-        BossCam.Priority = 0;
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("Player has exited the zone");
+            if (bossActions != null)
+            {
+                bossActions.DisableBossActions(); // Dừng hành động của boss
+            }
+        }
     }
 }

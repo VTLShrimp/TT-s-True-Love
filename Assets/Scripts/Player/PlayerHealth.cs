@@ -68,7 +68,9 @@ public class PlayerHealth : MonoBehaviour
     }
     public void TakeDamage(float damage)
     {
-        if (dead || isHurt) return;
+        Debug.Log("Player is taking damage: " + damage);  // In ra log khi người chơi nhận sát thương
+
+        if (dead || isHurt) return;  // Tránh sát thương nếu đã chết hoặc đang bị thương
 
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
@@ -76,12 +78,10 @@ public class PlayerHealth : MonoBehaviour
         if (currentHealth > 0)
         {
             animator.SetTrigger("hurt");
-            playerAttack.InterruptAttack(); // Prevent attack when hurt
-            playerAttack.DisableAttacking(1.5f); // Disable attacking for 1.5 seconds
+            playerAttack.InterruptAttack(); // Ngừng tấn công khi bị thương
+            playerAttack.DisableAttacking(1.5f); // Ngừng tấn công trong 1.5 giây
             StartCoroutine(HandleKnockback());
-
-            // Trigger the flash effect
-            flash.Flash(); // Call the flash effect when taking damage
+            flash.Flash();  // Gọi hiệu ứng flash khi bị thương
         }
         else if (!dead)
         {
