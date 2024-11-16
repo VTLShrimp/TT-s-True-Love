@@ -7,69 +7,83 @@ public class PauseMenu : MonoBehaviour
     public static bool GameIsPaused = false;
 
     [Header("UI References")]
-    public GameObject pauseMenuUI;
-    public GameObject optionsPanelUI;
-    public Button resumeButton;
-    public Button optionsButton;
-    public Button quitButton;
-    public Button saveButton;
+    [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private GameObject optionsPanelUI;
+    [SerializeField] private Button resumeButton;
+    [SerializeField] private Button optionsButton;
+    [SerializeField] private Button quitButton;
+    [SerializeField] private Button saveButton;
 
-    void Start()
+    private const float PausedTimeScale = 0f;
+    private const float RunningTimeScale = 1f;
+
+    private void Awake()
     {
-        // Ẩn các menu khi bắt đầu game
-        pauseMenuUI.SetActive(false);
-        optionsPanelUI.SetActive(false);
-
-        // Thêm các sự kiện cho các nút
+        // Thiết lập sự kiện cho các nút
         resumeButton.onClick.AddListener(Resume);
         optionsButton.onClick.AddListener(OpenOptions);
         quitButton.onClick.AddListener(QuitGame);
         saveButton.onClick.AddListener(SaveGame);
     }
 
-    void Update()
+    private void Start()
+    {
+        // Ẩn các menu khi bắt đầu game
+        pauseMenuUI.SetActive(false);
+        optionsPanelUI.SetActive(false);
+    }
+
+    private void Update()
     {
         // Nhấn phím Escape để dừng hoặc tiếp tục game
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (GameIsPaused) Resume();
-            else Pause();
+            if (GameIsPaused)
+                Resume();
+            else
+                Pause();
         }
     }
 
-    void Resume()
+    private void Resume()
     {
         // Tắt tất cả các UI và tiếp tục game
         pauseMenuUI.SetActive(false);
         optionsPanelUI.SetActive(false);
-        Time.timeScale = 1f;
-        GameIsPaused = false;
+        SetGamePaused(false);
     }
 
-    void Pause()
+    private void Pause()
     {
         // Hiển thị menu tạm dừng và dừng game
         pauseMenuUI.SetActive(true);
-        optionsPanelUI.SetActive(false); // Đảm bảo Options Panel tắt khi vào Pause Menu
-        Time.timeScale = 0f;
-        GameIsPaused = true;
+        optionsPanelUI.SetActive(false);
+        SetGamePaused(true);
     }
 
-    void OpenOptions()
+    private void OpenOptions()
     {
-        // Hiển thị Options Panel và ẩn Pause Menu UI
         optionsPanelUI.SetActive(true);
         pauseMenuUI.SetActive(false);
-        Debug.Log("Options menu opened."); // Thêm logic tuỳ chọn tại đây
+        GameIsPaused = true;
+        Debug.Log("Options menu opened.");
     }
 
-    void SaveGame()
+    private void SaveGame()
     {
+        DataPresistenceManager.Instance.SavePlayerData();
+        Debug.Log("Game saved.");
     }
 
-    void QuitGame()
+    private void QuitGame()
     {
         Debug.Log("Quitting game...");
         Application.Quit();
+    }
+
+    private void SetGamePaused(bool isPaused)
+    {
+        Time.timeScale = isPaused ? PausedTimeScale : RunningTimeScale;
+        GameIsPaused = isPaused;
     }
 }
