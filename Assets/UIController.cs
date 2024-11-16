@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
-    void Start()
+    public static UIController Instance { get; private set; }
+
+    private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
         DontDestroyOnLoad(gameObject);
     }
-
-
 }

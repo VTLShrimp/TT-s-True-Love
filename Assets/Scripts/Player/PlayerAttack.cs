@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEditor.Tilemaps;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerAttack : MonoBehaviour
 {
     public LayerMask enemyLayers;
     public Animator animator;
+    public Image manabar;
     public bool isAttacking = false;
     public static PlayerAttack instance;
     public Transform attackPoint;
@@ -16,7 +18,10 @@ public class PlayerAttack : MonoBehaviour
     public int airDamage = 15;  // Sát thương khi trên không
     public float attackCooldown = 0.5f;  // Thời gian giữa các lần tấn công
     private float nextAttackTime = 0f;
-
+    public int maxMana = 100;
+    public int currentMana;
+    public GameObject forgemenu;
+    public GameObject priestessmenu;
     private PlayerMovement playerMovement;
     private Coroutine attackCoroutine; // Biến để lưu Coroutine của đòn tấn công
 
@@ -33,8 +38,9 @@ public class PlayerAttack : MonoBehaviour
 
     void Start()
     {
+        currentMana = maxMana;
         playerMovement = GetComponent<PlayerMovement>();  // Lấy tham chiếu tới PlayerMovement
-        
+
     }
 
     void Update()
@@ -50,11 +56,26 @@ public class PlayerAttack : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(1))  // 1 là chuột phải
         {
-            LaunchSwordWave();
+            // LaunchSwordWave();
+            currentMana -= 20;
+            UpdateManaBar();
         }
 
     }
-
+    public void SavePlayerData(PlayerData playerData)
+    {
+        playerData.groundDMG = groundDamage;
+        playerData.airDMG = airDamage;
+        playerData.swordWaveDMG = swordWaveDamage;
+        playerData.maxMana = maxMana;
+    }
+    public void LoadPlayerData(PlayerData playerData)
+    {
+        groundDamage = playerData.groundDMG;
+        airDamage = playerData.airDMG;
+        swordWaveDamage = playerData.swordWaveDMG;
+        maxMana = playerData.maxMana;
+    }
     private void PerformAttack()
     {
         isAttacking = true;
@@ -172,5 +193,12 @@ public class PlayerAttack : MonoBehaviour
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, airAttackRange);
+    }
+    private void UpdateManaBar()
+    {
+        if (manabar != null)
+        {
+            manabar.fillAmount = (float)currentMana / maxMana;
+        }
     }
 }

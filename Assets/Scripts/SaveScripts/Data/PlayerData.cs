@@ -17,12 +17,12 @@ public class PlayerData
     {
         this.money = 0;
         this.maxhealth = 100;
-        this.groundDMG = 10;
-        this.airDMG = 10;
+        this.groundDMG = 25;
+        this.airDMG = 30;
         this.maxMana = 100;
         this.maxStamina = 100;
         this.swordWaveDMG = 10;
-        this.levelPotion = 0;
-        this.staminaRegenRate = 1;
+        this.levelPotion = 1;
+        this.staminaRegenRate = 15;
     }
 }

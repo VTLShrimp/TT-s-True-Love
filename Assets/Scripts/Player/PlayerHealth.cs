@@ -7,15 +7,13 @@ using BarthaSzabolcs.Tutorial_SpriteFlash;
 
 public class PlayerHealth : MonoBehaviour, IDataPersistence
 {
+    public static PlayerHealth Instance { get; private set; } // Singleton instance
+
     public float maxHealth = 100f;
     public float currentHealth;
     public int money = 0;
     public Image healthbar;
-    public float maxStamina = 100f;
-    public float currentStamina;
 
-    public int maxMana = 100;
-    public int currentMana;
     public Image staminabar;
     public Animator animator;
     public GameObject Player;
@@ -25,21 +23,29 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
     private PlayerAttack playerAttack;
     [SerializeField] private SimpleFlash flash; // Reference to the SimpleFlash script
     [SerializeField] private TextMeshProUGUI moneyText;
-    private int healUses = 5;
+    public int healUses = 5;
     public float healAmount = 20f;
     private bool isHurt = false;
 
     public float knockbackForce = 5f;
     public float hurtDuration = 1f;
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject); // Destroy duplicate player instances
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject); // Keep player across scenes
+    }
+
     private void Start()
     {
-        currentMana = maxMana;
         currentHealth = maxHealth;
-        currentStamina = maxStamina;
-        DontDestroyOnLoad(gameObject);
         UpdateHealthBar();
-        UpdateStaminaBar();
         UpdateHealUsesText();
         updatemoney();
         playerAttack = GetComponent<PlayerAttack>();
@@ -57,15 +63,18 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
         }
         updatemoney();
     }
+
     public void AddMoney(int amount)
     {
         money += amount;
         moneyText.text = money.ToString();
     }
+
     private void updatemoney()
     {
         moneyText.text = money.ToString();
     }
+
     public void TakeDamage(float damage)
     {
         Debug.Log("Player is taking damage: " + damage);  // In ra log khi người chơi nhận sát thương
@@ -74,24 +83,22 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
 
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-
+        UpdateHealthBar();
         if (currentHealth > 0)
         {
             animator.SetTrigger("hurt");
-            playerAttack.InterruptAttack(); // Ngừng tấn công khi bị thương
-            playerAttack.DisableAttacking(1.5f); // Ngừng tấn công trong 1.5 giây
+            playerAttack.InterruptAttack();
+            playerAttack.DisableAttacking(1.5f);
             StartCoroutine(HandleKnockback());
-            flash.Flash();  // Gọi hiệu ứng flash khi bị thương
+            flash.Flash();
         }
         else if (!dead)
         {
             dead = true;
             animator.SetTrigger("die");
-            Respanwn();
-            StartCoroutine(DisableAnimatorAndDestroy());
+            StartCoroutine(Respawn());
         }
 
-        UpdateHealthBar();
     }
 
     public void SavePlayerData(PlayerData playerData)
@@ -99,6 +106,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
         playerData.maxhealth = (int)maxHealth;
         playerData.money = money;
     }
+
     public void LoadPlayerData(PlayerData playerData)
     {
         maxHealth = playerData.maxhealth;
@@ -107,6 +115,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
         UpdateHealthBar();
         updatemoney();
     }
+
     private IEnumerator HandleKnockback()
     {
         isHurt = true;
@@ -138,15 +147,8 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
         }
     }
 
-    private void UpdateStaminaBar()
-    {
-        if (staminabar != null)
-        {
-            staminabar.fillAmount = currentStamina / maxStamina;
-        }
-    }
 
-    private void UpdateHealUsesText()
+    public void UpdateHealUsesText()
     {
         if (healUsesText != null)
         {
@@ -154,11 +156,24 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
         }
     }
 
-    private IEnumerator DisableAnimatorAndDestroy()
+    private IEnumerator Respawn()
     {
+        // Đợi một chút để hoàn tất hoạt ảnh chết
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
-        GetComponent<Animator>().enabled = false;
-        Destroy(Player);
+
+        // Reset trạng thái của người chơi
+        dead = false;
+        currentHealth = maxHealth;
+        UpdateHealthBar();
+
+        // Tải lại scene "Home"
+        SceneManager.LoadScene("Home");
+
+        // Bật lại Animator nếu đã tắt
+        if (!animator.enabled)
+        {
+            animator.enabled = true;
+        }
     }
 
     public void SetMaxHealth(float newMaxHealth)
@@ -166,10 +181,5 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
         maxHealth = newMaxHealth;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         UpdateHealthBar();
-    }
-
-    void Respanwn()
-    {
-        SceneManager.LoadScene("Home");
     }
 }

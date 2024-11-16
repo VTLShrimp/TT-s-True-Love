@@ -69,7 +69,7 @@ public class UpgradeManager : MonoBehaviour
         if (playerHealth.money >= staminaUpgradeCost)
         {
             playerHealth.money -= staminaUpgradeCost;
-            playerHealth.maxStamina += 10; // Increase max stamina
+            staminaBar.maxStamina += 10; // Increase max stamina
 
             UpdateUI();
         }
@@ -113,7 +113,7 @@ public class UpgradeManager : MonoBehaviour
         if (playerHealth.money >= maxManaUpgradeCost)
         {
             playerHealth.money -= maxManaUpgradeCost;
-            playerHealth.maxMana += 10; // Increase max mana
+            playerAttack.maxMana += 10; // Increase max mana
 
             UpdateUI();
         }
@@ -142,10 +142,13 @@ public class UpgradeManager : MonoBehaviour
         if (playerHealth.money >= levelPotionCost && potionLevel < maxPotionLevel)
         {
             playerHealth.money -= levelPotionCost;
-            potionLevel++; // Increase the potion level
-            playerHealth.healAmount += healIncreasePerLevel; // Increase heal amount per level
+            potionLevel++; // Tăng potion level
+            playerHealth.healAmount += healIncreasePerLevel; // Tăng lượng heal mỗi cấp
+
+            playerHealth.healUses = potionLevel; // Cập nhật số lần heal dựa trên potion level
 
             UpdateUI();
+            playerHealth.UpdateHealUsesText(); // Cập nhật UI hiển thị số lần heal
         }
         else if (potionLevel >= maxPotionLevel)
         {
@@ -192,8 +195,8 @@ public class UpgradeManager : MonoBehaviour
         groundDMGValueText.text = playerAttack.groundDamage.ToString();
         airDMGValueText.text = playerAttack.airDamage.ToString();
         maxHealthValueText.text = playerHealth.maxHealth.ToString();
-        maxStaminaValueText.text = playerHealth.maxStamina.ToString();
-        maxManaValueText.text = playerHealth.maxMana.ToString();
+        maxStaminaValueText.text = staminaBar.maxStamina.ToString();
+        maxManaValueText.text = playerAttack.maxMana.ToString();
         staminaRecoveryRateValueText.text = staminaBar.staminaRegenRate.ToString();
         levelPotionValueText.text = $"Lv {potionLevel}"; // Display potion level and healing amount
         swordWaveDamageValueText.text = playerAttack.swordWaveDamage.ToString();

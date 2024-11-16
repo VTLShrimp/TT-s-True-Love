@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class DataPresistenceManager : MonoBehaviour
 {
@@ -14,22 +14,30 @@ public class DataPresistenceManager : MonoBehaviour
     private FileDataHandler fileDataHandler;
     private void Awake()
     {
-        if (Instance == null)
+        if (Instance != null)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            Debug.Log("Found more than one Data Persistence Manager in the scene. Destroying the newest one.");
+            Destroy(this.gameObject);
+            return;
         }
-        else
-        {
-            Destroy(gameObject);
-            Debug.LogWarning("Multiple DataPresistenceManager instances detected. Destroying the new one.");
-        }
-    }
-    private void Start()
-    {
+        Instance = this;
+        DontDestroyOnLoad(this.gameObject);
         fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+    }
+    public void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnScenceLoaded;
+
+    }
+    public void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnScenceLoaded;
+    }
+    public void OnScenceLoaded(Scene scene, LoadSceneMode mode)
+    {
         dataPresistanceObjects = GetDataPresistanceObjects();
         LoadPlayerData();
+        Debug.Log("Scene Loaded: " + scene.name);
     }
     public void SavePlayerData()
     {
@@ -60,6 +68,7 @@ public class DataPresistenceManager : MonoBehaviour
     public void NewGame()
     {
         playerData = new PlayerData();
+        SavePlayerData();
     }
     private List<IDataPersistence> GetDataPresistanceObjects()
     {

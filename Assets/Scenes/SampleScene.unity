@@ -465,7 +465,6 @@ GameObject:
   - component: {fileID: 433064447}
   - component: {fileID: 433064444}
   - component: {fileID: 433064445}
-  - component: {fileID: 433064446}
   - component: {fileID: 433064448}
   - component: {fileID: 433064449}
   - component: {fileID: 433064450}
@@ -602,6 +601,8 @@ MonoBehaviour:
   dodgecooldown: 1
   dodgespeed: 20
   dodgeduration: 0.1
+  forgemenu: {fileID: 0}
+  priestessmenu: {fileID: 0}
   rb: {fileID: 433064439}
   groundCheck: {fileID: 1355287446}
   groundLayer:
@@ -671,20 +672,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &433064446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 433064438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1a40cda92b8c9e4b8fd47723811c034, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firePoint: {fileID: 1984284534}
-  projectilePrefab: {fileID: 8774266889734616353, guid: 9908b2fe0dcdf484aa531a5cc12caf41, type: 3}
 --- !u!114 &433064447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -701,6 +688,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   animator: {fileID: 433064445}
+  manabar: {fileID: 0}
   isAttacking: 0
   attackPoint: {fileID: 2100462415}
   attackRange: 0.51
@@ -708,6 +696,10 @@ MonoBehaviour:
   groundDamage: 200
   airDamage: 15
   attackCooldown: 0.5
+  maxMana: 100
+  currentMana: 0
+  forgemenu: {fileID: 0}
+  priestessmenu: {fileID: 0}
   swordWavePrefab: {fileID: 0}
   spawnPoint: {fileID: 0}
   swordWaveDamage: 20
@@ -762,14 +754,13 @@ MonoBehaviour:
   currentHealth: 0
   money: 0
   healthbar: {fileID: 1701319433}
-  maxStamina: 100
-  currentStamina: 0
   staminabar: {fileID: 1097382619}
   animator: {fileID: 433064445}
   Player: {fileID: 433064438}
   healUsesText: {fileID: 0}
   flash: {fileID: 0}
   moneyText: {fileID: 0}
+  healAmount: 20
   knockbackForce: 5
   hurtDuration: 1
 --- !u!114 &433064450
