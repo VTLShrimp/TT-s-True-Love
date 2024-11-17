@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TheKiwiCoder {
-    public abstract class Node : ScriptableObject {
-        public enum State {
+namespace TheKiwiCoder
+{
+    public abstract class Node : ScriptableObject
+    {
+        public enum State
+        {
             Running,
             Failure,
             Success
@@ -19,16 +22,19 @@ namespace TheKiwiCoder {
         [TextArea] public string description;
         public bool drawGizmos = false;
 
-        public State Update() {
+        public State Update()
+        {
 
-            if (!started) {
+            if (!started)
+            {
                 OnStart();
                 started = true;
             }
 
             state = OnUpdate();
 
-            if (state != State.Running) {
+            if (state != State.Running)
+            {
                 OnStop();
                 started = false;
             }
@@ -36,12 +42,15 @@ namespace TheKiwiCoder {
             return state;
         }
 
-        public virtual Node Clone() {
+        public virtual Node Clone()
+        {
             return Instantiate(this);
         }
 
-        public void Abort() {
-            BehaviourTree.Traverse(this, (node) => {
+        public void Abort()
+        {
+            BehaviourTree.Traverse(this, (node) =>
+            {
                 node.started = false;
                 node.state = State.Running;
                 node.OnStop();
