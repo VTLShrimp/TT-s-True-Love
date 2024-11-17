@@ -7,12 +7,13 @@ using BarthaSzabolcs.Tutorial_SpriteFlash;
 
 public class PlayerHealth : MonoBehaviour, IDataPersistence
 {
-    public static PlayerHealth Instance { get; private set; }
+
 
     public float maxHealth = 100f;
     public float currentHealth;
     public int money = 0;
     public Image healthbar;
+
     public Image staminabar;
     public Animator animator;
     public GameObject Player;
@@ -20,66 +21,23 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
 
     private bool dead = false;
     private PlayerAttack playerAttack;
-    [SerializeField] private SimpleFlash flash;
+    [SerializeField] private SimpleFlash flash; // Reference to the SimpleFlash script
     [SerializeField] private TextMeshProUGUI moneyText;
     public int healUses = 5;
     public float healAmount = 20f;
     private bool isHurt = false;
 
-    // Audio clips for damage and death
-    public AudioClip damageSound;
-    public AudioClip deathSound;
-    private AudioSource audioSource;
-
     public float knockbackForce = 5f;
     public float hurtDuration = 1f;
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
 
     private void Start()
     {
         currentHealth = maxHealth;
         UpdateHealthBar();
         UpdateHealUsesText();
-        UpdateMoney();
-
+        updatemoney();
         playerAttack = GetComponent<PlayerAttack>();
-        if (playerAttack == null)
-        {
-            Debug.LogError("PlayerAttack component is missing on this GameObject.");
-        }
-
-        flash = GetComponent<SimpleFlash>();
-        if (flash == null)
-        {
-            Debug.LogError("SimpleFlash component is missing or not assigned.");
-        }
-
-        if (moneyText == null)
-        {
-            moneyText = GameObject.Find("MoneyText").GetComponent<TextMeshProUGUI>();
-            if (moneyText == null)
-            {
-                Debug.LogError("MoneyText object not found in the scene.");
-            }
-        }
-
-        // Initialize AudioSource and check if the clips are assigned
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
-        {
-            audioSource = gameObject.AddComponent<AudioSource>();
-        }
+        flash = GetComponent<SimpleFlash>(); // Ensure the SimpleFlash component is assigned
     }
 
     private void Update()
@@ -91,43 +49,34 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
             Debug.Log("Used healing, remaining: " + healUses + " uses");
             UpdateHealUsesText();
         }
-
-        UpdateMoney();
+        updatemoney();
     }
 
     public void AddMoney(int amount)
     {
         money += amount;
-        UpdateMoney();
+        moneyText.text = money.ToString();
     }
 
-    private void UpdateMoney()
+    private void updatemoney()
     {
-        if (moneyText != null)
-        {
-            moneyText.text = money.ToString();
-        }
+        moneyText.text = money.ToString();
     }
 
     public void TakeDamage(float damage)
     {
-        if (dead || isHurt) return;
+        Debug.Log("Player is taking damage: " + damage);  // In ra log khi người chơi nhận sát thương
+
+        if (dead || isHurt) return;  // Tránh sát thương nếu đã chết hoặc đang bị thương
 
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         UpdateHealthBar();
-
         if (currentHealth > 0)
         {
             animator.SetTrigger("hurt");
-
-            // Play damage sound
-            if (audioSource != null && damageSound != null)
-            {
-                audioSource.PlayOneShot(damageSound);
-            }
-
-            StartCoroutine(DisableAttackInput(1.5f));
+            playerAttack.InterruptAttack();
+            playerAttack.DisableAttacking(1.5f);
             StartCoroutine(HandleKnockback());
             flash.Flash();
         }
@@ -135,20 +84,10 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
         {
             dead = true;
             animator.SetTrigger("die");
-            // Play death sound
-            if (audioSource != null && deathSound != null)
-            {
-                audioSource.PlayOneShot(deathSound);
-            }
+            DataPresistenceManager.Instance.SavePlayerData();
             StartCoroutine(Respawn());
         }
-    }
 
-    private IEnumerator DisableAttackInput(float duration)
-    {
-        playerAttack.enabled = false;
-        yield return new WaitForSeconds(duration);
-        playerAttack.enabled = true;
     }
 
     public void SavePlayerData(PlayerData playerData)
@@ -163,17 +102,17 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
         currentHealth = maxHealth;
         money = playerData.money;
         UpdateHealthBar();
-        UpdateMoney();
+        updatemoney();
     }
 
     private IEnumerator HandleKnockback()
     {
         isHurt = true;
         Vector3 knockbackDirection = (transform.position - Camera.main.transform.position).normalized;
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
+            rb.AddForce(knockbackDirection * knockbackForce, ForceMode.Impulse);
         }
 
         yield return new WaitForSeconds(hurtDuration);
@@ -197,6 +136,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
         }
     }
 
+
     public void UpdateHealUsesText()
     {
         if (healUsesText != null)
@@ -207,14 +147,18 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
 
     private IEnumerator Respawn()
     {
+        // Đợi một chút để hoàn tất hoạt ảnh chết
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
 
+        // Reset trạng thái của người chơi
         dead = false;
         currentHealth = maxHealth;
         UpdateHealthBar();
 
+        // Tải lại scene "Home"
         SceneManager.LoadScene("Home");
 
+        // Bật lại Animator nếu đã tắt
         if (!animator.enabled)
         {
             animator.enabled = true;
