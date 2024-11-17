@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -36,14 +35,18 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void FindCamera()
     {
-        // Tìm đối tượng Camera với Tag "MainCamera"
         cam = GameObject.FindWithTag("MainCamera");
 
         if (cam == null)
         {
             Debug.LogWarning("Main Camera not found in the scene!");
         }
+        else
+        {
+            Debug.Log("Main Camera found: " + cam.name);
+        }
     }
+
 
     void LateUpdate()
     {

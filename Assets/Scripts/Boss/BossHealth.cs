@@ -6,9 +6,15 @@ public class BossHealth : MonoBehaviour, IHealth
     public int maxHealth;
     private float currentHealth;
     public bool dead;
+
     [SerializeField] private SimpleFlash flash; // Reference to SimpleFlash script
     private Animator animator; // Reference to Animator
     private Collider2D bossCollider; // Reference to Collider
+
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource audioSource; // Audio source for playing sounds
+    [SerializeField] private AudioClip damageSound;   // Sound for taking damage
+    [SerializeField] private AudioClip deathSound;    // Sound for death
 
     void Start()
     {
@@ -37,6 +43,16 @@ public class BossHealth : MonoBehaviour, IHealth
         {
             Debug.LogError("Collider2D not found on Boss!");
         }
+
+        // Get AudioSource component
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+            {
+                Debug.LogError("AudioSource not found on Boss!");
+            }
+        }
     }
 
     public void TakeDamage(int damage)
@@ -44,6 +60,12 @@ public class BossHealth : MonoBehaviour, IHealth
         // Decrease health
         currentHealth -= damage;
         Debug.Log("Boss takes damage: " + damage + ". Current health: " + currentHealth);
+
+        // Play damage sound
+        if (damageSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(damageSound);
+        }
 
         // Flash when taking damage
         if (currentHealth > 0)
@@ -63,6 +85,12 @@ public class BossHealth : MonoBehaviour, IHealth
     private void HandleDeath()
     {
         Debug.Log("Boss is dead!");
+
+        // Play death sound
+        if (deathSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(deathSound);
+        }
 
         // Play death animation
         if (animator != null)

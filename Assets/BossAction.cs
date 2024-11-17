@@ -117,11 +117,14 @@ public class BossActions : MonoBehaviour
         }
 
         // Kích hoạt hiệu ứng rung khi chạm đất
+        // Kích hoạt hiệu ứng rung nhưng giảm cường độ nếu cần
         CinemachineImpulseSource impulseSource = GetComponent<CinemachineImpulseSource>();
         if (impulseSource != null)
         {
-            impulseSource.GenerateImpulse();
+            // Tạo một "custom impulse" để không ảnh hưởng tới camera chính
+            impulseSource.GenerateImpulseAt(transform.position, Vector3.one * 0.5f); // Điều chỉnh Vector3.one * 0.5f để giảm rung
         }
+
 
         // Chờ một khoảng thời gian để boss dừng lại
         yield return new WaitForSeconds(1.5f);
@@ -157,6 +160,13 @@ public class BossActions : MonoBehaviour
         {
             animationTime += Time.deltaTime; // Cộng dồn thời gian
             yield return null;
+        }
+        // Kích hoạt hiệu ứng rung nhưng giảm cường độ nếu cần
+        CinemachineImpulseSource impulseSource = GetComponent<CinemachineImpulseSource>();
+        if (impulseSource != null)
+        {
+            // Tạo một "custom impulse" để không ảnh hưởng tới camera chính
+            impulseSource.GenerateImpulseAt(transform.position, Vector3.one * 0.5f); // Điều chỉnh Vector3.one * 0.5f để giảm rung
         }
 
         // Tạo viên đạn tại vị trí bắn

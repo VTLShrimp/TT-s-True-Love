@@ -12,70 +12,80 @@ public class PlayerAttack : MonoBehaviour
     public bool isAttacking = false;
     public static PlayerAttack instance;
     public Transform attackPoint;
-    public float attackRange = 0.5f;  // Tầm đánh trên mặt đất
-    public float airAttackRange = 1.0f;  // Tầm đánh khi trên không
-    public int groundDamage = 20;  // Sát thương khi trên mặt đất
-    public int airDamage = 15;  // Sát thương khi trên không
-    public float attackCooldown = 0.5f;  // Thời gian giữa các lần tấn công
+    public float attackRange = 0.5f;  // Ground attack range
+    public float airAttackRange = 1.0f;  // Air attack range
+    public int groundDamage = 20;  // Ground attack damage
+    public int airDamage = 15;  // Air attack damage
+    public float attackCooldown = 0.5f;  // Time between attacks
     private float nextAttackTime = 0f;
     public int maxMana = 100;
     public int currentMana;
     public GameObject forgemenu;
     public GameObject priestessmenu;
     private PlayerMovement playerMovement;
-    private Coroutine attackCoroutine; // Biến để lưu Coroutine của đòn tấn công
-
+    private Coroutine attackCoroutine; // Variable to hold the attack coroutine
     private bool canAttack = true; // Track if the player can attack
 
-    public GameObject swordWavePrefab; // Prefab kiếm khí
-    public Transform spawnPoint;       // Điểm xuất phát của kiếm khí
-    public int swordWaveDamage = 20;   // Sát thương của kiếm khí
+    public GameObject swordWavePrefab; // Prefab for the sword wave
+    public Transform spawnPoint;       // Spawn point for the sword wave
+    public int swordWaveDamage = 20;   // Damage of the sword wave
+
+    // Sound Effects
+    public AudioClip groundAttackSound;
+    public AudioClip airAttackSound;
+    public AudioClip swordWaveSound;
+
+    private AudioSource audioSource;
+    public void InterruptAttack()
+    {
+        if (isAttacking)
+        {
+            isAttacking = false; // Reset the attacking state
+            animator.ResetTrigger("GroundAttack"); // Stop ground attack animation
+            animator.ResetTrigger("AirAttack");   // Stop air attack animation
+
+            if (attackCoroutine != null)
+            {
+                StopCoroutine(attackCoroutine); // Stop the attack coroutine
+                attackCoroutine = null;
+            }
+
+            Debug.Log("Attack interrupted!");
+        }
+    }
+
 
     private void Awake()
     {
         instance = this;
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
     void Start()
     {
         currentMana = maxMana;
-        playerMovement = GetComponent<PlayerMovement>();  // Lấy tham chiếu tới PlayerMovement
-
+        playerMovement = GetComponent<PlayerMovement>();  // Get reference to PlayerMovement
     }
 
     void Update()
     {
-        //if (DialogueManager.GetInstance().isDialogueActive)
-        //{
-        //    return;
-        //}
         if (Time.time >= nextAttackTime && Input.GetMouseButtonDown(0) && canAttack && !isAttacking)
         {
             PerformAttack();
             nextAttackTime = Time.time + attackCooldown;
         }
-        if (Input.GetMouseButtonDown(1))  // 1 là chuột phải
+        if (Input.GetMouseButtonDown(1) && currentMana >=20)  // Right mouse button
         {
-            // LaunchSwordWave();
+            LaunchSwordWave();
             currentMana -= 20;
             UpdateManaBar();
         }
+    }
 
-    }
-    public void SavePlayerData(PlayerData playerData)
-    {
-        playerData.groundDMG = groundDamage;
-        playerData.airDMG = airDamage;
-        playerData.swordWaveDMG = swordWaveDamage;
-        playerData.maxMana = maxMana;
-    }
-    public void LoadPlayerData(PlayerData playerData)
-    {
-        groundDamage = playerData.groundDMG;
-        airDamage = playerData.airDMG;
-        swordWaveDamage = playerData.swordWaveDMG;
-        maxMana = playerData.maxMana;
-    }
     private void PerformAttack()
     {
         isAttacking = true;
@@ -83,34 +93,39 @@ public class PlayerAttack : MonoBehaviour
         if (playerMovement.IsGrounded())
         {
             animator.SetTrigger("GroundAttack");
+            PlaySound(groundAttackSound);
             attackCoroutine = StartCoroutine(HandleGroundAttack());
         }
         else
         {
             animator.SetTrigger("AirAttack");
+            PlaySound(airAttackSound);
             attackCoroutine = StartCoroutine(HandleAirAttack());
         }
     }
+
     private void LaunchSwordWave()
     {
-
-        // Tạo kiếm khí từ prefab tại vị trí spawnPoint
+        // Spawn sword wave prefab at spawnPoint position
         GameObject swordWave = Instantiate(swordWavePrefab, spawnPoint.position, Quaternion.identity);
 
-        // Lấy component SwordWave từ kiếm khí đã tạo
+        // Get SwordWave component from the spawned sword wave
         SwordWave wave = swordWave.GetComponent<SwordWave>();
 
-        // Thiết lập sát thương cho kiếm khí
+        // Set damage for the sword wave
         wave.damage = swordWaveDamage;
 
-        // Xác định hướng di chuyển của kiếm khí dựa vào hướng của nhân vật
+        // Determine direction based on character's facing direction
         Vector2 direction = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
-        wave.SetDirection(direction); // Gọi hàm SetDirection để kiếm khí bay theo hướng của nhân vật
+        wave.SetDirection(direction);
+
+        // Play sword wave sound
+        PlaySound(swordWaveSound);
     }
-    // Xử lý tấn công trên mặt đất
+
     private IEnumerator HandleGroundAttack()
     {
-        yield return new WaitForSeconds(0.1f);  // Chờ đồng bộ với hoạt ảnh
+        yield return new WaitForSeconds(0.1f);  // Sync with animation
 
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
 
@@ -124,14 +139,13 @@ public class PlayerAttack : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(0.3f);  // Chờ hoàn thành hành động tấn công
+        yield return new WaitForSeconds(0.3f);  // Wait for attack to complete
         isAttacking = false;
     }
 
-    // Xử lý tấn công trên không
     private IEnumerator HandleAirAttack()
     {
-        yield return new WaitForSeconds(0.1f);  // Chờ đồng bộ với hoạt ảnh
+        yield return new WaitForSeconds(0.1f);  // Sync with animation
 
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, airAttackRange, enemyLayers);
 
@@ -145,55 +159,18 @@ public class PlayerAttack : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(0.3f);  // Chờ hoàn thành hành động tấn công
+        yield return new WaitForSeconds(0.3f);  // Wait for attack to complete
         isAttacking = false;
     }
 
-    // Hàm ngắt đòn tấn công
-    public void InterruptAttack()
+    private void PlaySound(AudioClip clip)
     {
-        if (isAttacking)
+        if (audioSource != null && clip != null)
         {
-            isAttacking = false; // Đặt lại trạng thái
-            animator.ResetTrigger("GroundAttack"); // Ngắt hoạt ảnh
-            animator.ResetTrigger("AirAttack");
-
-            // Nếu có coroutine đang chạy thì dừng nó
-            if (attackCoroutine != null)
-            {
-                StopCoroutine(attackCoroutine);
-                attackCoroutine = null;
-            }
-
-            Debug.Log("Attack interrupted!");
+            audioSource.PlayOneShot(clip);
         }
     }
 
-    // Method to disable attacking temporarily
-    public void DisableAttacking(float duration)
-    {
-        canAttack = false; // Disable attacking
-        StartCoroutine(EnableAttackingAfterDelay(duration));
-    }
-
-    // Coroutine to re-enable attacking after a delay
-    private IEnumerator EnableAttackingAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        canAttack = true; // Re-enable attacking
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (attackPoint != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(attackPoint.position, attackRange);
-        }
-
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, airAttackRange);
-    }
     private void UpdateManaBar()
     {
         if (manabar != null)
