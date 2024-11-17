@@ -7,7 +7,7 @@ using BarthaSzabolcs.Tutorial_SpriteFlash;
 
 public class PlayerHealth : MonoBehaviour, IDataPersistence
 {
-    public static PlayerHealth Instance { get; private set; } // Singleton instance
+
 
     public float maxHealth = 100f;
     public float currentHealth;
@@ -29,18 +29,6 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
 
     public float knockbackForce = 5f;
     public float hurtDuration = 1f;
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject); // Destroy duplicate player instances
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject); // Keep player across scenes
-    }
 
     private void Start()
     {
@@ -96,6 +84,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
         {
             dead = true;
             animator.SetTrigger("die");
+            DataPresistenceManager.Instance.SavePlayerData();
             StartCoroutine(Respawn());
         }
 

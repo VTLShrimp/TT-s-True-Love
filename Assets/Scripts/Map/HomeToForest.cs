@@ -8,7 +8,9 @@ public class HomeToForest : MonoBehaviour
     private void Update()
     {
         if (playerInRange && Input.GetKeyDown(KeyCode.E))
+
         {
+            DataPresistenceManager.Instance.SavePlayerData();
             SceneManager.LoadScene("ForestLevel");
         }
     }
