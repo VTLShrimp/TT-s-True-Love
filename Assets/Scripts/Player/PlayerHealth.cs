@@ -76,7 +76,6 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
         {
             animator.SetTrigger("hurt");
             playerAttack.InterruptAttack();
-            playerAttack.DisableAttacking(1.5f);
             StartCoroutine(HandleKnockback());
             flash.Flash();
         }

@@ -1,10 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class HomeToForest : MonoBehaviour
+public class BackToHome : MonoBehaviour
 {
     private bool playerInRange = false;
-    public Loading LoadingScreen;
 
     private void Update()
     {
@@ -12,8 +11,7 @@ public class HomeToForest : MonoBehaviour
 
         {
             DataPresistenceManager.Instance.SavePlayerData();
-            LoadingScreen.LoadLevel("ForestLevel");
-
+            SceneManager.LoadScene("Home");
         }
     }
 

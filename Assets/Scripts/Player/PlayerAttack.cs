@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -78,7 +77,7 @@ public class PlayerAttack : MonoBehaviour
             PerformAttack();
             nextAttackTime = Time.time + attackCooldown;
         }
-        if (Input.GetMouseButtonDown(1) && currentMana >=20)  // Right mouse button
+        if (Input.GetMouseButtonDown(1) && currentMana >= 20)  // Right mouse button
         {
             LaunchSwordWave();
             currentMana -= 20;

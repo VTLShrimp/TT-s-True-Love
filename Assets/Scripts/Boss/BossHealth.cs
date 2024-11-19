@@ -1,4 +1,5 @@
-﻿using BarthaSzabolcs.Tutorial_SpriteFlash;
+﻿using System.Collections;
+using BarthaSzabolcs.Tutorial_SpriteFlash;
 using UnityEngine;
 
 public class BossHealth : MonoBehaviour, IHealth
@@ -6,6 +7,11 @@ public class BossHealth : MonoBehaviour, IHealth
     public int maxHealth;
     private float currentHealth;
     public bool dead;
+    public GameObject coinPrefab;
+    public int minCoins = 1;
+    public int maxCoins = 3;
+    public float spawnDelay = 0.1f;
+    public GameObject BackHomeGate;
 
     [SerializeField] private SimpleFlash flash; // Reference to SimpleFlash script
     private Animator animator; // Reference to Animator
@@ -85,6 +91,7 @@ public class BossHealth : MonoBehaviour, IHealth
     private void HandleDeath()
     {
         Debug.Log("Boss is dead!");
+        BackHomeGate.SetActive(true);
 
         // Play death sound
         if (deathSound != null && audioSource != null)
@@ -97,7 +104,7 @@ public class BossHealth : MonoBehaviour, IHealth
         {
             animator.SetTrigger("Die");
         }
-
+        StartCoroutine(SpawnCoinsWithDelay());
         //// Disable collider to prevent interaction
         //if (bossCollider != null)
         //{
@@ -109,6 +116,27 @@ public class BossHealth : MonoBehaviour, IHealth
     public void OnDeathAnimationEnd()
     {
         // Destroy the boss object after animation ends
+        Destroy(gameObject);
+    }
+    private IEnumerator SpawnCoinsWithDelay()
+    {
+        if (coinPrefab != null)
+        {
+            int coinCount = Random.Range(minCoins, maxCoins + 1);
+            for (int i = 0; i < coinCount; i++)
+            {
+                GameObject coin = Instantiate(coinPrefab, transform.position, Quaternion.identity);
+                Rigidbody2D rb = coin.GetComponent<Rigidbody2D>();
+                if (rb != null)
+                {
+                    // Apply a random force to the coin to make it "jump" in different directions
+                    float randomX = Random.Range(-1f, 1f);
+                    float randomY = Random.Range(1f, 2f);
+                    rb.AddForce(new Vector2(randomX, randomY), ForceMode2D.Impulse);
+                }
+                yield return new WaitForSeconds(spawnDelay);
+            }
+        }
         Destroy(gameObject);
     }
 }

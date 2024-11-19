@@ -215,6 +215,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 40
+  coinPrefab: {fileID: 3050795039237815555, guid: 7c4e38768dd649648aaf313b707ab1be, type: 3}
+  spawnDelay: 0.1
 --- !u!1 &7103175818673757625
 GameObject:
   m_ObjectHideFlags: 0

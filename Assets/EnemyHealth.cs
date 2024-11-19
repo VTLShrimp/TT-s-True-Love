@@ -7,6 +7,8 @@ public class EnemyHealth : MonoBehaviour, IHealth
     private int currentHealth; // Máu hiện tại của kẻ thù
     public GameObject coinPrefab; // Prefab của đồng xu sẽ rớt khi kẻ thù chết
     public float spawnDelay = 0.1f;
+    public int minCoins = 1;
+    public int maxCoins = 3;
 
     void Start()
     {
@@ -38,7 +40,7 @@ public class EnemyHealth : MonoBehaviour, IHealth
     {
         if (coinPrefab != null)
         {
-            int coinCount = Random.Range(1, 4);
+            int coinCount = Random.Range(minCoins, maxCoins + 1);
             for (int i = 0; i < coinCount; i++)
             {
                 GameObject coin = Instantiate(coinPrefab, transform.position, Quaternion.identity);
